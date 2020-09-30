@@ -25,7 +25,7 @@ function initialiseMap() {
 
       // Center on (0, 0). Map center and zoom will reconfigure later (fitbounds method)
 	var tlv_center = new google.maps.LatLng(32.0853, 34.7818);
-	vat initial_zoom = 13;
+	var initial_zoom = 13;
       var mapOptions = {
         zoom: initial_zoom,
 	center: tlv_center
