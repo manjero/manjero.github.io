@@ -24,9 +24,11 @@ function initialiseMap() {
     	});
 
       // Center on (0, 0). Map center and zoom will reconfigure later (fitbounds method)
+	var tlv_center = new google.maps.LatLng(32.0853, 34.7818);
+	vat initial_zoom = 13;
       var mapOptions = {
-        zoom: 13,
-	center: new google.maps.LatLng(32.0853, 34.7818)
+        zoom: initial_zoom,
+	center: tlv_center
       };
       var map = new google.maps.Map(document.getElementById('map'), mapOptions);
       setLocations(map, locations);
