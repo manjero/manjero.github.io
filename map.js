@@ -12,19 +12,20 @@ function initialiseMap() {
     	// data.values contains the array of rows from the spreadsheet. Each row is also an array of cell values.
     	// Modify the code below to suit the structure of your spreadsheet.
     	$(data.values).each(function() {
-    		var location = {};
-		location.phone = this[0]
-		location.city = this[1]
-		location.title = this[2];
-		location.latitude = parseFloat(this[3]);
-      	        location.longitude = parseFloat(this[4]);
-	 	locations.push(location);
+		if(this[3] && this[4]) {
+			var location = {};
+			location.phone = this[0]
+			location.city = this[1]
+			location.title = this[2];
+			location.latitude = parseFloat(this[3]);
+			location.longitude = parseFloat(this[4]);
+			locations.push(location);	
+		}
     	});
 
       // Center on (0, 0). Map center and zoom will reconfigure later (fitbounds method)
       var mapOptions = {
-        zoom: 10,
-        center: new google.maps.LatLng(32.0853, 34.7818)
+        zoom: 10
       };
       var map = new google.maps.Map(document.getElementById('map'), mapOptions);
       setLocations(map, locations);
