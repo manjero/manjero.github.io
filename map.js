@@ -62,11 +62,10 @@ function createMarker(map, location, infowindow) {
     title: location.title,
   });
   google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent('<div>'+
+infowindow.setContent('<div>'+
     '<p><strong>' + ((location.url === undefined) ? location.title : ('<a href="' + location.url +'">' + location.title + '</a>')) + '</strong></p>' +
-    ((location.city === undefined) ? "" : ('<p><strong>City: </strong>' + location.city + '</p>')) +
-    ((location.location === undefined) ? "" : ('<p><strong>Department: </strong>' + location.department + '</p>')) +
-    ((location.phone === undefined) ? "" : ('<p><strong>Funder: </strong>' + location.phone + '</p>')) +
+    ((location.city === undefined) ? "" : ('<p><strong>עיר: </strong>' + location.city + '</p>')) +
+    ((location.phone === undefined) ? "" : ('<p><strong>טלפון: </strong>' + location.phone + '</p>')) +
     '</div>');
     infowindow.open(map, marker);
   });
