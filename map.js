@@ -8,15 +8,16 @@ function initialiseMap() {
   // https://sheets.googleapis.com/v4/spreadsheets/ID_OF_YOUR_GOOGLE_SPREADSHEET/values/Sheet1!A2:Q?key=YOUR_API_KEY
   // Also make sure your API key is authorised to access Google Sheets API - you can enable that through your Google Developer console.
   // Finally, in the URL, fix the sheet name and the range that you are accessing from your spreadsheet. 'Sheet1' is the default name for the first sheet.
-  $.getJSON("https://sheets.googleapis.com/v4/spreadsheets/1fBLlw8xlO_yhL8rYfFlQnzvKR-swEtE7NRX41ysARCk/values/Sheet2!B2:E?key=AIzaSyBxp9QJkCa1NVL3LslMRnT7aHw079bYfbw", function(data) {
+  $.getJSON("https://sheets.googleapis.com/v4/spreadsheets/18X7KkMtVxB64ko8d4W8-H1tiYW4JWCCAJl65KWpdlp0/values/data!A2:E?key=AIzaSyBxp9QJkCa1NVL3LslMRnT7aHw079bYfbw", function(data) {
     	// data.values contains the array of rows from the spreadsheet. Each row is also an array of cell values.
     	// Modify the code below to suit the structure of your spreadsheet.
     	$(data.values).each(function() {
     		var location = {};
+		location.phone = this[0]
+		location.city = this[1]
 		location.title = this[2];
 		location.latitude = parseFloat(this[3]);
       	        location.longitude = parseFloat(this[4]);
-                location.city = this[1];
 	 	locations.push(location);
     	});
 
@@ -59,9 +60,9 @@ function createMarker(map, location, infowindow) {
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent('<div>'+
     '<p><strong>' + ((location.url === undefined) ? location.title : ('<a href="' + location.url +'">' + location.title + '</a>')) + '</strong></p>' +
-    ((location.institution === undefined) ? "" : ('<p><strong>Lead institution: </strong>' + location.institution + '</p>')) +
-    ((location.department === undefined) ? "" : ('<p><strong>Department: </strong>' + location.department + '</p>')) +
-    ((location.funder === undefined) ? "" : ('<p><strong>Funder: </strong>' + location.funder + '</p>')) +
+    ((location.city === undefined) ? "" : ('<p><strong>City: </strong>' + location.city + '</p>')) +
+    ((location.location === undefined) ? "" : ('<p><strong>Department: </strong>' + location.department + '</p>')) +
+    ((location.phone === undefined) ? "" : ('<p><strong>Funder: </strong>' + location.phone + '</p>')) +
     '</div>');
     infowindow.open(map, marker);
   });
