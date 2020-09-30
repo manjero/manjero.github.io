@@ -8,7 +8,7 @@ function initialiseMap() {
   // https://sheets.googleapis.com/v4/spreadsheets/ID_OF_YOUR_GOOGLE_SPREADSHEET/values/Sheet1!A2:Q?key=YOUR_API_KEY
   // Also make sure your API key is authorised to access Google Sheets API - you can enable that through your Google Developer console.
   // Finally, in the URL, fix the sheet name and the range that you are accessing from your spreadsheet. 'Sheet1' is the default name for the first sheet.
-  $.getJSON("https://sheets.googleapis.com/v4/spreadsheets/1fBLlw8xlO_yhL8rYfFlQnzvKR-swEtE7NRX41ysARCk/values/data!A2:Q?key=AIzaSyBxp9QJkCa1NVL3LslMRnT7aHw079bYfbw", function(data) {
+  $.getJSON("https://sheets.googleapis.com/v4/spreadsheets/18X7KkMtVxB64ko8d4W8-H1tiYW4JWCCAJl65KWpdlp0/values/data!A2:Q?key=AIzaSyBxp9QJkCa1NVL3LslMRnT7aHw079bYfbw", function(data) {
     	// data.values contains the array of rows from the spreadsheet. Each row is also an array of cell values.
     	// Modify the code below to suit the structure of your spreadsheet.
     	$(data.values).each(function() {
