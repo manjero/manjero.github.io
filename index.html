@@ -1,0 +1,1354 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>רובוטיקה ו׳–ח׳</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=Heebo:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a classroom "night-sky" deck — navy home grid of lesson cards per unit; each lesson is a 16:9 slide stage scaled to the screen with a floating control pill. Single dark theme by design (matches the grades 3–5 sister site). */
+:root{
+  --navy:#1b2547; --navy-2:#24315c; --navy-3:#2f3e70; --ink:#141b36;
+  --cream:#f6efe1; --cream-2:#ebe1cc; --paper-ink:#1d2546; --paper-mute:#5b6283;
+  --sun:#f2b84b; --coral:#e36b5d; --teal:#4fb3a4; --sky:#8fc8e8; --violet:#9b8be0;
+  --fg:#f4f1ea; --mute:#aab3d6; --line:rgba(170,179,214,.22);
+  --f-display:"Rubik","Heebo",system-ui,sans-serif;
+  --f-body:"Heebo","Rubik",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--navy);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- HOME ---------- */
+#home{max-width:1180px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hero{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.badge{width:104px;height:104px;border-radius:24px;background:var(--cream);display:grid;place-items:center;flex:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.badge svg{width:76px;height:76px}
+.hero-txt{flex:1;min-width:0}
+.hero h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6vw,54px);line-height:1.05;margin:0 0 8px;color:var(--sun);text-wrap:balance}
+.hero p{margin:0;color:var(--fg);font-size:clamp(15px,2.2vw,19px)}
+.hero .credit{color:var(--mute);font-size:14px;margin-top:6px}
+.dots{display:flex;gap:10px;margin-inline-start:auto}
+.dots i{width:22px;height:22px;border-radius:50%;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 8px}
+.chip{border:1.5px solid var(--line);background:var(--navy-2);border-radius:999px;padding:8px 16px;font-family:var(--f-display);font-weight:700;font-size:15px;text-decoration:none;color:var(--fg);transition:border-color .15s,background .15s}
+.chip:hover{border-color:var(--sun);background:var(--navy-3)}
+.chip b{color:var(--sun)}
+.unit{margin-top:44px;scroll-margin-top:20px}
+.unit-h{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.unit-num{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:30px;color:var(--ink);flex:none}
+.unit-h small{display:block;font-family:var(--f-display);font-weight:700;letter-spacing:.04em;font-size:14px}
+.unit-h h2{margin:0;font-family:var(--f-display);font-weight:800;font-size:clamp(26px,4vw,36px);line-height:1.1}
+.unit-h p{margin:2px 0 0;color:var(--mute);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+@media (max-width:1060px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+.card{display:flex;flex-direction:column;text-decoration:none;color:var(--fg);background:var(--navy-2);border:1.5px solid var(--line);border-radius:20px;overflow:hidden;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);border-color:var(--sun)}
+.card .pic{padding:14px 14px 0;background:var(--navy-3)}
+.card .pic .art{width:100%;aspect-ratio:1;max-width:100%}
+.card .meta{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1;background:var(--navy-2)}
+.card .n{font-family:var(--f-display);font-weight:700;font-size:13px;color:var(--sun)}
+.card h3{margin:0;font-family:var(--f-display);font-weight:800;font-size:clamp(17px,2vw,20px);line-height:1.2;text-wrap:balance}
+.card .en{font-size:12px;color:var(--mute);direction:ltr;text-align:right}
+.card .tags{margin-top:auto;padding-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;background:rgba(170,179,214,.14);color:var(--mute)}
+.tag.dc{background:var(--coral);color:#fff}
+.foot{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;color:var(--mute);font-size:13px;display:flex;flex-direction:column;gap:4px}
+
+.art{border-radius:50%;overflow:hidden;display:block}
+.art svg{display:block;width:100%;height:100%}
+
+/* ---------- DECK ---------- */
+#deck{position:fixed;inset:0;background:var(--ink);display:flex;flex-direction:column}
+#deck[hidden]{display:none!important}
+#biv{position:absolute;inset:10px;z-index:8;background:var(--cream);color:var(--paper-ink);border-radius:20px;box-shadow:0 18px 44px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden}
+#biv .bih{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px 10px 18px;font-family:var(--f-display);background:var(--cream-2)}
+#biv .bih b{font-size:16px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#biv .bih button{flex:none;background:var(--navy);color:var(--fg);border:0;border-radius:12px;padding:8px 14px;cursor:pointer;font-family:var(--f-display);font-weight:700}
+#bip{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;align-items:center;gap:14px;min-height:0}
+#bip img{width:100%;max-width:1600px;display:block;max-width:100%;height:auto;background:#fff;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.bimsg{font-family:var(--f-display);font-size:18px;color:var(--paper-mute);margin:40px 0}
+button.bref{border:0;cursor:pointer;transition:background .15s}
+button.bref:hover{background:var(--sun)}
+.t-meta .tlink{border:0;cursor:pointer;font:inherit;background:var(--navy-3);border-radius:999px;padding:5px 14px;color:var(--sun);text-decoration:none}
+.t-meta .tlink:hover{background:var(--sun);color:var(--ink)}
+#progress{height:4px;background:var(--navy-2);flex:none;margin-top:env(safe-area-inset-top,0px)}
+#progress i{display:block;height:100%;background:var(--sun);transition:width .25s}
+#stageWrap{flex:1;position:relative;overflow:hidden;min-height:0}
+#stage{position:absolute;top:50%;left:50%;width:1280px;height:720px;transform-origin:center center}
+.bar{flex:none;display:flex;justify-content:center;padding-block:10px 14px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
+.pill{display:flex;align-items:center;gap:4px;background:var(--navy-2);border:1.5px solid var(--line);border-radius:999px;padding:6px 8px;max-width:100%;min-width:0}
+.pill button{background:none;border:0;border-radius:999px;padding:8px 14px;cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:15px;white-space:nowrap}
+.pill button:hover{background:var(--navy-3)}
+.pill button.on{background:var(--navy-3);color:var(--sun)}
+.pill .lbl{font-family:var(--f-display);font-weight:700;color:var(--sun);font-size:14px;padding:0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;max-width:230px}
+@media (max-width:1100px){.pill .lbl{display:none}}
+.pill .cnt{font-variant-numeric:tabular-nums;font-family:var(--f-display);font-weight:700;padding:0 6px;direction:ltr}
+.pill .arrow{font-size:20px;padding:6px 14px}
+@media (max-width:640px){.pill .lbl{display:none}.pill button{padding:8px 10px;font-size:14px}}
+#notes{position:absolute;top:14px;right:max(14px,env(safe-area-inset-right,0px));left:auto;width:min(620px,calc(100% - 28px));background:var(--cream);color:var(--paper-ink);border-radius:18px;padding:16px 20px 18px;box-shadow:0 18px 40px rgba(0,0,0,.4);z-index:5;max-height:calc(100% - 28px);overflow:auto}
+#notes h4{margin:0 0 6px;font-family:var(--f-display);color:#2d7f72;font-size:16px}
+#notes p{margin:0;font-size:16px;line-height:1.7}
+
+/* ---------- SLIDES (fixed 1280×720 canvas) ---------- */
+.slide{position:absolute;inset:0;padding:56px 72px 52px;display:flex;flex-direction:column;font-family:var(--f-body);overflow:hidden}
+.slide.dark{background:var(--navy-2);color:var(--fg)}
+.slide.paper{background:var(--cream);color:var(--paper-ink)}
+.slide .ph{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:18px;color:#2d7f72}
+.slide.dark .ph{color:var(--teal)}
+.slide .ph .min{color:var(--paper-mute);font-weight:500;font-size:16px}
+.slide h2{font-family:var(--f-display);font-weight:800;font-size:46px;line-height:1.12;margin:6px 0 18px;text-wrap:balance}
+.slide .cols{display:flex;gap:48px;flex:1;min-height:0}
+.slide .main{flex:1.25;min-width:0;display:flex;flex-direction:column;gap:16px}
+.slide .side{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.slide p.lead{font-size:26px;line-height:1.5;margin:0}
+.slide .big{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.35;margin:0}
+.slide .cta{align-self:flex-start;background:var(--sun);color:var(--ink);font-family:var(--f-display);font-weight:800;font-size:22px;border-radius:999px;padding:10px 26px}
+.vocab{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.vocab span.k{font-size:16px;color:var(--paper-mute);font-weight:700}
+.vocab b{background:var(--navy);color:var(--sun);font-family:var(--f-display);font-size:20px;border-radius:12px;padding:6px 16px}
+.qs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.qs li{font-size:27px;line-height:1.4;font-weight:500;display:flex;gap:14px;align-items:flex-start}
+.qs li::before{content:"?";flex:none;width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--sun);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:22px;margin-top:2px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:st}
+.steps li{counter-increment:st;font-size:26px;line-height:1.4;display:flex;gap:14px;align-items:flex-start;font-weight:500}
+.steps li::before{content:counter(st);flex:none;width:40px;height:40px;border-radius:12px;background:var(--sun);color:var(--ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:22px}
+.bricks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.bricks li{font-size:28px;font-weight:700;font-family:var(--f-display);display:flex;align-items:center;gap:14px}
+.bricks li i{width:34px;height:22px;border-radius:4px;position:relative;flex:none}
+.bricks li i::before,.bricks li i::after{content:"";position:absolute;top:-7px;width:10px;height:7px;border-radius:2px 2px 0 0;background:inherit}
+.bricks li i::before{right:5px}.bricks li i::after{left:5px}
+.box{background:var(--navy);color:var(--fg);border-radius:22px;padding:20px 26px;display:flex;flex-direction:column;gap:10px;width:100%}
+.box h5{margin:0;font-family:var(--f-display);font-size:20px;color:var(--sun)}
+.box p,.box li{font-size:22px;margin:0;line-height:1.45}
+.box ul{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.frame{border:3px dashed #2d7f72;border-radius:18px;padding:14px 22px;font-family:var(--f-display);font-weight:700;font-size:28px;color:#2d7f72;align-self:flex-start}
+.slide.dark .frame{border-color:var(--teal);color:var(--teal)}
+.bref{display:inline-flex;align-items:center;gap:10px;background:var(--cream-2);border-radius:14px;padding:8px 16px;font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--paper-ink)}
+.bref .lbl2{color:var(--paper-mute);font-weight:500}
+.logo-corner{position:absolute;bottom:22px;left:26px;width:58px;height:58px;border-radius:14px;background:var(--cream);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.slide.paper .logo-corner{background:#fff}
+.logo-corner svg{width:42px;height:42px}
+.foot-credit{position:absolute;bottom:26px;right:72px;left:110px;font-size:14px;color:var(--mute);text-align:right}
+
+/* title slide */
+.t-tag{display:inline-flex;align-items:center;gap:12px}
+.t-tag b{background:var(--sun);color:var(--ink);font-family:var(--f-display);font-weight:800;font-size:22px;border-radius:999px;padding:6px 18px}
+.t-tag span{color:var(--teal);font-family:var(--f-display);font-weight:700;font-size:20px}
+.t-title{font-family:var(--f-display);font-weight:800;font-size:96px;line-height:1;color:var(--sun);margin:18px 0 18px;text-wrap:balance}
+.t-q{font-size:36px;font-weight:500;line-height:1.35;margin:0 0 14px;text-wrap:balance}
+.t-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:18px;color:var(--mute)}
+.t-meta span{background:var(--navy-3);border-radius:999px;padding:5px 14px}
+.t-en{direction:ltr;text-align:right;color:var(--mute);font-size:18px;margin-top:10px}
+
+/* goals */
+.can{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.can li{display:flex;gap:16px;align-items:center;font-size:27px;line-height:1.35;background:var(--navy-3);border-radius:18px;padding:14px 20px}
+.can button.star{background:none;border:0;cursor:pointer;padding:0;flex:none;width:44px;height:44px}
+.can svg{width:44px;height:44px}
+.can .on path{fill:var(--sun)}
+
+/* code */
+.code{direction:ltr;text-align:left;background:#fff;border:2px solid var(--cream-2);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:5px;font-family:var(--f-display);font-weight:500;font-size:19px;width:100%;overflow:hidden}
+.blk{align-self:flex-start;color:#fff;border-radius:8px;padding:9px 14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:1.2;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.blk.ev{background:#f0a92b;border-radius:18px 18px 8px 8px;color:#3a2600}
+.blk.ctl{background:#e8833a}
+.blk.mot{background:#4a8fe0}
+.blk.mot1{background:#c95fb3}
+.blk.snd{background:#a05cd6}
+.blk.var{background:#e0663a}
+.blk.fn{background:#e85d7d}
+.blk.ai{background:#2f9e8f;border-radius:18px 18px 8px 8px}
+.blk .in{background:#fff;color:#222;border-radius:999px;padding:2px 10px;font-weight:700}
+.blk .rp{background:rgba(255,255,255,.28);border-radius:999px;padding:2px 8px;display:inline-flex;gap:5px;align-items:center}
+.blk .bo{background:rgba(0,0,0,.14);clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,10px 100%,0 50%);padding:3px 16px;display:inline-flex;gap:5px;align-items:center;flex-wrap:wrap}
+.pseudo{background:var(--navy);color:var(--fg);border-radius:20px;padding:18px 26px;list-style:none;margin:0;display:flex;flex-direction:column;gap:8px;width:100%}
+.pseudo li{font-family:var(--f-display);font-weight:700;font-size:24px;display:flex;gap:12px;align-items:center}
+.pseudo li::before{content:"←";color:var(--sun)}
+
+/* PIN */
+.pin{background:var(--navy);border-radius:24px;padding:24px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--fg);width:100%}
+.pin .url{direction:ltr;font-family:var(--f-mono);font-size:22px;color:var(--sky)}
+.pin .digits{display:flex;gap:12px;direction:ltr}
+.pin .digits b{width:66px;height:80px;border-radius:14px;background:var(--cream);color:var(--ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:46px}
+.pin small{font-size:16px;color:var(--mute)}
+
+/* timer */
+.timer{background:var(--navy);color:var(--fg);border-radius:22px;padding:14px 20px;display:flex;align-items:center;gap:14px}
+.timer .tv{font-family:var(--f-display);font-weight:800;font-size:46px;font-variant-numeric:tabular-nums;direction:ltr;min-width:136px;text-align:center}
+.timer .tv.done{color:var(--coral)}
+.timer button{background:var(--navy-3);border:0;border-radius:12px;padding:8px 12px;cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:16px}
+.timer button:hover{background:var(--sun);color:var(--ink)}
+
+/* norms */
+.roles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%}
+.role{display:flex;flex-direction:column;align-items:center;gap:8px;background:#fff;border-radius:20px;padding:18px 8px}
+.role svg{width:64px;height:84px}
+.role span{font-family:var(--f-display);font-weight:700;font-size:18px}
+
+/* feedback */
+.fb{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1}
+.fb .col{border-radius:24px;padding:24px 28px;display:flex;flex-direction:column;gap:14px}
+.fb .col h3{margin:0;font-family:var(--f-display);font-size:32px}
+.fb .col p{margin:0;font-size:26px;line-height:1.45;background:rgba(255,255,255,.55);border-radius:14px;padding:10px 16px}
+
+/* flowchart */
+.flow{width:100%}
+.flow svg{width:100%;height:auto}
+
+/* model panel + thumb */
+.pill{flex-wrap:wrap;justify-content:center;border-radius:28px}
+.pill a.pa{border-radius:999px;padding:8px 14px;font-family:var(--f-display);font-weight:700;font-size:15px;white-space:nowrap;color:var(--fg);text-decoration:none}
+.pill a.pa:hover{background:var(--navy-3);color:var(--sun)}
+@media (max-width:640px){.pill a.pa{padding:8px 10px;font-size:14px}}
+#model{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:min(560px,calc(100% - 28px));max-height:calc(100% - 24px);background:#fff;border-radius:22px;box-shadow:0 18px 44px rgba(0,0,0,.45);z-index:6;display:flex;flex-direction:column;overflow:hidden}
+#model .mh{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px 10px 16px;background:var(--cream);color:var(--paper-ink);font-family:var(--f-display)}
+#model .mh button{background:var(--cream-2);border:0;border-radius:10px;width:34px;height:34px;cursor:pointer;color:var(--paper-ink);font-size:16px}
+#model img{display:block;width:100%;min-height:0;flex:1;object-fit:contain;padding:14px;background:#fff}
+.mthumb{background:#fff;border:2px solid var(--cream-2);border-radius:22px;padding:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;flex:1;min-height:0;color:var(--paper-mute)}
+.mthumb:hover{border-color:var(--sun)}
+.mthumb img{flex:1;min-height:0;width:100%;object-fit:contain}
+.mthumb span{font-family:var(--f-display);font-weight:700;font-size:17px}
+.mthumb.sm{flex:none;height:230px}
+
+[hidden]{display:none!important}
+/* slide entrance */
+.slide{animation:sin .28s ease-out}
+@keyframes sin{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+<main id="home" dir="rtl" lang="he"></main>
+<div id="deck" dir="rtl" lang="he" hidden>
+ <div id="progress"><i></i></div>
+ <div id="stageWrap"><div id="stage"></div><div id="notes" hidden></div><div id="biv" hidden role="dialog" aria-label="הוראות בנייה"><div class="bih"><b id="bit"></b><button id="biclose" aria-label="סגירה">✕ סגירה</button></div><div id="bip"></div></div><div id="model" hidden><div class="mh"><b id="mt"></b><button id="mclose" aria-label="סגירת הדגם">✕</button></div><img id="mimg" alt=""></div></div>
+ <div class="bar"><div class="pill">
+  <button id="homeb" aria-label="חזרה לרשימת השיעורים">⌂ שיעורים</button>
+  <span class="lbl" id="lbl"></span>
+  <button id="prev" class="arrow" aria-label="שקופית קודמת">→</button>
+  <span class="cnt" id="cnt"></span>
+  <button id="next" class="arrow" aria-label="שקופית הבאה">←</button>
+  <button id="mb" aria-label="הצגת הדגם">▣ <span id="mbl">דגם</span></button>
+  <button id="bi" aria-label="פתיחת הוראות הבנייה">📄 <span id="bil">הוראות בנייה</span></button>
+  <button id="nb" aria-label="הערות למורה">הערות</button>
+  <button id="fs" aria-label="מסך מלא">⛶</button>
+ </div></div>
+</div>
+<script>
+const L=[];
+// Unit 1 — Basics
+L.push(
+{id:'u1l1',u:1,n:1,en:'Restaurant Rookie',t:'מלצר מתחיל',art:'restaurant',
+ q:'מה אם רובוט היה מלצר במסעדה?',
+ obj:'התלמידים ישתמשו בקלטים ופלטים של חומרה כדי ליצור רצף שמשיג מטרה.',
+ can:['אני יכול/ה להשתמש בקלטים לחיישן כדי לשלוט בפלטים של מנוע.','אני יכול/ה להסביר את הקשר בין קלטים לפלטים במכשירי מחשוב.','אני יכול/ה ליצור רצף כדי להשלים משימה.'],
+ min:'45 דקות',comp:false,build:'C1 · עמ׳ 8',pin:null,
+ nIntro:'בקשו מהתלמידים לדמיין רובוט מלצר במסעדה. אם מישהו פגש מלצר רובוטי – הזמינו אותו לספר. אפשר להסביר ש"טירון" הוא מי שחדש בעבודה או בפעילות.',
+ s:[
+ {k:'context',ph:'engage',h:'קלט ופלט',p:['במסעדות, המלצר מקליד הזמנה (קלט) והטבח רואה אותה על המסך (פלט).'],big:'איך אפשר להשתמש בקלטים ובפלטים כדי לתכנת רובוט מלצר חדש?',cta:'בואו נחקור קלטים ופלטים!',vocab:['קלט','פלט'],
+  n:'הציגו את מושגי המפתח קלט ופלט. קלט יכול להיות נגיעה במסך או לחיצה על מקש; פלט יכול להיות אות או תמונה על המסך, צליל או תנועה. דוגמה: המלצר נוגע במסך (קלט) והמנה מתווספת להזמנה של השולחן (פלט).'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 8'},
+ {k:'build',ph:'explore',l:['רובוט מלצר','סורק צבעים','פסי צבע'],h2:'חקרו:',p:['הרובוט המלצר הגיע בלי הוראות! איך הוא עובד?','הראו את פסי הצבע לסורק הצבעים. מה קורה?'],timer:10,
+  n:'כשהקבוצות מסיימות לבנות, הן מדליקות את חיישן הצבע ואת המנוע ומצמידות אותם בעזרת כרטיס חיבור. התלמידים מראים פס צבע לחיישן בתורות ומתבוננים בהתנהגות הרובוט. עודדו אותם להשתמש במילה "קלט" לצבע שהחיישן מזהה ו"פלט" לתגובת הרובוט.'},
+ {k:'check',ph:'explain',q:['מה מזהה את הקלטים?','תארו את הפלטים שאתם רואים.','איך הקלטים השונים יוצרים פלטים?'],
+  n:'כוונו את התלמידים להבין שהצבעים הם קלטים שחיישן הצבע מזהה, ושתנועות הרובוט הן פלטים של המנוע הכפול. חיישן הצבע והמנוע מתוכנתים מראש בהתנהגויות ברירת מחדל, וכשהם מוצמדים הם שולחים ומקבלים אותות. אפשר לבנות על הלוח טבלה: צבע (קלט) ← תנועה (פלט).'},
+ {k:'elab',ph:'elaborate',h:'צרו רצף של קלטים כדי שהרובוט המלצר יביא אוכל לשולחנות!',l:['בנו שולחן ואוכל.','תכננו ובדקו רצף עבור הרובוט המלצר.'],timer:10,
+  n:'הקבוצות מחליטות היכן המטבח והיכן השולחנות ומסמנות אותם. לאחר מכן הן מתכננות את רצף הצבעים שיוביל את הרובוט מהמטבח לשולחנות ובחזרה. אם צריך – הזכירו שהמטרה היא שהרובוט יתחיל במטבח ויביא את האוכל לשולחן הנכון.'},
+ {k:'share',ph:'elaborate',q:['שתפו את הרצף שלכם.','איך השתמשתם בקלטים ובפלטים כדי ליצור את הרצף?'],
+  n:'לבדיקת הבנה: התלמידים משתמשים בקלטים לחיישן כדי לשלוט במנוע; מסבירים את הקשר בין קלט לפלט; יוצרים רצף שמביא את הרובוט לשולחנות.'},
+ {k:'swk',ph:'evaluate',q:['מה הקשר בין הקלטים לפלטים ברובוט המלצר?','תארו את הרצף שלכם ואיך השתמשתם בקלטים ובפלטים.']},
+ {k:'clean'}
+ ]},
+
+{id:'u1l2',u:1,n:2,en:'Robot Food Service',t:'שירות רובוטי',art:'restaurant2',
+ q:'איך רובוט יכול להגיש אוכל במסעדה?',
+ obj:'התלמידים יזהו וישנו אירועים כדי לפתח תוכנית.',
+ can:['אני יכול/ה לזהות אירוע.','אני יכול/ה לשנות אירועים כדי לתקן תוכנית.','אני יכול/ה להסביר איך אירועים עובדים בתוכנית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 16',pin:'1302',
+ nIntro:'הציגו את השאלה הגדולה ובקשו מהתלמידים לדמיין איך היה לתכנת רובוט מלצר במסעדה.',
+ s:[
+ {k:'context',ph:'engage',h:'אירועים',p:['כשלוחצים על כפתור במסך הזה – ההזמנה נשלחת למטבח.'],big:'איך הייתם מתכנתים רובוט מלצר שיגיש הזמנה?',cta:'בואו נחקור אירועים!',vocab:['אירוע'],
+  n:'שאלו מי הזמין אוכל דרך מסך. כשלוחצים על כפתור, פריט נוסף להזמנה. הציגו את מושג המפתח אירוע: פעולה שמפעילה תגובה בתוכנית. שאלו איך אפשר להשתמש באירועים כדי לתכנת רובוט שמגיש הזמנה.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 16'},
+ {k:'build',ph:'explore',l:['רובוט מלצר','סורק צבעים','פסי צבע'],done:['איך הרובוט המלצר יכול לנוע במסעדה?','מה לדעתכם עושים פסי הצבע?'],timer:7,
+  n:'חלקו את ערכות הלגו והראו איך מתחילים בהוראות הבנייה. קבוצות שמסיימות מהר יכולות לחקור איך הרובוט נע ואיך הוא מגיב לחיישן הצבע, או לעזור לקבוצות אחרות.'},
+ {k:'predict',ph:'explore',p:['אתם מתכנתים רובוטים מלצרים במסעדה!','הסתכלו על הדגם שלכם ועל הקוד הזה.'],
+  code:[['ev','when [blue ▾] detected',0],['mot','move [2] steps',1],['mot','turn [90] degrees',1],['ev','when [purple ▾] detected',0],['mot','move [2] steps',1],['mot','turn [90] degrees',1]],
+  q:['מה לדעתכם הקוד הזה עושה?','האם שני האירועים עובדים עם הדגם שלכם? למה כן או למה לא?'],
+  n:'בקשו מהתלמידים לנבא. שאלו איזה בלוק הוא האירוע (בלוק הכובע "when color detected") ואיזו תגובה הוא מפעיל (תנועה). אחד הצבעים בבלוקי הכובע אינו מופיע בפסי הצבע שבנו – ולכן אירוע אחד לא יעבוד. את התשובה הנכונה אפשר לדון בה אחרי הניסוי.'},
+ {k:'try',ph:'explore',pin:'1302',p:['חברו את החומרה לתוכנית הזו ב-Coding Canvas.'],q:['הרובוט המלצר לא עובד. איך תתקנו את הקוד?'],
+  n:'כל קבוצה מקבלת מחשב, נכנסת ל-Coding Canvas ומקלידה את הקוד. הקוד פותח פרויקט ייעודי עם קוד התחלתי, ו-Coding Canvas ידריך לחבר את החומרה. כשלוחצים Play, אירועי הצבע לא מפעילים את הרובוט – יש לשנות את הצבעים בבלוקי "when color detected" כך שיתאימו לצבעי הלבנים שהם סורקים.'},
+ {k:'check',ph:'explain',q:['אילו שינויים עשיתם באירועים בתוכנית?','מה קרה אחרי שהאירועים הופעלו?'],frame:'כאשר ___ אז ___ .',
+  n:'עזרו לתלמידים לקשר בין הצבע שזוהה לבין התנועה המתוכנתת. השתמשו במשפט: "כאשר ___ אז ___". לדוגמה: "כאשר חיישן הצבע מזהה כחול, אז המלצר נוסע קדימה ופונה שמאלה."'},
+ {k:'elab',ph:'elaborate',h:'צרו הזמנות לשולחנות בעזרת פסי צבע!',l:['בנו שולחן.','תכנתו אירוע כך שהרובוט המלצר ייסע לשולחן שלכם כשפס הצבע נסרק בחיישן.'],timer:5,
+  n:'חלקו כל קבוצה לזוגות: זוג אחד בונה שולחן ופריטים נוספים (כמו אוכל), זוג שני מתכנת את הרובוט לנסוע לשולחן כשפס צבע נסרק. החליפו תפקידים כל 5 דקות, כך שכולם בונים ומקודדים. מומלץ לקבע את מיקום השולחנות כדי שהרובוט יגיע בצורה אמינה.'},
+ {k:'share',ph:'elaborate',q:['הראו את האירועים שתכנתתם לרובוט המלצר.','אילו תגובות קורות בתוכנית שלכם?'],frame:'כאשר ___ אז ___ .',
+  n:'לבדיקת הבנה: התלמידים מזהים אירועי צבע בתוכנית; משנים אירועים כדי לתקן את הקוד ההתחלתי; מסבירים איך אירועים עובדים בתוכנית שלהם.'},
+ {k:'swk',ph:'evaluate',q:['תארו איך השתמשתם באירועים בתכנון התוכנית שלכם.','איך השתמשתם באירועים כדי להפעיל את התגובות של הרובוט המלצר?']},
+ {k:'clean'}
+ ]},
+
+{id:'u1l3',u:1,n:3,en:'Forest Flight Rescue',t:'חילוץ אווירי ביער',art:'plane',
+ q:'איך טייס יכול לתכנן נתיב טיסה?',
+ obj:'התלמידים ישתמשו בפסאודו-קוד כדי לתכנן וליצור תוכנית שפותרת בעיה.',
+ can:['אני יכול/ה לקרוא פסאודו-קוד.','אני יכול/ה לתכנן תוכנית בעזרת כתיבת פסאודו-קוד.','אני יכול/ה ליצור תוכנית בעזרת פסאודו-קוד.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 24',pin:'1303',
+ nIntro:'שאלו מהו נתיב טיסה. עזרו להבין שמסלול המטוס נקבע לפני ההמראה. מה חשוב לשקול כשמתכננים נתיב? (יעילות, מזג אוויר, מכשולים).',
+ s:[
+ {k:'context',ph:'engage',h:'פסאודו-קוד',p:['לפני שיוצאים למסע, כדאי לתכנן את הרצף.'],big:'איך אפשר לתכנן רצף של נתיב טיסה לפני שמקודדים אותו כתוכנית?',cta:'בואו נחקור פסאודו-קוד!',vocab:['פסאודו-קוד'],
+  n:'דברו על תכנון מסע. הציגו את מושג המפתח פסאודו-קוד: תוכנית לא רשמית למחשב, כתובה בשפה שבני אדם קוראים. אין חוקים קבועים – אפשר להשתמש במילים, סמלים או ציורים.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 24'},
+ {k:'build',ph:'explore',pre:'חוקרים נתקעו ביער שבו חקרו עצים!',l:['מטוס חילוץ'],done:['אילו תנועות המטוס יכול לעשות?'],timer:7,
+  n:'קבוצות שמסיימות מהר יכולות לחקור אילו תנועות המטוס יכול לעשות (ישר, פנייה שמאלה, ימינה, אחורה) או לעזור לקבוצות אחרות.'},
+ {k:'predict',ph:'explore',p:['נתיב הטיסה של המטוס הוא אלגוריתם לחילוץ החוקרים.','הטייס קיבל את האלגוריתם כפסאודו-קוד:'],
+  pseudo:['טוס ישר קדימה','פנה שמאלה','טוס ישר','פנה ימינה','טוס ישר'],
+  q:['איפה המטוס יכול לעצור? איפה כל חוקר צריך להיות כדי להיחלץ?','הניחו את דמויות הלגו ביער כדי לנבא את נתיב הטיסה.'],
+  n:'הציגו את מושג המפתח אלגוריתם: רשימת צעדים לתוכנית, שאפשר לבטא כפסאודו-קוד. התלמידים קוראים את הפסאודו-קוד ומניחים דמויות במקומות שבהם הם מנבאים שהמטוס יעצור. הבהירו שהמטוס עוצר רק במקומות מסוימים, ושכדאי לבחור נקודת התחלה קבועה.'},
+ {k:'try',ph:'explore',pin:'1303',q:['האם המטוס נע כפי שציפיתם?'],
+  n:'הקבוצות פותחות את Coding Canvas, מקלידות את הקוד, מחברות חומרה ולוחצות Play. הן משוות את התוכנית ואת תנועת המטוס לפסאודו-קוד ובודקות אם הניבוי שלהן היה נכון.'},
+ {k:'check',ph:'explain',q:['מה היה דומה ומה שונה בין הפסאודו-קוד לקוד?','מתי פסאודו-קוד עוזר?','איך נוכל להשתמש בפסאודו-קוד כדי לתכנן תוכניות?'],
+  n:'דונו איך הבלוקים קובעים כיוון ומרחק, ואיך סדר הצעדים בקוד משתווה לפסאודו-קוד. למה פסאודו-קוד שימושי? הוא מהיר לכתיבה, קריא יותר לבני אדם, ועוזר לתכנן ולתעד לפני הקידוד.'},
+ {k:'elab',ph:'elaborate',h:'ביער יש מכשולים שהמטוס צריך לעקוף! כתבו בקבוצה פסאודו-קוד לנתיב הטיסה.',l:['בנו את המכשולים שהמטוס צריך לעקוף כדי לחלץ את החוקרים.','קודדו את התוכנית לפי הפסאודו-קוד שלכם.'],timer:5,
+  n:'הקבוצות דנות במכשולים אפשריים (עצים גבוהים, קווי חשמל) וכותבות פסאודו-קוד – במילים, סמלים או ציורים. אחר כך מתחלקים לזוגות: זוג בונה מכשולים, זוג מקודד את נתיב הטיסה. מחליפים כל 5 דקות.'},
+ {k:'share',ph:'elaborate',q:['שתפו את הפסאודו-קוד ואת נתיב הטיסה שלכם.','איך השתמשתם בפסאודו-קוד כדי ליצור את התוכנית?','האם הצלחתם לחלץ את החוקרים?'],
+  n:'לבדיקת הבנה: התלמידים מסבירים שפסאודו-קוד קריא לבני אדם ולא בהכרח למחשב; כותבים פסאודו-קוד כדי לתכנן; משתמשים בו כדי לקודד תוכנית שמחלצת את החוקרים.'},
+ {k:'swk',ph:'evaluate',q:['תארו איך יצרתם תוכנית בעזרת פסאודו-קוד.','באילו אסטרטגיות השתמשתם כדי לעקוף מכשולים?']},
+ {k:'clean'}
+ ]},
+
+{id:'u1l4',u:1,n:4,en:'Supplies from the Skies',t:'אספקה מהשמיים',art:'drop',
+ q:'איך מטוס יכול להטיל אספקה בכמה מקומות?',
+ obj:'התלמידים יפרקו בעיה כדי לתכנן תוכנית.',
+ can:['אני יכול/ה לעבוד עם הקבוצה כדי לפרק בעיה.','אני יכול/ה לזהות ולתאר את תתי-הבעיות במשימה גדולה.','אני יכול/ה לתכנן תוכנית שפותרת חלקים של בעיה גדולה.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 32',pin:'1304',
+ nIntro:'שאלו למה מטוס צריך להטיל אספקה. דונו באתגרים: למצוא את נקודת ההטלה, להטיל חפצים שבירים.',
+ s:[
+ {k:'context',ph:'engage',h:'פירוק לתתי-בעיות',p:['כשקבוצה עובדת על פרויקט, היא מפרקת אותו למשימות קטנות.'],big:'איך מטוס יטיל אספקה בכמה מקומות? איך נפרק את הבעיה לחלקים קטנים?',cta:'בואו נחקור פירוק משימה לתתי-בעיות!',vocab:['פירוק','תת-בעיה'],
+  n:'דברו על עבודה בפרויקט קבוצתי (אירוע, פוסטר, מצגת): למטרה הגדולה יש משימות קטנות. הציגו את מושגי המפתח פירוק ותת-בעיה: קל יותר לפתור כמה בעיות קטנות מאשר בעיה גדולה אחת.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 32'},
+ {k:'build',ph:'explore',l:['מטוס','חבילות אספקה'],done:['הניחו את דמויות החוקרים ביער, שיחכו לאספקה.'],timer:7,
+  n:'קבוצות שמסיימות מהר יכולות להניח דמויות ביער ולתכנן נתיב טיסה לכל אחת, או לעזור לאחרים.'},
+ {k:'predict',ph:'explore',p:['המטוס צריך להטיל אספקה לחוקרים ביער.'],
+  code:[['mot','move [20] steps',0],['mot1','run [▾] for [0.2] rotations',0],['mot1','run [▾] for [0.2] rotations',0]],
+  q:['איך הוא יכול להטיל חבילות לאורך נתיב הטיסה?','מה לדעתכם הקוד הזה עושה?'],
+  n:'שאלו: איזה בלוק שולט באיזה מנוע? איזה חלק במטוס כל בלוק מזיז? המנוע הכפול מזיז את המטוס, והמנוע היחיד מפעיל את מנגנון הטלת האספקה. לבלוקים צבעים וסמלים שונים.'},
+ {k:'try',ph:'explore',pin:'1304',q:['האם תוכלו לתכנת רצף שבו המטוס מטיל אספקה לחוקר אחד?'],
+  n:'אם צריך – הסבירו שרצף הוא הסדר שבו ההוראות מתוכנתות כדי להגיע לתוצאה. התלמידים מצרפים בלוקים ברצף ובודקים מה קורה: בלוקי המנוע הכפול מזיזים את המטוס, בלוקי המנוע היחיד מטילים את האספקה.'},
+ {k:'check',ph:'explain',q:['איך יצרתם את הרצף?','מה עושה כל חלק בקוד?'],
+  n:'בקשו מהתלמידים להסביר את סדר הבלוקים ומה כל בלוק גרם למטוס לעשות. קשרו את ההסבר לפירוק המשימה הכוללת.'},
+ {k:'elab',ph:'elaborate',h:'המשימה: לעקוף מכשולים ביער ולהטיל אספקה לכל חוקר. פרקו יחד את המשימה לתתי-בעיות, ואז:',l:['בנו מכשולים והניחו דמויות לגו ביער.','צרו רצף שמזיז את המטוס אל החוקרים ומטיל אספקה.'],timer:5,
+  n:'עזרו לפרק את הבעיה לתתי-בעיות. הקבוצה יכולה לעבוד יחד או לחלק תתי-בעיות לזוגות. מי שמתקשה להתחיל יכול לכתוב קודם פסאודו-קוד. זוג אחד מקודד וזוג שני בונה מכשולים (עצים, סלעים); מחליפים כל 5 דקות.'},
+ {k:'share',ph:'elaborate',q:['שתפו את הרצף של הקבוצה להטלת האספקה.','איך פירקתם את המשימה לתתי-בעיות?'],
+  n:'לבדיקת הבנה: התלמידים מפרקים את המשימה לתתי-בעיות; מזהים ומתארים תת-בעיה (עקיפת מכשול, הגעה לחוקר מסוים); מתכננים רצף שפותר חלק מהבעיה הגדולה.'},
+ {k:'swk',ph:'evaluate',p:['המטוס היה צריך לעקוף מכשולים ולהטיל אספקה לחוקרים במקומות שונים ביער.'],q:['הסבירו איך הקבוצה שלכם פירקה את הבעיה.']},
+ {k:'clean'}
+ ]},
+
+{id:'u1l5',u:1,n:5,dc:true,en:'Chore Champion',t:'אלוף מטלות הבית',art:'chores',
+ q:'איך נעצב רובוט עוזר לבית?',
+ obj:'התלמידים יאספו מידע מהקהל (crowdsourcing) כדי לזהות בעיה, ויפרקו אותה כדי לעצב פתרון.',
+ can:['אני יכול/ה לאסוף מידע מהקהל על צורכי המשתמשים.','אני יכול/ה לפרק בעיה.','אני יכול/ה לעצב עבור משימה מסוימת.'],
+ min:'2 מפגשים של 45 דקות',comp:true,build:null,pin:'1305',
+ nIntro:'בקשו מהתלמידים לספר על מטלות שהם עושים בבית (שאיבת אבק, שטיפת כלים, הוצאת זבל). הציגו את השאלה הגדולה: איך רובוט יכול לעזור?',
+ s:[
+ {k:'context',ph:'engage',h:'מלוכלך, משעמם או מסוכן',p:['אפשר להשתמש ברובוטים למשימות מלוכלכות, משעממות או מסוכנות.','את המשימות האלה אפשר לפרק להוראות צעד אחר צעד.'],cta:'בואו נשתמש בפירוק כדי לעצב רובוט עוזר!',vocab:['פירוק'],
+  n:'סיעור מוחות: משימות בבית שהן מלוכלכות (ניקוי שירותים), משעממות (קיפול כביסה) או מסוכנות (עבודות חשמל). בעולם האמיתי: רוברים חוקרים את החלל כי זה מסוכן לבני אדם; רכבים אוטונומיים פותחו לנסיעות ארוכות ומשעממות. חזקו את מושג הפירוק.'},
+ {k:'plan',ph:'proto',h:'איך נעצב רובוט שעושה מטלת בית?',pre:'אספו רעיונות מהקהל!',q:['למי אנחנו מעצבים? מה הוא צריך?','איך נפרק את המשימה?','איך נעבוד יחד?'],
+  n:'הציגו את מושג המפתח crowdsourcing (מיקור המונים): איסוף רעיונות ונקודות מבט רבות – בשיחה, סקר מקוון ועוד. שאלות לדיון: איזו מטלה הייתם רוצים שרובוט יעשה? מה יקל עליכם או על המשפחה? בקבוצות של 4 בוחרים רעיון, מגדירים את המשתמש וצרכיו, ומפרקים את המשימה לצעדים קטנים.'},
+ {k:'proto',ph:'proto',h:'בנו כקבוצה אב-טיפוס של רובוט עוזר למטלת בית!',l:['בנו את הרובוט העוזר.','פרקו את המשימה לחלקים קטנים.','קודדו כל חלק קטן כדי לבצע את המשימה כולה.'],pin:'1305',timer:30,
+  n:'לפי התוכנית, הקבוצות בונות ומקודדות. הזכירו שאב-טיפוס הוא טיוטה שאפשר להמשיך לבדוק ולשפר. להשראה: קוד PIN ב-Coding Canvas והוראות בנייה של דגמים קודמים. חלוקה מומלצת: זוג אחד בונה, זוג שני מפרק את המשימה ומקודד.'},
+ {k:'feedback',ph:'share',pres:['הכנו ___ .','השתמשנו בפירוק כדי ___ .'],amb:['אהבתי שהקבוצה שלכם ___ .','מה אם תנסו ___ ?'],
+  n:'כל קבוצה מתחלקת לזוג מציגים וזוג שגרירים. המציגים נשארים ליד האב-טיפוס ומסבירים איך עיצבו ואיך פירקו את המשימה. השגרירים מבקרים בקבוצות אחרות ונותנים משוב על הבנייה והקוד. הדגישו משוב ספציפי ובונה.'},
+ {k:'check',ph:'share',pre:'בקבוצה שלכם:',q:['מה שמעתם?','אילו רעיונות חדשים יש לכם?','מה תרצו לעשות בהמשך?'],
+  n:'הקבוצות מתאחדות, משתפות את המשוב ודנות בשיפורים למפגש הבא. הזכירו לשמור פרויקטים ב-Coding Canvas, לרשום תוכניות ולצלם דגמים.'},
+ {k:'clean'}
+ ]}
+);
+// Unit 2 — Loops
+L.push(
+{id:'u2l1',u:2,n:1,en:'Drop from the Top',t:'נפילה מהפסגה',art:'droptower',
+ q:'איך הייתם מעצבים מתקן מרגש בלונה פארק?',
+ obj:'התלמידים יפתחו תוכנית באופן איטרטיבי בעזרת מבני בקרה, כולל לולאות.',
+ can:['אני יכול/ה לתאר איך לולאה עובדת.','אני יכול/ה להשתמש בלולאות בתוכנית.','אני יכול/ה לבדוק ולפתח תוכנית בשלבים.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 42',pin:'1306',prep:'השיעור משתמש במנועים הכפולים – ודאו שהם טעונים.',
+ nIntro:'שאלו על חוויות ממתקנים בלונה פארק (גם מסרטונים או ספרים). אילו מתקנים מרגשים אתכם? שימו לב למגוון הדעות. איך הייתם מעצבים מתקן שמרגש אתכם?',
+ s:[
+ {k:'context',ph:'engage',h:'לולאות',p:['מתקנים בלונה פארק חוזרים על אותן תנועות כמה פעמים.'],big:'איך תעצבו מתקן "מגדל נפילה" עם דפוס תנועה שחוזר על עצמו?',cta:'בואו נחקור לולאות!',vocab:['לולאה'],
+  n:'שאלו על מתקן "ספינת הפיראטים" שנעה קדימה ואחורה שוב ושוב. הציגו את מושג המפתח לולאה: מבנה שמריץ רצף קוד כמה פעמים. אילו פעולות יכולות לחזור במגדל נפילה? (עלייה, ירידה, צלילים, המתנה). במגדל נפילה, תא הרוכבים עולה מעט-מעט ואז נופל בפתאומיות.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 42'},
+ {k:'build',ph:'explore',l:['מתקן מגדל נפילה'],done:['דונו איך מגדל נפילה עשוי לעבוד.'],timer:7,
+  n:'קבוצות שמסיימות מהר דנות איך מגדל נפילה עובד: התא עולה לאט במעלה עמוד גבוה ואז נופל פתאום.'},
+ {k:'predict',ph:'explore',p:['מגדל הנפילה עולה לאט, טיפה אחרי טיפה, ואז נופל מהר!','איך תשתמשו בלולאה כדי לתכנת את המתקן?'],
+  code:[['ev','when ▶ clicked',0],['ctl','repeat [3]',0],['mot1','run [right ▾] motor for [1] rotations',1],['ctl','wait [1] seconds',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'הזכירו שכדי להתנהג כמו מתקן אמיתי, התא צריך לעלות בהדרגה ואז לרדת מהר. שאלו איך הקוד עשוי לעבוד (התא עולה ועוצר כמה פעמים בלולאה).'},
+ {k:'try',ph:'explore',pin:'1306',q:['איך תתכנתו את התנועה של מגדל הנפילה?'],
+  n:'התלמידים גוררים בלוקים לתוך לולאה כדי ליצור דפוס תנועה. אפשר לשחק עם: מספר הסיבובים, מספר החזרות, צלילים לפני ההתחלה או הנפילה. אם המגדל לא זז נכון – בדקו שהבלוקים מתאימים למנוע הנכון.'},
+ {k:'check',ph:'explain',q:['איך השתמשתם בלולאה במגדל הנפילה?','איך לולאות הופכות תוכניות ליעילות יותר?','איך עשיתם איטרציה (שיפור חוזר)?'],vocab:['איטרציה'],
+  n:'אילו בלוקים הכניסו ללולאה, ואיך התוכנית הייתה נראית בלי לולאה? בלי לולאה היה צריך לשכפל את בלוקי המנוע וההמתנה. לולאות מקצרות את הקוד, הופכות אותו לקריא, ומקלות על שינוי הדפוס כולו. הציגו את מושג המפתח איטרציה: שינויים קטנים ובדיקה חוזרת.'},
+ {k:'elab',ph:'elaborate',h:'צרו מגדל נפילה מרגש עוד יותר!',l:['בנו נושא (תֵּמָה) למתקן.','שפרו את התוכנית כך שהתא יעלה וירד.'],timer:5,
+  n:'חלקו לזוגות ועזרו לתכנן מי מתחיל במה. אחרי שהתא עולה ויורד, אפשר להוסיף: צליל אזהרה לפני הנפילה, רציף עלייה וירידה לרוכבים, נושא (דרקון, חד-קרן, פיראטים). מחליפים כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הציגו את מגדל הנפילה שלכם!',q:['איך השתמשתם בלולאות?','איך בדקתם ושיפרתם את התוכנית?'],
+  n:'לבדיקת הבנה: התלמידים מתארים איך הלולאה מזיזה את התא למעלה ולמטה כמה פעמים; משתמשים בלולאות כדי ליצור מגדל עובד; בודקים ומשפרים את התוכנית.'},
+ {k:'swk',ph:'evaluate',q:['איך השתמשתם בלולאות בתוכנית שלכם?','הסבירו איך שיפרתם (עשיתם איטרציה) את מגדל הנפילה.']},
+ {k:'clean'}
+ ]},
+
+{id:'u2l2',u:2,n:2,en:'Dizzy Descent',t:'צניחה מסחררת',art:'spintower',
+ q:'איך מתקן יכול להסתובב וליפול באותו זמן?',
+ obj:'התלמידים יעצבו ויפתחו באופן איטרטיבי תוכנית שמשתמשת בלולאות מקוננות.',
+ can:['אני יכול/ה ליצור תוכנית עם לולאות מקוננות.','אני יכול/ה להסביר איך לולאות מקוננות עובדות בתוכנית.','אני יכול/ה לבדוק ולשפר תוכנית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 54',pin:'1307',
+ nIntro:'הציגו את השאלה הגדולה. האם הייתם פעם במתקן שמסתובב ונופל? איך מתקנים כאלה עובדים?',
+ s:[
+ {k:'context',ph:'engage',h:'לולאות מקוננות',p:['יש מתקנים שנעים בכמה דרכים בו-זמנית.'],big:'איך תתכנתו מגדל נפילה שעולה ויורד תוך כדי סיבוב?',cta:'בואו נחקור לולאות מקוננות!',vocab:['לולאה מקוננת'],
+  n:'שאלו מה הם כבר יודעים על לולאות: מבנה שמריץ את אותו רצף כמה פעמים. הציגו את מושג המפתח לולאות מקוננות – לולאה בתוך לולאה.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 54'},
+ {k:'build',ph:'explore',l:['מתקן מגדל נפילה'],done:['איך הרציף של המתקן עובד?','איך הרוכבים יעלו וירדו?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות איך הרציף עובד, כמה דמויות יכולות לרכוב יחד, ואיך עולים ויורדים.'},
+ {k:'predict',ph:'explore',p:['למגדל הנפילה יש הרבה תכונות מרגשות!'],
+  code:[['ctl','repeat [4]',0],['mot1','run [right ▾] motor for [1] rotations',1],['ctl','repeat [6]',1],['mot1','run [left ▾] motor for [0.5] rotations',2],['snd','play sound [tada ▾] until done',0]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'אם צריך – הצביעו על שתי לולאות repeat, אחת בתוך השנייה. עודדו לחשוב איזה מנוע הוא השמאלי ואיזה הימני בדגם, ואיך כל אחד מהם יפעל.'},
+ {k:'try',ph:'explore',pin:'1307',q:['איך תשנו את הלולאות המקוננות כך שהרציף יסתובב תוך כדי עלייה וירידה?'],
+  n:'התלמידים משנים ומוסיפים ללולאות המקוננות, וחוקרים איך לגרום לרציף להסתובב תוך כדי תנועה למעלה ולמטה.'},
+ {k:'check',ph:'explain',q:['איך השתמשתם בלולאות מקוננות כדי ליצור חוויה מסחררת?','איך בדקתם את התוכנית?','מה שיניתם?'],
+  n:'דונו איך לולאות מקוננות מאפשרות לבצע אוטומטית כמה פעולות חוזרות. איך פיתחו את הקוד? (הרצת חלקים שונים, מחזורים של הרצה–בדיקה–שינוי).'},
+ {k:'elab',ph:'elaborate',h:'ארבעה רוכבים רוצים חוויית נפילה מסחררת ומטורפת!',l:['בנו נושא ורציף לארבעת הרוכבים.','קודדו עם לולאות מקוננות כדי ליצור מתקן מרגש.'],timer:5,
+  n:'הקבוצות בוחרות נושא (חלל, ג׳ונגל, מדבר) ודנות איך הלולאות המקוננות יהפכו את המתקן למרגש ונגיש לכל ארבע הדמויות. רעיונות: הרציף מסתובב למטה כדי להעלות כל דמות; צליל אזהרה למעלה לפני הנפילה; המתקן חוזר מספר פעמים. אחר כך זוגות, החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הציגו את מגדל הנפילה שלכם.',q:['איך השתמשתם בלולאות מקוננות בתוכנית?','איך בדקתם את הקוד?'],
+  n:'לבדיקת הבנה: התלמידים יוצרים תוכנית עם לולאות מקוננות ששולטת במגדל המסתובב; מסבירים איך הלולאות המקוננות עובדות; בודקים ומשפרים את הקוד ההתחלתי.'},
+ {k:'swk',ph:'evaluate',q:['הסבירו איך השתמשתם בלולאות מקוננות במגדל הנפילה המסתובב שלכם.']},
+ {k:'clean'}
+ ]},
+
+{id:'u2l3',u:2,n:3,en:'Wake-Up Call',t:'השכמה!',art:'clock',
+ q:'איך הייתם מעצבים שעון מעורר?',
+ obj:'התלמידים יפתחו ויתעדו תוכנית שמשתמשת בלולאת "חזור עד ש".',
+ can:['אני יכול/ה להסביר איך לולאת "חזור עד ש" פועלת בתוכנית.','אני יכול/ה לפתח תוכנית שמשתמשת בלולאת "חזור עד ש".','אני יכול/ה להוסיף הערות לקוד כדי לתעד איך התוכנית עובדת.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 68',pin:'1308',
+ nIntro:'שאלו איך התלמידים מתעוררים בבוקר. אפשר לערוך סקר: מי משתמש בשעון מעורר עם צליל? איך זה להתעורר לשעון? מה הייתם מעצבים לעצמכם?',
+ s:[
+ {k:'context',ph:'engage',h:'לולאת "חזור עד ש"',p:['גלאי אש ממשיך לצפצף עד שמשהו או מישהו עוצר אותו.'],big:'איך נתכנת שעון מעורר שיחזור על צליל עד שנעצור אותו?',cta:'בואו נחקור לולאות "חזור עד ש"!',vocab:['לולאת חזור עד ש'],
+  n:'מה קורה כשגלאי אש מופעל? (רעש חזק). צלילי התראה חוזרים עד שמשהו קורה. הציגו את מושג המפתח repeat until – לולאה שמריצה בלוקים שוב ושוב עד שתנאי מתקיים (ביטוי בוליאני מחזיר "אמת"). אילו תנאים יכולים לעצור התראה? (לחיצה על כפתור, החלקה על מסך).'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 68'},
+ {k:'build',ph:'explore',l:['שעון מעורר','כפתור שליטה'],done:['תוכלו לכוון את השעון לשעה הנוכחית?','איך השעון והכפתור עובדים?'],timer:7,
+  n:'קבוצות שמסיימות מהר מכוונות את המחוגים לשעה הנוכחית, חוקרות את כפתור השליטה, או עוזרות לאחרים.'},
+ {k:'predict',ph:'explore',p:['הגיע הזמן לקום!','איך השעון המעורר הזה עובד?'],
+  code:[['ctl','repeat until ⟨[both ▾] lever is [down ▾] ?⟩',0],['snd','play [60] with [(1) Piano ▾] for [0.25] beats',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'חזרו לדיון על לולאות "חזור עד ש": איזו פעולה עשויה לעצור את הלולאה? (לחיצה על כפתור השליטה). התלמידים יכולים לנבא התנהגויות נוספות של השעון.'},
+ {k:'try',ph:'explore',pin:'1308',q:['תוכלו לשנות את התוכנית כך שההתראה תחזור עד שתלחצו על כפתור השליטה?'],p:['היעזרו בהערות שבקוד ההתחלתי.'],
+  n:'בקוד ההתחלתי יש הערות שעוזרות להבין אותו. השעון זז והצלילים מתנגנים שוב ושוב; התלמידים קובעים תנאי עצירה – עד שלוחצים על כפתור השליטה. אפשר לנסות קלטים אחרים לעצירה או לשנות את צלילי ההתראה.'},
+ {k:'check',ph:'explain',q:['הסבירו איך השתמשתם בלולאת "חזור עד ש" בתוכנית.','איך לולאת "חזור עד ש" עובדת?','מה ההערות עזרו לכם להבין?'],
+  n:'תשובות אפשריות: "הרצף בתוך הלולאה חוזר עד ש...", "הלולאה מפסיקה כשמשהו קורה". דונו בהערות: קשה לפעמים לקרוא קוד – שלכם או של אחרים – והערות מקלות על ההבנה.'},
+ {k:'elab',ph:'elaborate',h:'ומה אם לא בא לכם לקום כשהשעון מצלצל?',l:['שנו את מבנה השעון כדי לשפר את חוויית ההשכמה.','קודדו כך שהשעון "ינודנד" (snooze) לפני שהוא נכבה. הוסיפו לכל לולאה הערה שמתארת איך היא עובדת.'],timer:5,
+  n:'הסבירו שנודניק (snooze) עוצר את ההתראה לזמן קצר לפני שהיא חוזרת. הראו איך יוצרים הערה בלחיצה ימנית על בלוק ב-Coding Canvas. הקבוצות מחליטות על התנאים בלולאות (אפשר גם לולאה מקוננת) ועל תוספות לשעון (צליל, תנועה, קישוט). זוגות, החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הציגו את השעון המעורר שלכם.',q:['באיזה סוג של לולאות "חזור עד ש" ובאילו בלוקים נוספים השתמשתם?','איך השתמשתם בהערות כדי שהתוכנית תהיה קלה להבנה?'],
+  n:'לבדיקת הבנה: התלמידים מסבירים איך הלולאה מכבה או מנדנדת את השעון; מרחיבים את הקוד ההתחלתי; מוסיפים הערות שמתארות חלקים בקוד.'},
+ {k:'swk',ph:'evaluate',q:['איך השתמשתם בלולאת "חזור עד ש" בתוכנית של השעון המעורר?','תארו איך השתמשתם בהערות כדי שהקוד יהיה קל להבנה.']},
+ {k:'clean'}
+ ]},
+
+{id:'u2l4',u:2,n:4,en:'Tick-Tick Trouble',t:'צרות של תיק-תק',art:'runclock',
+ q:'מה אם השעון המעורר שלכם היה בורח מכם בבוקר?',
+ obj:'התלמידים ייישמו את הידע שלהם על לולאות כדי לתקן שגיאות ולפתח את התוכנית.',
+ can:['אני יכול/ה לזהות ולתקן שגיאות בקוד.','אני יכול/ה לתכנן תוכנית שמשתמשת בכמה לולאות.','אני יכול/ה להסביר איך ניפוי באגים ולולאות משפרים תוכנית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 74',pin:'1309',
+ nIntro:'דמיינו שעון מעורר שבורח מכם! יתרונות וחסרונות: תצטרכו לקום כדי לכבות אותו; אם יתרחק מדי לא תשמעו אותו; אולי תדרכו עליו.',
+ s:[
+ {k:'context',ph:'engage',h:'ניפוי באגים',p:['דמיינו שאפיתם עוגיות, אבל הן יצאו קשות מדי או מרות.'],big:'איך מוצאים ומתקנים בעיה במשהו שהשתבש?',cta:'בואו נחקור ניפוי באגים!',vocab:['ניפוי באגים (דיבאגינג)'],
+  n:'מתכון שהשתבש: מזהים את הבעיה (העוגיות קשות); בודקים את השלבים; מחפשים טעויות (יותר מדי קמח? זמן אפייה ארוך?); מתקנים; בודקים שוב. הציגו את מושג המפתח ניפוי באגים: כשתוכנית לא עובדת כמצופה ייתכן שיש בה שגיאה, ודיבאגינג הוא תהליך מציאתה ותיקונה.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 74'},
+ {k:'build',ph:'explore',l:['שעון מעורר','כפתור שליטה'],done:['איך אפשר להשתמש בחיישן הצבע כדי לעצור את השעון?'],timer:7,
+  n:'קבוצות שמסיימות מהר דנות בחיישן הצבע שעל השעון או חוקרות את תנועת השעון.'},
+ {k:'predict',ph:'explore',p:['כשמגיע הזמן לקום, השעון המעורר בורח! הצגת אדום לחיישן הצבע תעצור אותו.','אבל השעון לא עובד.'],
+  code:[['ctl','repeat until ⟨detecting [red ▾] ?⟩',0],['ctl','forever',1],['mot','start moving [▾]',2],['mot','stop moving',0]],
+  q:['מה לדעתכם הקוד הזה עושה? למה הוא לא עובד?'],
+  n:'הסבירו שיש שעונים שמעוצבים לברוח כדי שתצטרכו לקום. הפנו תשומת לב ללולאה המקוננת ושאלו מה יקרה כשמראים אדום לחיישן.'},
+ {k:'try',ph:'explore',pin:'1309',pre:'בשעון המעורר יש באג!',q:['תוכלו למצוא ולתקן אותו?'],
+  n:'הבאג: השעון לעולם לא מפסיק לברוח, גם כשמראים אדום – כי לולאת forever נמצאת בתוך לולאת repeat until, והמנוע ממשיך לנוע לנצח. התיקון: להסיר את לולאת forever. אסטרטגיות: להריץ כל סקריפט בנפרד, לפרק סקריפטים, להשתמש בבלוק write כדי לתעד מתי בלוקים רצים. עודדו בדיקה שיטתית.'},
+ {k:'check',ph:'explain',q:['מה היה הבאג בתוכנית?','איך הקבוצה שלכם מצאה ותיקנה אותו?'],
+  n:'הבאג: לולאת forever בתוך לולאת repeat until. תעדו על הלוח אסטרטגיות ניפוי באגים: לזהות את הבעיה (מה הקוד אמור לעשות? מה לא עובד?); לבדוק את הקוד בקפידה; לתקן ולבדוק; לחזור על התהליך אם צריך. אפשר גם לבקש עזרה מקבוצות אחרות.'},
+ {k:'elab',ph:'elaborate',h:'אחרי שתיקנתם את התוכנית – פתחו שעון מעורר טוב עוד יותר!',l:['הוסיפו למבנה של השעון.','תכנתו דרך נוספת לעצור את השעון מלצלצל או מלברוח.'],timer:5,
+  n:'זוג אחד מוסיף לדגם (תנועה אחרת או פונקציות חדשות); זוג שני משנה את התוכנית כדי ליצור דרך עצירה נוספת – אפשר להשתמש בשני הקלטים (חיישן צבע וכפתור) ולשנות פלטים (צליל ותנועה). החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הציגו את השעון המעורר המשופר.',q:['איך שיניתם את הדגם ואת הקוד?','תארו את הלולאות שהשתמשתם בהן ואיך הן עובדות.'],
+  n:'לבדיקת הבנה: התלמידים מזהים ומתקנים את השגיאה בקוד ההתחלתי; מתכננים תוכנית עם כמה לולאות; מסבירים איך ניפוי באגים ולולאות שיפרו את התוכנית.'},
+ {k:'swk',ph:'evaluate',q:['תארו איך הקבוצה שלכם תיקנה את השעון המעורר התקול.','איזו אסטרטגיית ניפוי באגים הייתה הכי שימושית, ולמה?']},
+ {k:'clean'}
+ ]},
+
+{id:'u2l5',u:2,n:5,dc:true,en:'Repeat the Beat',t:'חזרו על הקצב',art:'dance',
+ q:'איך נעצב מדריך ריקוד אוטומטי?',
+ obj:'התלמידים יפתחו באופן איטרטיבי תוכנית אינטראקטיבית עם לולאות מקוננות, וישתמשו במשוב מבדיקות משתמשים כדי לשפר.',
+ can:['אני יכול/ה לתכנן תוכנית שמשתמשת בלולאות מקוננות.','אני יכול/ה להתבונן איך אנשים משתמשים בתוכנית.','אני יכול/ה לשפר תוכנית לפי הדרך שבה אנשים משתמשים בה.'],
+ min:'2 מפגשים של 45 דקות',comp:true,build:null,pin:'1310',
+ nIntro:'שאלו על חוויות של לימוד ריקודים – בחוג, מסרטון ברשת או ריקוד מהתרבות שלהם. איך מדריך ריקוד אוטומטי יכול לעזור ללמוד ריקוד חדש?',
+ s:[
+ {k:'context',ph:'engage',h:'לפרק ריקוד לחזרות',p:['ללמוד את הריקוד הוויראלי החדש זה לא פשוט!','פירוק הריקוד לצעדים שחוזרים על עצמם מקל על הלמידה.'],cta:'בואו נשתמש בלולאות מקוננות כדי לעצב מדריך שמלמד ריקוד.',vocab:['לולאה מקוננת'],
+  n:'אפשר להראות סרטונים של ריקודים קבוצתיים או ויראליים. מה מקשה ומה מקל על לימוד ריקוד? קשה לזכור צעדים; קל יותר כשמישהו מראה כל צעד; חלקים חוזרים מקלים ללמוד את הכול. חזקו את מושג הלולאות המקוננות והזכירו לולאות forever ו-repeat until.'},
+ {k:'plan',ph:'proto',h:'איך נעצב את מדריך הריקוד?',q:['מה צריך מי שלומד ריקוד?','איך נשתמש בלולאות מקוננות?','איך נעבוד יחד?'],
+  n:'בקבוצות של 4: למי אנחנו מעצבים (חבר, בן משפחה)? איך הוא ילמד? כל קבוצה בוחרת ריקוד ודנה איך לתכנת אותו עם לולאות מקוננות. אפשר לעצב מדריך דמוי-אדם או כזה שמצביע על תנועות.'},
+ {k:'proto',ph:'proto',h:'בנו כקבוצה אב-טיפוס של מדריך הריקוד!',l:['בנו את מדריך הריקוד.','השתמשו בלולאות מקוננות כדי לחזור על חלקים בריקוד.','עצבו כך שחבר לכיתה יוכל ללמוד את הריקוד מהמדריך.'],pin:'1310',timer:30,
+  n:'הקבוצות בונות ומקודדות לפי התוכנית. זוג אחד בונה, זוג שני מקודד עם לולאות מקוננות; מחליפים תפקידים. שאלו: איך אתם משתמשים בלולאות מקוננות? איך מישהו ילמד מהמדריך שלכם? מי שנתקע – חוזר לתוכנית ומחליט על מה לוותר בגלל הזמן.'},
+ {k:'feedback',ph:'share',pres:['הכנו ___ .','השתמשנו בלולאות מקוננות כדי ___ .'],amb:['אהבתי שהקבוצה שלכם ___ .','מה אם תנסו ___ ?'],
+  n:'המציגים נשארים ליד האב-טיפוס, מסבירים, ומזמינים את השגרירים לנסות ללמוד את הריקוד – זו בדיקת משתמשים! השגרירים נותנים משוב ספציפי על החוויה שלהם כמשתמשים. אפשר להפעיל טיימר לסבב בין קבוצות.'},
+ {k:'check',ph:'share',pre:'בקבוצה שלכם:',q:['מה שמעתם?','איך הלכה בדיקת המשתמשים?','מה תרצו לעשות בהמשך?'],
+  n:'הקבוצות מתאחדות, משתפות משוב ומתכננות שיפורים. הזכירו לשמור פרויקטים, לרשום תוכניות ולצלם דגמים.'},
+ {k:'clean'}
+ ]}
+);
+// Unit 3 — Conditionals
+L.push(
+{id:'u3l1',u:3,n:1,en:'Game On',t:'המשחק מתחיל',art:'game',
+ q:'איך הייתם מעצבים משחק וידאו משלכם?',
+ obj:'התלמידים יפתחו תוכנית בעזרת תנאי "אם/אז".',
+ can:['אני יכול/ה לזהות תנאי "אם/אז".','אני יכול/ה להשתמש בתנאי "אם/אז".','אני יכול/ה להסביר איך משתמשים בתנאי "אם/אז" בתוכנית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 80',pin:'1311',
+ nIntro:'שאלו על חוויות עם משחקי וידאו. הציגו את השאלה הגדולה: אילו תכונות הייתם רוצים במשחק שתעצבו?',
+ s:[
+ {k:'context',ph:'engage',h:'תנאי אם/אז',p:['אם השחקן קופץ במשחק הזה, אז הוא מקבל נקודות.'],big:'אילו חוקים הייתם מעצבים למשחק וידאו משלכם?',cta:'בואו נחקור תנאי אם/אז!',vocab:['תנאי אם/אז'],
+  n:'איך דמויות מרוויחות פרסים במשחקים? הציגו את מושג המפתח תנאי אם/אז: חוק בתוכנית שמבצע פעולה אם התנאי מתקיים. השתמשו במשפט "אם ___ אז ___": אם הדמות קופצת ופוגעת בקובייה, אז היא מקבלת מטבעות; אם הדמות נוגעת בלב, אז היא מקבלת חיים נוספים. גם מהחיים: מה לוקחים אם מתחיל לרדת גשם? (מטרייה).'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 80'},
+ {k:'build',ph:'explore',l:['משחק וידאו "חי"'],done:['איך לדעתכם המשחק עובד?','איך הדמויות יכולות להצליח במשחק?'],timer:7,
+  n:'קבוצות שמסיימות מהר דנות איך המשחק עשוי לעבוד: איך מקבלים נקודות, עולים שלבים או מתקדמים.'},
+ {k:'predict',ph:'explore',p:['אתם מעצבים משחק וידאו "חי"!','השחקנים מסובבים את גלגל המנוע הכפול כדי לשלוט בעגלה של הדמות.'],
+  code:[['ctl','if ⟨detecting [red ▾] ?⟩ then',0],['snd','play sound [win ▾] until done',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'במשחק, השחקן מסובב גלגל (המנוע הכפול) כדי לשלוט במנוע היחיד שעל המסילה, ודמות הלגו עומדת עליו. איזו פעולה התנאי יפעיל? השתמשו ב"אם ___ אז ___": אם חיישן הצבע מזהה את צבע הדמות (למשל אדום), אז מתנגן צליל.'},
+ {k:'try',ph:'explore',pin:'1311',q:['איך תגרמו למשהו לקרות כשדמות הלגו עוברת ליד חיישן הצבע?'],
+  n:'התלמידים גוררים בלוק זיהוי צבע לתוך תנאי אם/אז – הצבע צריך להתאים לדמות. מסובבים את המנוע הכפול כדי להזיז את המנוע היחיד על המסילה; כשהדמות מול החיישן – מתנגן צליל. אם לא עובד: לבדוק שמשתמשים במנוע הנכון (שמאל/ימין) ומסובבים בכיוון הנכון. אפשר לשחק עם המהירות והסיבובים.'},
+ {k:'check',ph:'explain',q:['תארו איך משחקים במשחק הווידאו ה"חי" הזה.','איך משתמשים בתנאי אם/אז במשחק?'],frame:'אם ___ אז ___ .',
+  n:'בקשו מהתלמידים להשתמש במשפט כדי לתאר את התנאי בקוד ההתחלתי: "אם חיישן הצבע מזהה את הצבע הנכון, אז מתנגן צליל".'},
+ {k:'elab',ph:'elaborate',h:'איך המשחק שלכם עובד? החליטו מה השחקנים צריכים לעשות כדי לנצח.',l:['בנו נושא או מכשולים למשחק.','תכנתו חוקים חדשים למשחק.'],timer:5,
+  n:'הקבוצות מחליטות מה השחקנים עושים (להפעיל צלילים שוב ושוב, לעבור את המסילה בזמן מוגבל) ועל נושא (יער, ים). אחר כך זוגות: זוג בונה את הנושא, זוג מתכנת חוקים חדשים בעזרת תנאים. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'שתפו את משחק הווידאו המעודכן שלכם.',q:['איך הקבוצה שלכם השתמשה בתנאי אם/אז?'],frame:'אם ___ אז ___ .',
+  n:'לבדיקת הבנה: התלמידים מזהים תנאי אם/אז בקוד ההתחלתי; משתמשים בהם לחוקים חדשים; מתארים איך התנאי עובד. דוגמאות: "אם השחקן מפעיל צליל מסוים 5 פעמים, אז הוא מנצח"; "אם נגמר הזמן לפני סוף המסילה, אז הוא מפסיד".'},
+ {k:'swk',ph:'evaluate',q:['תארו איך השתמשתם בתנאי אם/אז בקוד שלכם.','איך התנאים עבדו במשחק שלכם?'],
+  n:'התלמידים יכולים לבחון איך התנאים השפיעו על חוקי המשחק, על תנועת השחקן או על שניהם.'},
+ {k:'clean'}
+ ]},
+
+{id:'u3l2',u:3,n:2,en:'Level Up',t:'עולים שלב',art:'game2',
+ q:'איך אפשר להפוך משחק וידאו למאתגר יותר?',
+ obj:'התלמידים ייצרו תרשימי זרימה כדי לתכנן, וישתמשו בתנאי "אם/אז/אחרת" בתוכנית.',
+ can:['אני יכול/ה להשתמש בתנאי "אם/אז/אחרת" בתוכנית.','אני יכול/ה להסביר איך תנאי "אם/אז/אחרת" עובד בתוכנית.','אני יכול/ה להשתמש בתרשים זרימה כדי לתכנן ולארגן את הרעיונות שלי.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 90',pin:'1312',
+ nIntro:'דונו בחוויות משחק קלות או מאתגרות. עודדו תלמידים ברמות ניסיון שונות להחליף רעיונות על מה הופך משחק – כולל משחקים פיזיים – לקל או מאתגר, ואיך זה משפיע על חוויית השחקן.',
+ s:[
+ {k:'context',ph:'engage',h:'תנאי אם/אז/אחרת',p:['בחלק ממשחקי הווידאו צריך לעמוד בחוקים – אחרת מתחילים מההתחלה.'],big:'אילו השלכות הייתם מעצבים למשחק וידאו משלכם?',cta:'בואו נחקור תנאי אם/אז/אחרת!',vocab:['תנאי אם/אז/אחרת'],
+  n:'דונו במשחקים שדורשים לעמוד בחוקים ובהשלכות כשלא עומדים בהם. אפשר לשרטט תרשים זרימה של רעיונות התלמידים. השתמשו במשפט "אם ___ אז ___ אחרת ___": אם מגיעים לדגל, אז עולים שלב, אחרת מתחילים מחדש. הציגו את מושג המפתח: תנאי שמריץ רצף אחד אם התנאי מתקיים ורצף אחר אם לא.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 90'},
+ {k:'build',ph:'explore',l:['משחק וידאו "חי"'],done:['איך לדעתכם השחקנים מתמודדים עם המכשולים?'],timer:7,
+  n:'בדגם יש שני מכשולים: הבקר וחיישן הצבע. קבוצות שמסיימות מהר דנות איך הם יכולים להשפיע על המשחק.'},
+ {k:'predict',ph:'explore',p:['משחק הווידאו ה"חי" משתמש בבקר כמכשול!'],
+  code:[['ev','when [right ▾] lever is [up ▾]',0],['ctl','if ⟨[left ▾] lever is [up ▾] ?⟩ then',1],['snd','play sound [win ▾] until done',2],['ctl','else',1],['snd','play sound [lose ▾] until done',2]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'בקשו לנבא לפי מצבי הידיות. שאלו: מתי בלוק אם/אז/אחרת מופעל? מה קורה אם הידית הימנית והשמאלית למעלה? ומה אם רק הימנית? למי שחדש בתנאים – התמקדו באם/אז; למי שמכיר – הסבירו ש"אחרת" מגדיר את ההשלכה כשהתנאי לא מתקיים.'},
+ {k:'try',ph:'explore',pin:'1312',q:['תכנתו את מכשול הבקר כך שיהיו לו מצבי הצלחה וכישלון.'],
+  n:'לתנאי שני חלקים: "אם/אז" – מה קורה כשהתנאי מתקיים, ו"אחרת" – מה קורה כשלא. כשהעגלה נעה על המסילה, הדמות יכולה לדחוף את הידיות. בהתחלה הדמות לא תצליח להזיז את שתי הידיות – כדי להצליח יצטרכו לשנות את הדגם.'},
+ {k:'check',ph:'explain',q:['איך תכנתתם הצלחות והשלכות בעזרת תנאים?','צרו תרשים זרימה שמסביר איך המשחק עובד.'],vocab:['תרשים זרימה'],flow:true,
+  n:'הציגו את מושג המפתח תרשים זרימה. כל קבוצה או הכיתה כולה יוצרים תרשים: "התחלה" (לחיצה על Play / המנוע מתחיל); חיצים למצבים מתפצלים (ידית אחת למעלה / שתי ידיות למעלה); חיצים לתוצאות (צליל מסוים, המנוע נוסע אחורה). שימו לב: הצליל מתנגן רק אם שתי הידיות במצב הנכון – זה בעצם תנאי מורכב.'},
+ {k:'elab',ph:'elaborate',h:'הפכו את המשחק למאתגר יותר! קודם צרו תרשים זרימה שמתכנן איך תשתמשו בתנאי אם/אז/אחרת.',l:['בנו מכשולים משופרים.','תכנתו תנאי למכשול חיישן הצבע או למכשול הבקר.'],timer:5,
+  n:'בקבוצה: תרשים זרימה שמתעד את התנאים, חוקי המשחק והנושא. עודדו לשלב את ארבע הדמויות. אחר כך זוגות: זוג מרחיב את הדגם, זוג מתכנת מכשול. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הציגו את תרשים הזרימה ואת משחק הווידאו שלכם.',q:['איך השתמשתם בתנאי אם/אז/אחרת בתוכנית?'],
+  n:'לבדיקת הבנה: התלמידים משתמשים בתנאי אם/אז/אחרת ליצירת הצלחה או השלכה; מסבירים איך הוא פועל בתוכנית ובדגם; משתמשים בתרשים זרימה כדי לתכנן.'},
+ {k:'swk',ph:'evaluate',q:['הסבירו איך השתמשתם בתנאי אם/אז/אחרת בקוד שלכם.','באילו אסטרטגיות תכנון השתמשתם?']},
+ {k:'clean'}
+ ]},
+
+{id:'u3l3',u:3,n:3,en:'Ocean Walker',t:'הולך הים',art:'ocean',
+ q:'איך אפשר לשלוט ברובוט בקרקעית האוקיינוס?',
+ obj:'התלמידים יפתחו תוכנית שמשתמשת בתנאים מורכבים.',
+ can:['אני יכול/ה לזהות תנאי מורכב בתוכנית.','אני יכול/ה לתאר איך תנאי מורכב עובד.','אני יכול/ה לפתח תוכנית בעזרת תנאים מורכבים.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 102',pin:'1313',
+ nIntro:'איך מדענים יכולים לשלוט ברובוט שחוקר את קרקעית האוקיינוס, ומה מאתגר? כבל חזק לספינה – אבל שטח החקירה מוגבל; אות אלחוטי – אבל יש עיכוב בשידור; רשימת פקודות מראש – אבל הרובוט לא יגיב למצבים בלתי צפויים.',
+ s:[
+ {k:'context',ph:'engage',h:'תנאים מורכבים',p:['טכנולוגיה יכולה להשתמש בכמה תנאים כדי לקבל החלטות. למשל, יש מכשירים תת-ימיים שמשתמשים באור ובתנועה כדי לעקוב אחרי בעלי חיים.'],big:'איך נוכל לשלוט ברובוט על קרקעית האוקיינוס?',cta:'בואו נחקור תנאים מורכבים!',vocab:['תנאי מורכב'],
+  n:'הסבירו שמכשיר המעקב מגיב לאור ולתנועה. הציגו את מושג המפתח תנאים מורכבים: בודקים כמה תנאים. תנאי הוא טענה שיכולה להיות אמת או שקר – למשל, האם הרחפן זיהה תנועה. השיעור מתמקד בתנאי "וגם" (and), אבל אפשר להציג גם "או" (or).'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 102'},
+ {k:'build',ph:'explore',l:['רובוט','בקר'],done:['איך הרובוט זז?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות איך הרובוט זז. ייתכן שישימו לב שהרגליים זזות בנפרד.'},
+ {k:'predict',ph:'explore',p:['מדענים רוצים להשתמש ברובוט כדי לחקור את קרקעית האוקיינוס.','הם צריכים להשתמש בבקר כדי להפעיל את הרובוט מפני המים.'],
+  code:[['ev','when ⟨⟨[left ▾] lever is [up ▾] ?⟩ and ⟨[right ▾] lever is [down ▾] ?⟩⟩',0],['mot','start moving [▾]',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],frame:'כאשר ___ וגם ___ אז ___ .',
+  n:'הדגישו שהמטרה היא להשתמש בשתי ידיות הבקר כדי לתמרן את הרובוט. אם צריך – הצביעו על התנאי המורכב עם and. תשובה אפשרית: "כאשר הידית השמאלית וגם הימנית נדחפות, אז הרובוט מתחיל לזוז".'},
+ {k:'try',ph:'explore',pin:'1313',p:['שני מדענים צריכים להפעיל את הבקר יחד. הם חייבים להשתמש בתנאים מורכבים.'],q:['איך תתכנתו את הרובוט לזוז?'],
+  n:'התלמידים יוצרים תנאי מורכב שגורם לרובוט לזוז ובוחרים את התנאים (ידית למעלה, למטה או משוחררת). שני תלמידים מפעילים את הידיות יחד; עודדו להחליף תפקידים. אם יש מקום – עבדו על הרצפה.'},
+ {k:'check',ph:'explain',p:['תנאים מורכבים הם סוג של מבנה בקרה.'],q:['איך השתמשתם בתנאי מורכב כדי לשלוט ברובוט?'],frame:'כאשר ___ וגם ___ אז ___ .',vocab:['מבני בקרה'],
+  n:'הציגו את מושג המפתח מבני בקרה: הוראות שמאפשרות למחשב להחליט מה, מתי וכמה פעמים משהו יקרה. דוגמה: "כאשר הידית השמאלית למעלה וגם הימנית למטה, אז ההולך מתחיל לזוז".'},
+ {k:'elab',ph:'elaborate',h:'תכנתו את הרובוט כך ששני אנשים יוכלו להזיז אותו בכל קרקעית האוקיינוס!',l:['בנו מכשולים לרובוט.','תכנתו תנאים מורכבים כך ששני אנשים יוכלו לנווט את הרובוט סביב המכשולים.'],timer:5,
+  n:'זוג אחד בונה מכשולים (ספינה טבועה, שונית אלמוגים); זוג שני מוסיף תנאים מורכבים כך שהרובוט יתחיל, יעצור ויזוז לכיוונים שונים. מחליפים תורות בהפעלת הידיות לבדיקה. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הראו איך הרובוט שלכם זז סביב המכשולים!',q:['הסבירו איך השתמשתם בתנאים מורכבים בתוכנית.'],
+  n:'לבדיקת הבנה: התלמידים משתמשים בתנאי מורכב כדי לשלוט בתנועות; מתארים איך התנאים עובדים; מוסיפים תנאים מורכבים לתנועות נוספות.'},
+ {k:'swk',ph:'evaluate',q:['אילו מבני בקרה יש בקוד שלכם? איך הם עובדים?'],
+  n:'אפשר לבקש תשובה בכתב במחברת, בציור או בכל דרך אחרת שנהוגה בכיתה.'},
+ {k:'clean'}
+ ]},
+
+{id:'u3l4',u:3,n:4,en:'Robot in the Deep',t:'רובוט במעמקים',art:'deep',
+ q:'איך אפשר לדעת שרובוט הגיע ליעד שלו?',
+ obj:'התלמידים יעצבו ויתעדו תוכנית שמשתמשת בכמה מבני בקרה.',
+ can:['אני יכול/ה להשתמש בתנאים מורכבים כדי לשלוט באופן פעולת התוכנית.','אני יכול/ה להוסיף הערות לקוד כדי שיהיה קל יותר להבין את התוכנית.','אני יכול/ה לתאר את מבני הבקרה בתוכנית שלי.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 110',pin:'1314',
+ nIntro:'איך מקבלים מידע מרובוט או יודעים שסיים משימה? שואב רובוטי משמיע "הניקוי הסתיים"; צעצוע רובוטי משמיע צליל כשמנצחים; נורה מהבהבת מסמנת שצריך לטעון.',
+ s:[
+ {k:'context',ph:'engage',h:'חיישנים תת-ימיים',p:['מדענים משתמשים במכשירים תת-ימיים כדי לאסוף נתונים על האוקיינוס.'],big:'איך רובוט יכול להגיע לחיישן תת-ימי?',cta:'בואו נחקור תנאים מורכבים!',vocab:['תנאי מורכב'],
+  n:'המכשירים אוספים נתונים – למשל אם טמפרטורת המים או רמת הזיהום מגיעה לרמה מסוימת. חזקו את מושג התנאים המורכבים: תנאי אם/אז בודק אם תנאים מסוימים נכונים, ותנאי מורכב בודק אם כמה תנאים נכונים.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 110'},
+ {k:'build',ph:'explore',l:['רובוט','בקר','חיישן צבע'],done:['איך הרובוט יגיע לחיישן?'],timer:7,
+  n:'קבוצות שמסיימות מהר דנות איך הרובוט יגיע לחיישן. ודאו שהרובוט והחיישן ממוקמים רחוק זה מזה.'},
+ {k:'predict',ph:'explore',p:['איך נדע שהחיישן זיהה את הרובוט?'],
+  code:[['ev','when ⟨⟨detecting [red ▾] ?⟩ and ⟨[both ▾] lever is [released ▾] ?⟩⟩',0],['snd','play sound [connecting ▾] until done',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'אם צריך – הצביעו על "and" בתנאי. דונו בשני התנאים: מה יקרה אם שניהם נכונים?'},
+ {k:'try',ph:'explore',pin:'1314',q:['תוכלו לגרום לצליל להתנגן כשהחיישן מזהה את הרובוט וגם שתי הידיות משוחררות?'],
+  n:'התלמידים משלימים את הקוד ההתחלתי: גוררים את שני הבלוקים הבוליאניים למשבצות הריקות בתנאי המורכב. חברי הקבוצה משתפים פעולה בהפעלת הידיות. אם צריך – הפנו לאירוע שמשמיע צליל כששני התנאים נכונים.'},
+ {k:'check',ph:'explain',q:['תארו את מבני הבקרה השונים בתוכנית.','איך הם עבדו?'],frame:'אם ___ וגם ___ אז ___ .',vocab:['מבני בקרה'],
+  n:'חזקו את מושג מבני הבקרה. דוגמאות: "אם הידית השמאלית למעלה וגם הימנית למטה, אז הרובוט פונה ימינה"; "אם זוהה אדום וגם שתי הידיות משוחררות, אז מתנגן צליל". סקרו סוגי מבני בקרה: תנאים, תנאים מורכבים וסוגי לולאות.'},
+ {k:'elab',ph:'elaborate',h:'הרובוט מגלה תגליות חדשות!',l:['בנו חפצים שהרובוט יכול לגלות.','תכנתו את הרובוט לחקור ולחזור לחיישן. הוסיפו הערות לקוד.'],timer:5,
+  n:'זוג אחד בונה חפצים לגילוי (אוצר, ספינה טבועה, יצורי ים); זוג שני משנה את הקוד וכותב הערות. רעיונות: לשנות את תנאי ה-and; להשתמש בתנאי and לפנייה ימינה ושמאלה; לתעד מבני בקרה בהערות (לחיצה ימנית ← Add Comment). החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הדגימו איך הרובוט שלכם מגלה תגליות חדשות.',q:['באילו תנאים מורכבים השתמשתם בתוכנית? איך הם עובדים?'],frame:'אם ___ וגם ___ אז ___ .',
+  n:'לבדיקת הבנה: התלמידים מיישמים תנאים מורכבים לשליטה ברובוט; משתמשים בהערות כדי שאחרים יבינו את הקוד; מתארים את מבני הבקרה בתוכנית.'},
+ {k:'swk',ph:'evaluate',q:['באילו מבני בקרה שונים השתמשתם בתוכנית?','איך הם עבדו?']},
+ {k:'clean'}
+ ]},
+
+{id:'u3l5',u:3,n:5,dc:true,en:'Smart Park',t:'פארק חכם',art:'park',
+ q:'איך נעצב מתקן חכם לפארק?',
+ obj:'התלמידים ייצרו תנאים מורכבים שמשתמשים בנתוני חיישנים, וישוו בין השפעות חיוביות ושליליות של טכנולוגיה.',
+ can:['אני יכול/ה להשתמש בחיישנים כדי לאסוף ולשלוח נתונים.','אני יכול/ה לקודד תנאי מורכב שמשתמש בנתוני חיישנים.','אני יכול/ה להשוות בין ההשפעות החיוביות והשליליות של טכנולוגיה.'],
+ min:'2 מפגשים של 45 דקות',comp:true,build:null,pin:'1315',
+ nIntro:'מה זו טכנולוגיה חכמה? מכשירים שמבצעים משימות, מקבלים החלטות או פותרים בעיות אוטומטית – תרמוסטט חכם, רמקול חכם. אילו מתקנים חכמים יכולים להיות בפארק?',
+ s:[
+ {k:'context',ph:'engage',h:'טכנולוגיה חכמה',p:['טכנולוגיה חכמה מתוכנתת לאסוף נתוני חיישנים ולהגיב להם.','תנאים קובעים איך הטכנולוגיה מגיבה – וכך נוצרים מתקנים חכמים בחיי היומיום.'],cta:'בואו נשתמש בתנאים מורכבים כדי לעצב פארק חכם יותר!',vocab:['תנאי מורכב'],
+  n:'פנסי רחוב חכמים נדלקים כשהחיישן מזהה ירידה באור; משטחי התזה (ספלאש) מופעלים כשחיישן תנועה מזהה אנשים. תנאי מורכב: משטח ההתזה פועל רק אם הטמפרטורה מעל סף מסוים וגם זוהתה תנועה.'},
+ {k:'plan',ph:'proto',h:'איך נעצב מתקן חכם לפארק?',q:['למי אנחנו מעצבים? מה הוא צריך?','איך נשתמש בנתוני חיישנים ובתנאים מורכבים?','איך נעבוד יחד?'],
+  n:'המשתמשים: ילדים, בני נוער, משפחות, ספורטאים, אנשים עם צרכים מיוחדים. רעיונות: מתקן בטיחות, מתקן משחק, ניהול פסולת ומיחזור. אילו נתוני חיישנים? חיישן צבע, בקר, מנוע כפול או המחשב.'},
+ {k:'proto',ph:'proto',h:'בנו כקבוצה אב-טיפוס של מתקן חכם לפארק!',l:['בנו מתקן חכם לפארק.','קודדו תנאים מורכבים שמשתמשים בנתוני חיישנים.','הכינו רשימה של ההשפעות החיוביות והשליליות האפשריות של העיצוב.'],pin:'1315',timer:30,
+  n:'זוג בונה, זוג מקודד; מחליפים. שאלו: איך אתם משתמשים בתנאים מורכבים? מה ההשפעות? חיוביות: בטיחות, חיסכון באנרגיה, הנאה. שליליות: נזק לסביבה, עלות, פרטיות הנתונים. מי שנתקע – יפרק את הבעיה לחלקים קטנים.'},
+ {k:'feedback',ph:'share',pres:['השתמשנו בנתוני חיישנים ובתנאים מורכבים כדי ___ .','ההשפעות החיוביות והשליליות הן ___ .'],amb:['אהבתי שהקבוצה שלכם ___ .','מה אם תנסו ___ ?'],
+  n:'המציגים מסבירים לשגרירים איך עיצבו ותכנתו את המתקן. השגרירים מבקרים בקבוצות ונותנים משוב ספציפי ובונה. אפשר להפעיל טיימר לסבבים.'},
+ {k:'check',ph:'share',pre:'בקבוצה שלכם:',q:['מה שמעתם?','אילו רעיונות חדשים יש לכם?','מה תרצו לעשות בהמשך?'],
+  n:'הקבוצות מתאחדות, משתפות משוב ומתכננות שיפורים. הזכירו לשמור פרויקטים, לרשום תוכניות ולצלם דגמים.'},
+ {k:'clean'}
+ ]}
+);
+// Unit 4 — Variables
+L.push(
+{id:'u4l1',u:4,n:1,en:'Save or Score',t:'הצלה או גול',art:'goal',
+ q:'איך שוער מחליט לאן לזוז?',
+ obj:'התלמידים ישנו משתנה ויתארו איך משתנים קובעים את תוצאת התוכנית.',
+ can:['אני יכול/ה לשנות משתנה.','אני יכול/ה לתאר איך משתנים עובדים בתוכנית.','אני יכול/ה ליישם את ההבנה שלי במשתנים כדי לקבוע את תוצאת התוכנית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 118',pin:'1316',
+ nIntro:'מה התלמידים יודעים על שוערים ושערים? תפקיד השוער למנוע מהכדור להיכנס לשער; שערים שווים נקודות; שוערים יש בכדורגל, הוקי ועוד. הדגישו שהשוער צריך להחליט לאן לזוז בלי לדעת לאן היריב יבעט.',
+ s:[
+ {k:'context',ph:'engage',h:'משתנים',p:['מהנדסים יכולים לתכנת את המיקומים של זרוע רובוטית.'],big:'איך נקבע את המיקום של שוער כדי לחסום שערים?',cta:'בואו נחקור משתנים!',vocab:['משתנה'],
+  n:'אילו קלטים נוספים מהנדס יכול לתכנת לזרוע רובוטית מלבד מיקום? זווית, מהירות, עוצמת אחיזה. הציגו את מושג המפתח משתנה: כמו קופסה שיכולה להכיל מספר, מילה או משהו מורכב יותר. מיקום הרובוט הוא דוגמה למשתנה.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 118'},
+ {k:'build',ph:'explore',l:['שוער','בועט','כדור','לוח צבעים'],done:['איך אפשר להשתמש בבועט כדי להבקיע גול?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות איך למקם את הבועט והכדור כדי להבקיע, ואיך להזיז את השוער כדי לחסום.'},
+ {k:'predict',ph:'explore',p:['השוער יכול להגן רק על חלק אחד של השער בכל פעם!','איזה מיקום הוא צריך לבחור?'],
+  code:[['ev','when [purple ▾] detected',0],['var','set [position ▾] to [1]',1],['mot1','run [▾] for (position) rotations',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'שאלו למה מתייחס שם המשתנה position (מיקום השוער) ומה המשמעות של הערך המספרי (המקומות השונים בשער). איך אירוע הצבע משפיע על המשתנה ועל תנועת השוער?'},
+ {k:'try',ph:'explore',pin:'1316',p:['שנו את המשתנה position. בחרו ערך בין 1- ל-1.','אחר כך סרקו את הלבנה בלוח הצבעים עם החיישן – וראו מה קורה!'],
+  n:'הציגו את מושג המפתח שינוי (modify): אפשר לשנות בלוקים ותוכניות קיימות. התלמידים קובעים ערך בין 1- ל-1, וכשהחיישן מזהה את הצבע – המשתנה position נקבע. השוער זז למיקום, הבועט בועט, ואז מחזירים ידנית את השוער והבועט למקום.'},
+ {k:'check',ph:'explain',q:['איך המשתנה משפיע על השוער במשחק?'],
+  n:'שינוי ערך המשתנה position מזיז את השוער לחלקים שונים של השער. שאלו אילו ערכים ניסו.'},
+ {k:'elab',ph:'elaborate',h:'כמה גולים תצליחו להבקיע או לחסום?',l:['בנו חולצה לשוער ולבועט. כוונו את הבועט לנסות להבקיע.','צרו עוד אירועי צבע עם ערכי מיקום שונים. סרקו בסוד צבע כדי למקם את השוער.'],timer:5,
+  n:'זוג אחד מקשט את השוער והבועט בחולצות קבוצה; זוג שני מתכנת לפחות אירוע צבע אחד שקובע ערך ל-position, ושומר אותו בסוד. במשחק: זוג אחד ממקם את הבועט, השני סורק צבע בסוד; בלחיצה על מקש השוער זז והבועט מנסה להבקיע. מחליפים כל 5 דקות או אחרי סיבוב.'},
+ {k:'share',ph:'elaborate',pre:'הראו את משחק השוער שלכם!',q:['איך הקבוצה שלכם השתמשה במשתנים ושינתה אותם?'],
+  n:'לבדיקת הבנה: התלמידים משתמשים במשתנה ומשנים אותו כדי למקם את השוער; מסבירים איך המשתנה עובד; יוצרים משחק בעיטות עם בועט ושוער.'},
+ {k:'swk',ph:'evaluate',q:['הסבירו איך המשתנה position עובד בתוכנית שלכם.','איך שיניתם את המשתנה כדי שהשוער יתנהג אחרת?']},
+ {k:'clean'}
+ ]},
+
+{id:'u4l2',u:4,n:2,en:'Score Tracker',t:'לוח תוצאות',art:'scoreboard',
+ q:'איך נעקוב אחרי הנקודות שאנחנו צוברים?',
+ obj:'התלמידים ייצרו משתנים עם שמות ברורים כדי לעקוב אחרי ניקוד בתוכנית.',
+ can:['אני יכול/ה ליצור משתנים חדשים.','אני יכול/ה לתת למשתנים חדשים שמות ברורים.','אני יכול/ה להשתמש במשתנים כדי לספור נקודות.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 128',pin:'1317',
+ nIntro:'הציגו את השאלה הגדולה. בקשו לשתף חוויות של ספירת נקודות – במשחק קופסה או בצפייה במשחק ספורט עם לוח תוצאות.',
+ s:[
+ {k:'context',ph:'engage',h:'משתנים שעוקבים',p:['לוחות תוצאות הם חלק חשוב באירועי ספורט.'],big:'איך ערכי הנתונים בלוח משתנים כשקבוצות צוברות נקודות?',cta:'בואו נחקור משתנים!',vocab:['משתנה'],
+  n:'למה לוח תוצאות חשוב? (כולם יודעים מי מוביל). אילו ערכים רואים עליו ומתי הם משתנים? הניקוד עולה כשקבוצה מבקיעה; השעון יורד עם הזמן. חזקו את מושג המשתנה: ערך בקוד שאפשר לשנות ולשמור – מספר, מילה או משהו מורכב יותר.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 128'},
+ {k:'build',ph:'explore',l:['בועט','שוער','חיישן צבע','כדור'],done:['איך הבועט יכול להבקיע גול?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות איך הבועט מבקיע ואיך השוער חוסם.'},
+ {k:'predict',ph:'explore',p:['הקבוצות רוצות לספור את הגולים שהן מבקיעות.'],
+  code:[['ev','when [up ▾] arrow key pressed',0],['var','change [score ▾] by [1]',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'הסבירו שהתלמידים ייצרו משתנים חדשים לספירת נקודות. ניבוי: כשלוחצים על חץ למעלה, המשתנה score עולה ב-1.'},
+ {k:'try',ph:'explore',pin:'1317',l:['צרו משתנה שסופר את הניקוד כשלוחצים על חץ למעלה.','סרקו לבנה בחיישן הצבע ולחצו על חץ למטה – וראו מה קורה!','עדכנו את משתנה הניקוד.'],
+  n:'יוצרים משתנה חדש בלחיצה על Create variable בקטגוריית Data, נותנים שם ברור (score או שם קבוצה) ומצמידים בלוק change לאירוע "חץ למעלה". סריקת צבע קובעת את מיקום השוער (אדום – מקום אחד, צהוב – אחר). בלחיצה על חץ למטה השוער זז והבועט בועט. אם נכבש גול – לוחצים חץ למעלה.'},
+ {k:'check',ph:'explain',q:['איך יצרתם משתנה לספירת הניקוד?','איזה שם נתתם למשתנה?'],
+  n:'אם צריך – הדגימו על מסך משותף את Create variable. איך המשתנים position ו-score עובדים, ולמה חשוב שלכל אחד יהיה שם ברור?'},
+ {k:'elab',ph:'elaborate',h:'תוכלו ליצור משחק הבקעת שערים?',l:['שפרו את דגם הבועט. נסו להבקיע!','השתמשו במשתנים עם שמות ברורים כדי לעקוב אחרי הנקודות במשחק.'],timer:5,
+  n:'זוג אחד משפר את הבועט (חיבור המנוע, תוספת למנוע הפנוי, החלפת הכדור) ומבקיע; זוג שני יוצר משתנה נוסף – למשל מספר ניסיונות או נקודות לכל קבוצה. לכל משתנה צריך אירוע משלו (מקש אחר). החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'שתפו את משחק השוער שלכם.',q:['איך השתמשתם במשתנים כדי לעקוב אחרי הניקוד?'],
+  n:'לבדיקת הבנה: התלמידים יוצרים משתנים חדשים לכל קבוצה; נותנים שמות מובנים לאחרים; משתמשים במשתנים לספירת נקודות.'},
+ {k:'swk',ph:'evaluate',q:['הסבירו איך המשחק שלכם השתמש במשתנים.','אילו נתונים המשתנים שלכם מייצגים?','למה חשוב לתת למשתנים שמות ברורים?']},
+ {k:'clean'}
+ ]},
+
+{id:'u4l3',u:4,n:3,en:'Nap Needs',t:'זמן תנומה',art:'pet',
+ q:'איך הייתם מטפלים בחיית מחמד רובוטית?',
+ obj:'התלמידים ייצרו משתנים ויבצעו פעולות על ערכי המשתנים.',
+ can:['אני יכול/ה ליצור משתנה עם שם ברור.','אני יכול/ה לתכנת שינוי בערך של משתנה.','אני יכול/ה להסביר איך עוקבים אחרי משתנים.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 138',pin:'1318',
+ nIntro:'אילו צרכים יכולים להיות לחיית מחמד רובוטית? (אכילה, שינה). אפשר לקשר למשחקי סימולציה של חווה או חיים, או לסימולציות של וטרינרים ומדענים. איך אתם יודעים שלא ישנתם מספיק?',
+ s:[
+ {k:'context',ph:'engage',h:'מעקב אחרי אנרגיה',p:['אפשר להשתמש בטכנולוגיה כדי לעקוב אחרי רמות האנרגיה שלנו.'],big:'איך נדע מתי חיית מחמד רובוטית צריכה לנוח?',cta:'בואו נחקור משתנים!',vocab:['משתנה'],
+  n:'שעונים חכמים שומרים נתונים משתנים – דופק, לחץ דם, שינה – עוקבים אחרי שינויים ומתריעים כשצריך. איך בני אדם משפיעים על רמת האנרגיה (אוכל בריא, שינה)? חזקו את מושג המשתנה: ערך משתנה שנשמר, כמו רמת אנרגיה.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 138'},
+ {k:'build',ph:'explore',l:['חיית מחמד רובוטית'],done:['איך חיית המחמד שלכם יכולה לישון?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות איך למקם את חיית המחמד (ישיבה / שכיבה).'},
+ {k:'predict',ph:'explore',p:['חיית המחמד הרובוטית מתחילה את היום ערה ומוכנה לשחק!','מה קורה במהלך היום?'],
+  code:[['ctl','forever',0],['ctl','if ⟨tilted [up ▾] ?⟩ then',1],['var','change [energy ▾] by [-1]',2],['ctl','wait [1] seconds',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'הפנו את תשומת הלב למשתנה energy ובקשו לנבא איך הוא משתנה לאורך זמן.'},
+ {k:'try',ph:'explore',pin:'1318',q:['מה קורה כשמשנים את התנוחה של חיית המחמד?','מה יכול לקרות אם היא עייפה מדי?'],
+  n:'המשתנה energy תלוי בתנוחת המנוע הכפול: מוטה למעלה (ערה וזקופה) – האנרגיה יורדת; שוכבת (ישנה) – האנרגיה עולה. עודדו לנסות בקוד מה קורה כשהמשתנה מגיע לסף מסוים.'},
+ {k:'check',ph:'explain',q:['מה גרם למשתנה האנרגיה של חיית המחמד לעלות או לרדת?'],
+  n:'התנוחה (שהמנוע הכפול מזהה) משנה את המשתנה: יורד כשהיא יושבת, עולה כשהיא שוכבת. איך השם של המשתנה עזר להבין את מטרתו? קשרו לחיים: איך שינה ופעילות משפיעות על האנרגיה שלכם?'},
+ {k:'elab',ph:'elaborate',h:'מה עוד חיית המחמד שלכם צריכה כדי להיות מאושרת ולשגשג?',p:['איך אפשר להשתמש בחיישן הצבע כדי לשנות משתנה?'],l:['בנו חפצים שעונים על צורך של חיית המחמד.','צרו משתנה שעוקב אחרי השינוי בצורך הזה.'],timer:5,
+  n:'זוג אחד יוצר משתנה לצורך נוסף (רעב, שעמום, אושר), קובע ערך התחלתי ומה משנה אותו, ומתכנת אירועי חיישן צבע. זוג שני בונה חפצים – למשל אוכל אדום שמוריד את הרעב, צעצועים כחולים שמעלים את האושר. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הראו איך אתם מטפלים בחיית המחמד הרובוטית!',q:['תארו איך המשתנה החדש שלכם עובד.'],
+  n:'לבדיקת הבנה: התלמידים יוצרים משתנה עם שם ברור; מתכנתים שינוי בערכו; מסבירים איך עוקבים אחרי משתנים.'},
+ {k:'swk',ph:'evaluate',q:['איך שם ברור למשתנה עוזר למישהו אחר להבין את הצרכים של חיית המחמד שלכם?']},
+ {k:'clean'}
+ ]},
+
+{id:'u4l4',u:4,n:4,en:'Feelings in Flow',t:'רגשות בזרימה',art:'pet2',
+ q:'מה אפשר לעשות אם חיית מחמד מתנהגת באופן אקראי?',
+ obj:'התלמידים יתקנו ויפתחו תוכנית שמשתמשת במשתנים עם ערכים אקראיים.',
+ can:['אני יכול/ה ליצור משתנה עם ערך אקראי.','אני יכול/ה להסביר איך משתנים עם ערכים אקראיים עובדים.','אני יכול/ה למצוא ולתקן באגים בתוכנית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 144',pin:'1319',
+ nIntro:'למי יש חיית מחמד? איך היא מתנהגת כשהיא שמחה, רעבה או משועממת? לרוב איננו יודעים מה החיה רוצה. איך אפשר להגיב להתנהגות שלה – להאכיל, לשחק?',
+ s:[
+ {k:'context',ph:'engage',h:'ערכים אקראיים',p:['במשחקים, לערכים אקראיים יכולות להיות השפעות חיוביות או שליליות על השחקנים.'],big:'איך נשמור על הרגשה טובה אצל חיית מחמד רובוטית?',cta:'בואו נחקור משתנים עם ערכים אקראיים!',vocab:['ערך אקראי'],
+  n:'משחקי קופסה עם קוביות קובעים פעולות או משבצות עם השפעה חיובית או שלילית; במשחקי וידאו יש פריטים עם תוצאה בלתי צפויה (חיים נוספים, בונוס, הורדת נקודות). הציגו את מושג המפתח ערכים אקראיים: ערכים שנקבעים במקרה.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 144'},
+ {k:'build',ph:'explore',l:['חיית מחמד רובוטית'],done:['איך אפשר לתקשר עם חיית המחמד הרובוטית?'],timer:7,
+  n:'רעיונות לקבוצות שמסיימות מהר: להזיז את הזרועות, להזיז את האנטנות (הבקר), להשכיב או להושיב את חיית המחמד.'},
+ {k:'predict',ph:'explore',p:['אנחנו לא יודעים איך חיית המחמד מרגישה כשהיא מתעוררת!','איך נתכנת את האושר שלה?'],
+  code:[['ev','when ▶ clicked',0],['var','set [happiness ▾] to (pick random [5] to [10])',1],['ev','when [any ▾] lever is [down ▾]',0],['var','change [happiness ▾] by (pick random [1] to [3])',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'הפנו לשני האירועים עם ערכים אקראיים – בלחיצה על Play וכשידית כלשהי למטה. אפשר לדון בכל אירוע בנפרד.'},
+ {k:'try',ph:'explore',pin:'1319',pre:'בקוד יש באג!',q:['תקנו את הקוד כדי שתוכלו לתקשר עם חיית המחמד.'],
+  n:'הציגו או חזקו את מושג ניפוי הבאגים. התלמידים מפרקים את הקוד, מריצים סקריפטים בנפרד ועושים שינויים קטנים. רמז: בבלוק האקראי הראשון הטווח הוא בין 0 ל-0, ולכן האזעקה נשמעת מיד. מתקנים על ידי שינוי הטווח (למשל 5 עד 10). הזזת ידית למטה ("גירוד בראש") מעלה את האושר.'},
+ {k:'check',ph:'explain',q:['תארו איך תיקנתם את התוכנית.','איך הערכים האקראיים משפיעים על ההתנהגות של חיית המחמד?'],
+  n:'ערכים אקראיים מוסיפים חוסר צפיות: לא יודעים כמה החיה שמחה בהתחלה; לא יודעים כמה מהר האושר יירד עד שהאזעקה תישמע; גירוד בראש מעלה את האושר, אבל לא יודעים בכמה.'},
+ {k:'elab',ph:'elaborate',h:'מה עוד חיית המחמד שלכם צריכה או מרגישה?',l:['בנו עוד תוספות שישפיעו על חיית המחמד.','צרו עוד משתנים עם ערכים אקראיים לצרכים ולרגשות של חיית המחמד.'],timer:5,
+  n:'זוג אחד בונה תוספות וחפצים (אוכל, צעצועים); זוג שני יוצר משתנים לצרכים או רגשות (רעב, עייפות, שעמום) – אפשר להוסיף חיישן צבע ואירועי צבע. הזכירו לתת שמות ברורים ולבדוק כל סקריפט בנפרד. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הראו איך אתם מתקשרים עם חיית המחמד הרובוטית!',q:['איך השתמשתם בערכים אקראיים?','האם הייתם צריכים לתקן עוד באגים?'],
+  n:'לבדיקת הבנה: התלמידים יוצרים משתנה עם ערכים אקראיים; מסבירים איך הוא עובד; מוצאים ומתקנים באגים.'},
+ {k:'swk',ph:'evaluate',q:['אילו אסטרטגיות ניפוי באגים עזרו לכם למצוא ולתקן בעיות במשתנים?']},
+ {k:'clean'}
+ ]},
+
+{id:'u4l5',u:4,n:5,dc:true,en:'Game Designer',t:'מעצבי משחקים',art:'gamedesign',
+ q:'איך נעצב משחק?',
+ obj:'התלמידים יתנו שמות ויבצעו פעולות על כמה משתנים במשחק, וינהלו תוכנית פרויקט שמחלקת משימות בצוות.',
+ can:['אני יכול/ה ליצור כמה משתנים עם שמות ברורים בתוכנית.','אני יכול/ה לתעד תוכנית פרויקט שמחלקת משימות בצוות.','אני יכול/ה לקבוע לוח זמנים לפרויקט עם אבני דרך.'],
+ min:'2 מפגשים של 45 דקות',comp:true,build:null,pin:'1320',
+ nIntro:'אילו משחקים אתם אוהבים לשחק או לעצב? (קופסה, קלפים, וידאו). מה הייתם כוללים כשמעצבים משחק?',
+ s:[
+ {k:'context',ph:'engage',h:'משתנים במשחקים',p:['למשחקים יש מטרות וחוקים שונים.','משחקי מחשב מתוכנתים לעקוב אחרי ההתקדמות בעזרת משתנים שונים.'],cta:'בואו נשתמש במשתנים כדי לעצב משחק משלנו!',vocab:['משתנה'],
+  n:'דוגמאות: משחק בניית עולם – יוצרים חווה או עיר, אוספים פריטים ומטבעות; תחרות ספורט – שתי קבוצות צוברות נקודות ושעון סופר לאחור. משתנים אפשריים: מספר חיים, מטבעות, כוחות מיוחדים. חזקו את מושג המשתנה.'},
+ {k:'plan',ph:'proto',h:'איך נעצב משחק?',pre:'תכננו כקבוצה ותעדו:',q:['למי אנחנו מעצבים? מה הוא צריך?','איך נשתמש בכמה משתנים?','אילו מטרות יש לנו לפרויקט?','איך נעבוד יחד?'],
+  n:'הקבוצות מגדירות משתמש וצרכים, ודנות איך לשלב כמה משתנים (למשל ספירת מעברים בקו הסיום או נקודות). כל קבוצה מתעדת תוכנית פרויקט: שלבים, לוח זמנים, אבני דרך לסוף כל מפגש ומי אחראי – בשיטה שאפשר לעדכן.'},
+ {k:'proto',ph:'proto',h:'בנו כקבוצה אב-טיפוס של המשחק!',l:['השתמשו בתוכנית הפרויקט כדי שכולם יידעו מה לעשות.','בנו את המשחק.','קודדו את המשחק בעזרת כמה משתנים.'],pin:'1320',timer:30,
+  n:'זוג אחד בונה את רכיבי המשחק, זוג שני מקודד אחד המשתנים; מחליפים. שאלו: איך אתם משתמשים בכמה משתנים? איך תוכנית הפרויקט עוזרת לחלק עבודה ולעקוב אחרי התקדמות? מי שנתקע – יתמקד במשתנה אחד בכל פעם.'},
+ {k:'feedback',ph:'share',pres:['הכנו ___ .','השתמשנו בכמה משתנים כדי ___ .'],amb:['אהבתי שהקבוצה שלכם ___ .','מה אם תנסו ___ ?'],
+  n:'המציגים מסבירים איך עיצבו ותכנתו את המשחק עם כמה משתנים. השגרירים מבקרים ונותנים משוב ספציפי ובונה.'},
+ {k:'check',ph:'share',pre:'בקבוצה שלכם:',q:['מה שמעתם?','אילו רעיונות חדשים יש לכם?','מה תרצו לעשות בהמשך?'],
+  n:'הקבוצות מתאחדות, משתפות משוב ומעדכנות את תוכנית הפרויקט. הזכירו לשמור פרויקטים ולצלם דגמים.'},
+ {k:'clean'}
+ ]}
+);
+// Unit 5 — Functions
+L.push(
+{id:'u5l1',u:5,n:1,en:'Music Machine',t:'מכונת מוזיקה',art:'dj',
+ q:'איך אפשר לתכנת חוויה מוזיקלית?',
+ obj:'התלמידים ייצרו ויגדירו פונקציה כדי לארגן קוד.',
+ can:['אני יכול/ה ליצור ולהגדיר פונקציה.','אני יכול/ה להשתמש בפונקציה כדי לארגן קוד.','אני יכול/ה להסביר איך פונקציה עובדת בתוכנית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 150',pin:'1321',
+ nIntro:'איזו מוזיקה אתם שומעים? איך היא נוצרת? אפשר לשאול על כלים אלקטרוניים. איך אפשר לתכנת חוויה מוזיקלית – הופעת DJ, קונצרט, פסקול של סרט?',
+ s:[
+ {k:'context',ph:'engage',h:'פונקציות',p:['תקליטנים (DJ) יכולים לתכנת ביטים כדי ליצור חוויה מוזיקלית מרגשת.'],big:'איך נתכנת ביטים משלנו כדי ליצור מוזיקה?',cta:'בואו נחקור פונקציות!',vocab:['פונקציה'],
+  n:'מה ידוע לתלמידים על איך תקליטנים יוצרים מוזיקה? הם משתמשים במכונות תופים וסינתיסייזרים. אפשר להראות סרטוני DJ. הציגו את מושג המפתח פונקציה: קוד שאפשר להשתמש בו שוב ושוב – כמו DJ שרוצה להשתמש באותו ביט או מנגינה כמה פעמים.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 150'},
+ {k:'build',ph:'explore',l:['4 רכיבים של עמדת DJ'],done:['מה לדעתכם כל רכיב עושה?'],timer:7,vocab:['רכיב'],
+  n:'הציגו את מושג המפתח רכיבים: חלקים שעובדים יחד כדי ליצור מערכת גדולה יותר – כמו רכיבי החומרה של מחשב. בעמדת ה-DJ יש ארבעה רכיבים. קבוצות שמסיימות מהר חוקרות כל רכיב ודנות בתפקידו.'},
+ {k:'predict',ph:'explore',p:['אפשר להשתמש בפונקציות כדי ליצור מוזיקה!'],
+  code:[['fn','define (beat 1)',0],['snd','play [(1) Snare Drum ▾] for [1] beats',1],['snd','play [(5) Open Hi Hat ▾] for [1] beats',1],['ev','when ▶ clicked',0],['fn','beat 1',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'הפנו לפונקציה beat 1. מה היא תעשה? ומתי היא תפעל? (כשהתוכנית קוראת לה).'},
+ {k:'try',ph:'explore',pin:'1321',pre:'בואו ניצור מוזיקה עם פונקציות!',q:['באילו רכיבים אפשר להשתמש כדי לעצב את החוויה המוזיקלית?'],
+  n:'הפונקציה beat 1 מוגדרת בסקריפט אחד ונקראת בסקריפט אחר בתוך לולאת forever. הזזת ידיות הבקר משמיעה צלילים; סיבוב המנוע הכפול השמאלי משנה את הקצב. חיישן הצבע עוד לא בשימוש – אפשר להוסיף אותו בהמשך. גלגל המנוע היחיד צריך לסובב את הפטיפון – ודאו שהוא נוגע.'},
+ {k:'check',ph:'explain',q:['מה הפונקציה הגדירה?','למה כדאי להשתמש בפונקציות בתוכנית?'],
+  n:'הפונקציה beat 1 הגדירה את רצף הצלילים; אפשר לקרוא לה כמה פעמים; הגדרת פונקציה חוסכת לבנות את אותו סקריפט שוב ושוב – חוסכת זמן ומקום.'},
+ {k:'elab',ph:'elaborate',h:'בואו ניצור עוד מוזיקה!',l:['שנו את עמדת ה-DJ כך שתשתמש בכל הרכיבים.','הגדירו וקראו לעוד פונקציות כדי להוסיף למוזיקה.'],timer:5,
+  n:'זוג אחד משנה את רכיבי עמדת ה-DJ וחוקר איך המחוון עם חיישן הצבע יכול להשמיע צלילים נוספים; זוג שני יוצר ומגדיר פונקציות נוספות – למשל את הפונקציה הריקה beat 2. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'שתפו את עמדת ה-DJ המשודרגת שלכם!',q:['איך שיניתם את הפונקציות?'],
+  n:'לבדיקת הבנה: התלמידים יוצרים ומגדירים פונקציה שמנגנת ביט; משתמשים בפונקציה לארגון הקוד; מסבירים איך פונקציה עובדת.'},
+ {k:'swk',ph:'evaluate',q:['תארו פונקציה חדשה שהקבוצה שלכם יצרה לעמדת ה-DJ.','למה הייתם משתמשים בפונקציה בקוד?']},
+ {k:'clean'}
+ ]},
+
+{id:'u5l2',u:5,n:2,en:'Funky Functions',t:'פונקציות פאנקיות',art:'dj2',
+ q:'איך DJ מחליט מתי לנגן מנגינה?',
+ obj:'התלמידים ייצרו פונקציות ויקראו להן.',
+ can:['אני יכול/ה ליצור פונקציות ולקרוא להן.','אני יכול/ה להסביר איך יוצרים פונקציות וקוראים להן בתוכנית.','אני יכול/ה לקבל השראה מרעיונות של קבוצות אחרות ולתת להן קרדיט.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 160',pin:'1322',
+ nIntro:'מי ראה DJ בהופעה חיה או בסרטון? אפשר להראות סרטון. תקליטנים מערבבים קטעים מכמה שירים ומנגנים ביטים בזמנים שונים. אילו ביטים הייתם רוצים לערבב?',
+ s:[
+ {k:'context',ph:'engage',h:'קריאה לפונקציות',p:['תקליטנים יכולים לשלוט בהרבה חלקים שונים של המוזיקה שלהם.'],big:'איך נוכל לנגן מנגינות וביטים בדיוק מתי שנרצה?',cta:'בואו נחקור פונקציות!',vocab:['פונקציה'],
+  n:'באילו קלטים DJ משתמש כדי להפעיל ביטים ומנגינות? (כפתורים סיבוביים, ידיות, לחצנים). DJ עשוי לרצות לנגן את אותו ביט כמה פעמים בהופעה. הציגו את מושג המפתח פונקציה: קטע קוד שאפשר לקרוא לו כמה פעמים.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 160'},
+ {k:'build',ph:'explore',l:['4 רכיבים של עמדת DJ'],done:['אילו ביטים הייתם רוצים לנגן?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות איך הרכיבים עובדים יחד או מתחילות לתכנן את הופעת ה-DJ.'},
+ {k:'predict',ph:'explore',code:[['fn','define (melody)',0],['snd','play [60] with [(5) Electric Guitar ▾] for [1] beats',1],['snd','play [64] with [(5) Electric Guitar ▾] for [1] beats',1],['ev','when [red ▾] detected',0],['fn','melody',1]],
+  q:['מה לדעתכם הקוד הזה עושה?','מתי קוראים לפונקציה?'],
+  n:'בקשו לנבא מה יקרה כשהפונקציה תרוץ, ואז – מתי קוראים לה (כשחיישן הצבע מזהה אדום).'},
+ {k:'try',ph:'explore',pin:'1322',q:['איך תנגנו ביטים ומנגינות?'],p:['נסו את הפונקציות של עמדת ה-DJ שלכם.'],
+  n:'התלמידים משתמשים ברכיבים שונים כדי לקרוא לפונקציות שונות, ומשחקים עם הצלילים. גלגל המנוע היחיד צריך לסובב את הפטיפון – ודאו שהוא נוגע.'},
+ {k:'check',ph:'explain',q:['אילו מנגינות וביטים יצרתם?','מתי קראתם לפונקציות שלכם?'],
+  n:'שימו לב להבדלים בין הקבוצות: פונקציות בתוך לולאות נקראות בזמנים מסוימים; אפשר להפעיל פונקציות בעזרת רכיבי חומרה שונים. אם לא עלה – הזכירו שאפשר ליצור פונקציה חדשה בלחיצה על Make a block.'},
+ {k:'elab',ph:'elaborate',h:'צרו את עמדת ה-DJ האולטימטיבית!',l:['שנו את הבנייה של רכיבי עמדת ה-DJ.','צרו עוד פונקציות. היעזרו ברעיונות ששמעתם מאחרים.'],timer:5,vocab:['ייחוס (קרדיט)'],
+  n:'עודדו לחשוב על מה ששמעו מקבוצות אחרות: מותר לקבל השראה ולהשתמש ברעיונות של אחרים – כל עוד נותנים קרדיט (ייחוס). זוג אחד משנה את הרכיבים, זוג שני יוצר פונקציה נוספת ומחליט מתי לקרוא לה. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'שתפו את עמדת ה-DJ האולטימטיבית שלכם!',q:['אילו פונקציות חדשות יצרתם? מתי אתם משתמשים בהן?','איך קבוצות אחרות נתנו לכם השראה?'],
+  n:'לבדיקת הבנה: התלמידים יוצרים פונקציות וקוראים להן; מסבירים איך יוצרים וקוראים לפונקציות כדי ליצור מנגינות וביטים; מקבלים השראה מאחרים ונותנים קרדיט.'},
+ {k:'swk',ph:'evaluate',q:['מה עשתה אחת הפונקציות של עמדת ה-DJ שלכם?','איך קבוצות אחרות נתנו לכם השראה?']},
+ {k:'clean'}
+ ]},
+
+{id:'u5l3',u:5,n:3,en:'Art Designer',t:'מעצבי אמנות',art:'art',
+ q:'איך אפשר להשתמש במכונה כדי ליצור אמנות?',
+ obj:'התלמידים ייצרו פונקציה עם פרמטר בעל שם ברור.',
+ can:['אני יכול/ה ליצור פונקציה עם פרמטר.','אני יכול/ה לשנות את הערך של פרמטר בפונקציה.','אני יכול/ה להסביר איך פרמטרים משפיעים על הפלט של פונקציה.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 170',pin:'1323',prep:'לכל קבוצה: כלי כתיבה (טוש/עט) וכמה דפים.',
+ nIntro:'מה מעניין אתכם באמנות חזותית? אפשר להראות יצירות עם קווים ודפוסים. איך אנשים משתמשים במכונות ליצירת אמנות? אפשר גם לדון באמנות שנוצרת בבינה מלאכותית יוצרת.',
+ s:[
+ {k:'context',ph:'engage',h:'פרמטרים',p:['אמנים משתמשים בדפוסים כדי ליצור עיצובים.'],big:'איך תתכנתו מכונה שתיצור עיצובים אמנותיים?',cta:'בואו נחקור פרמטרים בפונקציה!',vocab:['פונקציה','פרמטר'],
+  n:'הדוגמה היא סאשיקו – אמנות יפנית של תפרים קטנים ופשוטים שיוצרים דפוסים גאומטריים על בד. איך מכונה יכולה ליצור דפוסים? חזקו את מושג הפונקציה והציגו את מושג המפתח פרמטר: מאפשר להתאים פונקציה לצורך או מטרה מסוימת.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 170'},
+ {k:'build',ph:'explore',l:['מכונת אמנות'],done:['איך מכונת האמנות זזה?'],timer:7,
+  n:'המכונה כולה יכולה לנוע במעגל, והמסילה נעה אופקית. יש להכניס כלי כתיבה לתפסנית ולהניח דף מתחת למכונה.'},
+ {k:'predict',ph:'explore',p:['אפשר להשתמש במכונת האמנות כדי ליצור דפוסים בעזרת פונקציה עם פרמטר.'],
+  code:[['fn','define (drawing arm) (number of rotations)',0],['mot1','run [left ▾] motor [▾] for (number of rotations) rotations',1],['mot1','run [left ▾] motor [▾] for (number of rotations) rotations',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'שאלו: מהי הפונקציה? (define drawing arm) מהו הפרמטר? (number of rotations). מה הערך המספרי ישלוט כשקוראים לפונקציה? (מספר הסיבובים).'},
+ {k:'try',ph:'explore',pin:'1323',pre:'חקרו דפוסים שאפשר ליצור עם מכונת האמנות!',l:['הכניסו ערכים שונים כדי לשנות את הפרמטר.'],
+  n:'התלמידים מכניסים ערך לפרמטר – מומלץ בין 0.5 ל-1. ודאו שכלי הכתיבה מהודק בגומייה והמכונה במרכז הדף. המכונה נעה במעגל והזרוע נעה הלוך ושוב לפי הערך – כך נוצר דפוס קווים. אם יש בעיה: בדקו שקצה כלי הכתיבה נוגע היטב בדף.'},
+ {k:'check',ph:'explain',q:['אילו דפוסים יצרתם עם מכונת האמנות?','איך שינוי ערך הפרמטר השפיע על הדפוסים?'],
+  n:'כל קבוצה משתפת דפוס. הובילו להבנה ששינוי ערך הפרמטר גורם לפונקציה לרוץ קצת אחרת.'},
+ {k:'elab',ph:'elaborate',h:'איך תשתמשו בפרמטרים כדי ליצור דפוסים שונים?',l:['תכננו תוכנית שמשתמשת בפונקציה כמה פעמים.','קראו לפונקציה כמה פעמים, עם ערכי פרמטר שונים.'],timer:5,
+  n:'אם יש – אפשר לנסות כלי כתיבה או דפים בצבעים שונים. זוג אחד מתכנן בפסאודו-קוד: צופה במכונה, משרטט טיוטות של הדפוס או מחשב ערכים; זוג שני משנה את הקוד וקורא לפונקציה כמה פעמים עם ערכים שונים. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'שתפו את העיצובים שלכם!',q:['איך השתמשתם בפונקציה?','איך הפרמטרים שינו את הדפוס?'],
+  n:'לבדיקת הבנה: התלמידים יוצרים פונקציה עם פרמטר שמציירת עיצוב; משנים את ערך הפרמטר כדי לשנות את העיצוב; מסבירים איך פרמטרים משפיעים על הפלט.'},
+ {k:'swk',ph:'evaluate',q:['איך שינוי הפרמטר שינה את העיצובים שלכם?']},
+ {k:'clean'}
+ ]},
+
+{id:'u5l4',u:5,n:4,en:'Pattern Party',t:'מסיבת דפוסים',art:'art2',
+ q:'איך אפשר להשתמש במכונה כדי ליצור דפוסים בכמה צבעים?',
+ obj:'התלמידים ייצרו פונקציה עם יותר מפרמטר אחד.',
+ can:['אני יכול/ה ליצור פונקציה עם כמה פרמטרים.','אני יכול/ה לשנות את הערכים של כמה פרמטרים בפונקציה.','אני יכול/ה להסביר איך כמה פרמטרים משפיעים על פונקציה.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 182',pin:'1324',prep:'לכל קבוצה: כלי כתיבה בשני צבעים וכמה דפים.',
+ nIntro:'באילו דרכים מכונות יוצרות דפוסים בכמה צבעים? מדפסות תלת-ממד, הדפסה על בדים, תוכנות עיצוב גרפי.',
+ s:[
+ {k:'context',ph:'engage',h:'כמה פרמטרים',p:['אמנים יכולים לשנות היבטים שונים של דפוס כדי ליצור עיצובים מעניינים.'],big:'איך תשתמשו במכונה כדי ליצור דפוסים בעיצוב שלכם?',cta:'בואו נחקור פונקציות עם כמה פרמטרים!',vocab:['פרמטר'],
+  n:'בקשו לתאר את הדפוסים ואיך מכונה יצרה אותם. חזקו את מושג הפרמטרים: כמה פרמטרים מאפשרים להתאים פונקציה. דוגמאות: בתוכנת עיצוב – סוג צורה, צבע וגודל; במוזיקה – גובה צליל, קצב ועוצמה.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 182'},
+ {k:'build',ph:'explore',l:['מכונת אמנות'],done:['בכמה דרכים מכונת האמנות יכולה לזוז?'],timer:7,
+  n:'המכונה נעה במעגל בעזרת צד אחד של המנוע ואופקית בעזרת הצד השני. עודדו לחשוב איך מהירות ומרחק משפיעים על הדפוסים.'},
+ {k:'predict',ph:'explore',p:['אפשר לתכנת פונקציות עם יותר מפרמטר אחד כדי ליצור דפוסים שונים.'],
+  code:[['fn','define (draw) (arm speed) (number of rotations)',0],['mot1','set [left ▾] motor speed to (arm speed) %',1],['mot1','run [left ▾] motor [▾] for (number of rotations) rotations',1],['mot1','run [left ▾] motor [▾] for (number of rotations) rotations',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'התלמידים צריכים לזהות שבפונקציה יש שני פרמטרים. מה יקרה כשייתנו להם ערכים?'},
+ {k:'try',ph:'explore',pin:'1324',l:['הכניסו ערך לכל פרמטר.'],
+  n:'פרמטר אחד הוא מהירות המנוע (1–100) והשני הוא המרחק הלוך-ושוב (0.2–1). הקבוצות בוחרות כמה פעמים הפונקציה תחזור. אפשר לנסות כלי כתיבה וסוגי נייר שונים.'},
+ {k:'check',ph:'explain',q:['שתפו את העיצוב של הקבוצה.','איך כל פרמטר השפיע על הפונקציה?'],
+  n:'הקבוצות משתפות את הערכים שבחרו. פרמטר אחד הגדיל או הקטין את המעגל, השני השפיע על המרחק בין הקווים. יותר פרמטרים = יותר אפשרויות התאמה.'},
+ {k:'elab',ph:'elaborate',h:'איך תיצרו דפוסים בשכבות?',l:['בחרו צבע ותכננו דפוס בצבע הזה.','תכנתו פונקציה עם ערכים לכל פרמטר.'],timer:5,
+  n:'הקבוצות דנות איך העיצוב ייראה ואיך לשלב שני עיצובים. זוג אחד מתכנן בפסאודו-קוד, צופה במכונה, מודד ובוחר צבע; זוג שני מתכנת את הפונקציה עם ערכים לכל פרמטר ומחבר כלי כתיבה בצבע שלו. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'שתפו את העיצוב המשותף שלכם!',q:['איך שני הפרמטרים השפיעו על כל דפוס?'],
+  n:'לבדיקת הבנה: התלמידים יוצרים פונקציה עם כמה פרמטרים שמציירת דפוסים; משנים ערכים כדי ליצור עיצוב בשכבות; מסבירים איך כל פרמטר משפיע.'},
+ {k:'swk',ph:'evaluate',q:['הסבירו איך השתמשתם בפרמטרים ואיך כל פרמטר השפיע על הפונקציה.']},
+ {k:'clean'}
+ ]},
+
+{id:'u5l5',u:5,n:5,dc:true,en:'Culinary Convenience',t:'נוחות במטבח',art:'kitchen',
+ q:'איך נעצב כלי מטבח?',
+ obj:'התלמידים ישתמשו בפסאודו-קוד כדי לפרק בעיה, וייצרו פונקציות עם פרמטרים.',
+ can:['אני יכול/ה לפרק בעיה.','אני יכול/ה ליצור פונקציות ופרמטרים עם שמות ברורים בתוכנית.','אני יכול/ה לתכנן את שלבי הפונקציה בעזרת פסאודו-קוד.'],
+ min:'2 מפגשים של 45 דקות',comp:true,build:null,pin:'1325',
+ nIntro:'מי מבשל או עוזר במטבח? הציגו את השאלה הגדולה ודונו בכלי מטבח: מיקסר, מטרפה, בלנדר.',
+ s:[
+ {k:'context',ph:'engage',h:'כלים עם הרבה תפקידים',big:'איך כלי מטבח הופכים בישול לקל או מהיר יותר?',p:['כלי מטבח יכולים לעשות כמה עבודות.'],cta:'בואו נשתמש בפונקציות עם פרמטרים כדי לעצב כלי מטבח!',vocab:['פונקציה','פרמטר'],
+  n:'אילו משימות כל כלי יכול לבצע? פומפייה, מסחטה, ערבוב. משימות נוספות: חיתוך ירקות, היפוך פנקייק, בחישת רוטב. למיקסר יש אביזרים לבלילה, ללישה ולהקצפה; סיר אורז מכין אורז ומרקים. כל פונקציה יכולה לטפל במשימה אחרת או בחלק ממשימה.'},
+ {k:'plan',ph:'proto',h:'איך נעצב כלי מטבח? איך נשתמש בפונקציות ובפרמטרים?',pre:'תכננו כקבוצה:',q:['למי אנחנו מעצבים? מה הוא צריך?','השתמשו בפסאודו-קוד כדי לפרק את המשימה ולתכנן את הפונקציות.','איך נעבוד יחד?'],vocab:['פסאודו-קוד'],
+  n:'דוגמאות: פונקציות נפרדות לקילוף ולחיתוך ירקות; מיקסר עם מהירות אחת לבלילה ואחרת לרידוד פסטה. חזקו את מושג הפסאודו-קוד ועודדו להשתמש בו כדי לפרק את הבעיה ולתכנן את הפונקציות.'},
+ {k:'proto',ph:'proto',h:'בנו כקבוצה אב-טיפוס של כלי המטבח!',l:['השתמשו בתוכנית הפסאודו-קוד שלכם.','בנו את כלי המטבח.','קודדו 2 פונקציות או יותר עם פרמטרים כדי לשלוט בכלי.'],pin:'1325',timer:30,
+  n:'זוג אחד בונה, זוג שני יוצר פונקציות ופרמטרים ב-Coding Canvas; מחליפים. שאלו: איך אתם משתמשים בפסאודו-קוד? איך אתם משתמשים בפונקציות? מי שנתקע – ישפר את הפסאודו-קוד לפני שחוזר לקוד.'},
+ {k:'feedback',ph:'share',pres:['הכנו ___ .','השתמשנו בפונקציות עם פרמטרים כדי ___ .'],amb:['אהבתי שהקבוצה שלכם ___ .','מה אם תנסו ___ ?'],
+  n:'המציגים מסבירים איך עיצבו ותכנתו את כלי המטבח. השגרירים מבקרים ונותנים משוב ספציפי ובונה.'},
+ {k:'check',ph:'share',pre:'בקבוצה שלכם:',q:['מה שמעתם?','אילו רעיונות חדשים יש לכם?','מה תרצו לעשות בהמשך?'],
+  n:'הקבוצות מתאחדות, משתפות משוב ומתכננות שיפורים. הזכירו לשמור פרויקטים, לרשום תוכניות ולצלם דגמים.'},
+ {k:'clean'}
+ ]}
+);
+// Unit 6 — AI & Data
+L.push(
+{id:'u6l1',u:6,n:1,en:'Dance Partner',t:'שותף לריקוד',art:'robodance',
+ q:'איך אפשר להשתמש בבינה מלאכותית כדי לקודד ריקוד של רובוט?',
+ obj:'התלמידים יעצבו פרויקט שמשתמש במסווג בינה מלאכותית כדי לשלוט ברובוט.',
+ can:['אני יכול/ה להשתמש בבלוקי אירוע עם בינה מלאכותית.','אני יכול/ה לפתח תוכנית שמשתמשת במסווג בינה מלאכותית.','אני יכול/ה להסביר איך מסווג בינה מלאכותית משתמש בנתונים.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 194',pin:'1326',prep:'נדרשת מצלמה במחשב של כל קבוצה.',
+ nIntro:'מה התלמידים יודעים על בינה מלאכותית ומה החוויות שלהם? עוזרים דיגיטליים, צ׳טבוטים, מערכות המלצה, רכבים אוטונומיים. איך אפשר להשתמש בבינה מלאכותית כדי לקודד רובוט שרוקד?',
+ s:[
+ {k:'context',ph:'engage',h:'מסווג מאומן מראש',p:['מסווג מאומן מראש יכול לקבל החלטות על ידי השוואת תמונות מהמצלמה לנתונים קודמים.','הבינה המלאכותית ב-Coding Canvas יכולה לחזות אילו תנוחות אנחנו עושים מול המצלמה.'],big:'באילו נתונים אימנו את הבינה המלאכותית הזו?',vocab:['מסווג מאומן מראש'],
+  n:'מסווג בינה מלאכותית הוא כלי שממיין נתונים לקטגוריות; מסווג מאומן מראש אומן על נתונים קודמים, ודיוקו תלוי בנתוני האימון. דוגמה: זיהוי פנים – יתרונות וחסרונות, בטיחות ופרטיות ברשת. דוגמאות נוספות: תיוג אוטומטי ברשתות חברתיות, מערכות אבטחה, רכבים אוטונומיים. חשוב: ה-AI של LEGO Education בטוח – כל הנתונים נשמרים מקומית, לא נשמרות תמונות אלא רק נתוני נקודות ציון בגוף (מרחקים וזוויות בין ברכיים, מרפקים וכו׳).'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 194'},
+ {k:'build',ph:'explore',l:['רובוט רקדן'],done:['אילו תנועות ריקוד הרובוט יכול לעשות?'],timer:7,
+  n:'תנועות הרובוט: הזזה מצד לצד, יד ימין למעלה, יד שמאל למעלה, שתי הידיים למעלה, שתי הידיים למטה.'},
+ {k:'predict',ph:'explore',p:['הרובוט הרקדן יכול לחקות את התנועות שלכם!'],
+  code:[['ai','when [arms up ▾] detected',0],['mot1','run [left ▾] motor to [180] angle',1],['mot1','run [right ▾] motor to [180] angle',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'"לחקות" = להעתיק. המחשב משתמש בנתוני המצלמה כדי לחזות איזו תנוחה התלמיד עושה, בעזרת מסווג שאומן על תנוחות שונות. מה יקרה כשתעמדו מול המצלמה בתנוחה, ואיך זה ישפיע על הרובוט?'},
+ {k:'try',ph:'explore',pin:'1326',pre:'בואו נרקוד!',q:['מה הרובוט הרקדן עושה כשאתם עושים תנוחה מול המצלמה?'],
+  n:'יש להפעיל את מצלמת המחשב. במסווג ארבע תנוחות; הקוד מגיב לתנוחת "ידיים למעלה" ומרים את ידי הרובוט. חברי הקבוצה מתחלפים מול המצלמה. ודאו שידי הרובוט למטה לפני כל ניסיון. המסווג פועל כשרמת הביטחון בניבוי מספיקה – נסו כמה גבוה צריך להרים ידיים, לסובב את הגוף וכו׳. אם תנוחה אינה נגישה לתלמיד – הוא יכול להנחות חבר, או לבחור תנוחות אחרות. אפשר לדון בהטיות בנתוני אימון.'},
+ {k:'check',ph:'explain',q:['מה קרה כשעשיתם תנוחה מול המצלמה?','איך לדעתכם המסווג המאומן מראש מבצע ניבויים?'],
+  n:'המצלמה מזהה תנוחות גוף כנתונים; המסווג מסווג תנוחה לפי הדוגמאות שעליהן אומן; כשהוא בטוח מספיק – הוא מסווג, והאירוע מופעל. המצלמה לא "רואה" אותנו כמו אדם – היא מחפשת נקודות מפתח (מרפקים, פרקי ידיים, כתפיים) ומחברת אותן כמו "איש מקלות".'},
+ {k:'elab',ph:'elaborate',h:'צרו עוד תנועות לרובוט הרקדן!',l:['בנו במה לריקוד.','קודדו את הרובוט כך שיחקה עוד תנועות ריקוד.'],timer:5,
+  n:'זוג אחד בונה במה ופרטי רקע (עצים, בית, צורות); זוג שני משתמש בבלוקי ה-AI כדי שהרובוט יחקה כל אחת מהתנוחות המאומנות. אם יש זמן – לבחור מוזיקה או נושא. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הראו את התנועות החדשות של הרובוט הרקדן!',q:['איך השתמשתם במסווג המאומן מראש כדי לגרום לרובוט לרקוד?'],
+  n:'לבדיקת הבנה: התלמידים משתמשים בבלוקי אירוע של AI ויודעים לעמוד מול המצלמה; מוסיפים אירועים לתנועות נוספות; מסבירים איך המסווג משתמש בנתונים. אפשר לשאול על רמות הביטחון בכל תנוחה.'},
+ {k:'swk',ph:'evaluate',q:['הסבירו איך השתמשתם בתנוחות גוף כדי להפעיל את תנועות הרובוט.','איך המסווג המאומן מראש משתמש בנתונים כדי לזהות ולחזות תנוחות?']},
+ {k:'clean'}
+ ]},
+
+{id:'u6l2',u:6,n:2,en:'Dance Trainer',t:'מאמן ריקוד',art:'robodance2',
+ q:'איך בינה מלאכותית יכולה לזהות את תנועות הריקוד שלכם?',
+ obj:'התלמידים ייצרו מסווגי בינה מלאכותית מותאמים אישית לפרויקטי הקוד שלהם.',
+ can:['אני יכול/ה ליצור מסווגי בינה מלאכותית מותאמים אישית.','אני יכול/ה לאמן בינה מלאכותית על נתונים שאספתי.','אני יכול/ה להסביר איך נתוני האימון משפיעים על הדיוק של הבינה המלאכותית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 204',pin:'1327',prep:'נדרשת מצלמה במחשב של כל קבוצה.',
+ nIntro:'אילו ריקודים אתם מכירים? איך אפשר לפרק אותם לחלקים קטנים (אפשר להדגים)? איך בינה מלאכותית יכולה לסווג את התנועות – ואיך הייתם קוראים לכל תנוחה?',
+ s:[
+ {k:'context',ph:'engage',h:'מחלקות (קטגוריות)',p:['אפשר להשתמש במסווגי בינה מלאכותית כדי למיין נתונים לקטגוריות.'],big:'איך מסווג יכול ללמוד על תנוחות ריקוד שונות כדי למיין אותן?',cta:'בואו נחקור מחלקות בבינה מלאכותית!',vocab:['מחלקה (class)','מסווג'],
+  n:'יש אפליקציות ריקוד שאומנו על תמונות של תנוחות, מזהות אותן וממיינות לקטגוריות – מחלקות. הציגו את מושג המפתח מחלקות. דונו ברמת הפירוט: מחלקות כלליות ("תנועות ידיים"/"תנועות רגליים") לעומת תנוחות ספציפיות לסגנון ריקוד – שייתנו משוב טוב יותר. זו גם הזדמנות לדבר על בטיחות בשיתוף תמונות ברשת.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 204'},
+ {k:'build',ph:'explore',l:['רובוט רקדן'],done:['אילו תנועות ריקוד אפשר לאמן את הרובוט לעשות?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות איך הרובוט זז או עוזרות לאחרים.'},
+ {k:'predict',ph:'explore',p:['אתם תאמנו את הרובוט לעשות שתי תנוחות.'],poses:true,
+  q:['מה יקרה אם תשתמשו בנתוני האימון האלה?'],
+  n:'המטרה: שתי מחלקות שונות, למשל ידיים למעלה וידיים למטה. מה יקרה אם כל הנתונים ישמשו לאימון כל מחלקה? אילו נתונים יתאימו לכל מחלקה? כשמחלקות דומות מדי, ה-AI עלול לא להבחין ביניהן. תזכורת: הנתונים נשמרים מקומית ונשמרות רק נקודות ציון בגוף, לא תמונות.'},
+ {k:'try',ph:'explore',pin:'1327',pre:'צרו שתי מחלקות כדי שהרובוט הרקדן יזיז את הידיים!',l:['התחלפו ביצירת נתוני אימון.','אחר כך בדקו את הקוד. כמה מדויק המסווג שלכם?'],
+  n:'מפעילים מצלמה. המסווג המותאם נגיש דרך בלוקי Pose Classification או החלון הקופץ. כל קבוצה יוצרת שתי מחלקות (ידיים למעלה / למטה) עם לפחות 5 דוגמאות לכל אחת, מתחלפים מול המצלמה ולוחצים Train model. לחיקוי מדויק – כוונו את המנועים לאפס (הנקודות השחורות בקו אחד).'},
+ {k:'check',ph:'explain',q:['איך יצרתם את נתוני האימון?','כמה בטוח המסווג כשהוא מזהה מחלקות?'],
+  n:'נדרשות כמה דוגמאות לכל מחלקה; דוגמאות מכמה אנשים מפחיתות הטיה ומגדילות דיוק; הנתונים בכל מחלקה צריכים להיות דומים; שונות קלה בנתונים יוצרת מודל חסין יותר.'},
+ {k:'elab',ph:'elaborate',h:'תכנתו את הרקדן שלכם!',l:['בנו את נושא הריקוד.','שפרו את מסווג הבינה המלאכותית.'],timer:5,
+  n:'זוג אחד בונה נושא בסגנון מסוים; זוג שני משפר את המסווג – עורך מחלקות לשיפור הדיוק או מוסיף מחלקות ותנועות (גם שליטה בכל יד בנפרד). עודדו יצירתיות וניסוי בבלוק detecting class?. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'הראו את תנועות הריקוד של הרובוט!',q:['איך שיפרתם את מסווג הבינה המלאכותית?'],
+  n:'לבדיקת הבנה: התלמידים יוצרים מסווגים מותאמים; מאמנים על נתונים שאספו; מסבירים איך הנתונים משפיעים על הדיוק (מספר הדוגמאות, השונות ביניהן).'},
+ {k:'swk',ph:'evaluate',q:['אם היה לכם עוד זמן, מה עוד הייתם עושים כדי לשפר את המסווג?'],
+  n:'אפשר לשאול: מכמה אנשים הייתם אוספים נתונים? מה יקרה אם מחלקות דומות מדי?'},
+ {k:'clean'}
+ ]},
+
+{id:'u6l3',u:6,n:3,en:'Skateboard Stunts',t:'פעלולי סקייטבורד',art:'skate',
+ q:'אילו טריקים גולש סקייטבורד יכול לעשות?',
+ obj:'התלמידים יתכנתו עם בלוקי חישת-גוף של בינה מלאכותית.',
+ can:['אני יכול/ה להשתמש בבלוקי חישת-גוף בתוכנית.','אני יכול/ה לתאר איך בלוקי חישת-גוף של בינה מלאכותית מייצרים נתונים.','אני יכול/ה לשנות תוכנית בעזרת בלוקי חישת-גוף.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 214',pin:'1328',prep:'נדרשת מצלמה במחשב של כל קבוצה.',
+ nIntro:'מי מכיר סקייטבורד – גולש בעצמו או צפה? אילו טריקים גולשים עושים? קפיצות, סיבובים, היפוכים.',
+ s:[
+ {k:'context',ph:'engage',h:'נתוני חישת-גוף',p:['מדעני ספורט יכולים להשתמש בבינה מלאכותית ובנתוני חיישנים כדי לשפר את ביצועי הספורטאים.'],big:'איך נתכנת טריקים של סקייטבורד בעזרת נתונים?',cta:'בואו נחקור נתוני חישת-גוף!',vocab:['נתוני חישת-גוף'],
+  n:'בדוגמה ספורטאי לובש חיישני גוף וחמצן. מדעני ספורט משתמשים בחיישנים ובמודלים של AI כדי לאסוף נתונים על התנועה, לאבחן בעיות ולשפר ביצועים. הציגו את מושג המפתח נתוני חישת-גוף: מערכות AI אוספות בזמן אמת נתונים על תנועות ומיקומי הגוף.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 214'},
+ {k:'build',ph:'explore',l:['גולש סקייטבורד','ספסל'],done:['אילו טריקים הגולש יכול לעשות?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות טריקים – למשל קפיצה מעל הספסל.'},
+ {k:'predict',ph:'explore',p:['התוכנית אוספת נתוני חישת-גוף כדי לעקוב אחרי מיקום האף שלכם.'],
+  code:[['ai','when ⟨[y ▾] coordinate of [nose ▾] [> ▾] [0]⟩',0],['mot1','run [▾] for [0.2] rotations',1],['mot1','run [▾] for [0.2] rotations',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'Coding Canvas משתמש במודל AI ובנתוני חישת-גוף כדי לעקוב אחרי מיקום האף של מי שעומד מול המצלמה. שאלו: מה יקרה אם האף גבוה? ואם נמוך?'},
+ {k:'try',ph:'explore',pin:'1328',q:['איך תגרמו לגולש לקפוץ מעל הספסל?'],
+  n:'מפעילים מצלמה. בלחיצה על Play הגולש נוסע במעגל; מניחים את הספסל במסלול. התלמידים מתחלפים בקפיצה מול המצלמה כדי לגרום לגולש לקפוץ. אם יש בעיה – ודאו שהמצלמה פועלת ושהאף של התלמיד מזוהה.'},
+ {k:'check',ph:'explain',q:['האם הגולש הצליח לקפוץ מעל הספסל?','תארו איך השתמשתם בנתוני חישת-גוף כדי לשלוט בגולש.'],
+  n:'ה-AI מזהה את מיקום האף; כשהמיקום עובר את הערך שנקבע – האירוע מופעל; הקוד מפעיל את המנועים. ציר y הוא הציר האנכי בגרף: כשקואורדינטת y של האף גבוהה מהערך – התוכנית מזהה קפיצה.'},
+ {k:'elab',ph:'elaborate',h:'מה עוד הגולש יכול לעשות?',l:['בנו עוד חפצים שהגולש ישתמש בהם בטריקים.','שנו את הקוד והשתמשו בבלוקי חישת-גוף.'],timer:5,
+  n:'זוג אחד בונה חפצים (פח, רמפה) – ייתכן שהגולש יצטרך לקפוץ גבוה יותר או לרחף זמן רב יותר; זוג שני משנה את הקוד – ערכים או איבר הגוף שמזוהה. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'שתפו את הטריקים החדשים שלכם.',q:['איך השתמשתם בנתוני חישת-גוף של בינה מלאכותית?'],
+  n:'לבדיקת הבנה: התלמידים משתמשים בבלוקי חישת-גוף; מתארים איך הם מייצרים נתונים; משנים תוכנית בעזרתם.'},
+ {k:'swk',ph:'evaluate',q:['באילו נתונים השתמשתם כדי לשלוט בגולש?']},
+ {k:'clean'}
+ ]},
+
+{id:'u6l4',u:6,n:4,en:'Super Speed Skateboard',t:'סקייטבורד סופר-מהיר',art:'skate2',
+ q:'איך אפשר לשלוט בטריק של סקייטבורד?',
+ obj:'התלמידים יתכנתו עם בלוקי חישת-גוף ונתוני קואורדינטות.',
+ can:['אני יכול/ה להשתמש בבלוקי חישת-גוף בתוכנית.','אני יכול/ה לשנות תוכנית בעזרת נתונים מקואורדינטות x ו-y.','אני יכול/ה להסביר למה בחרתי בנקודות נתונים מסוימות בתוכנית.'],
+ min:'45 דקות',comp:true,build:'C1 · עמ׳ 224',pin:'1329',prep:'נדרשת מצלמה במחשב של כל קבוצה.',
+ nIntro:'איך אפשר לשלוט בטריק? מהירות, גובה קפיצה, כיוון. דונו בסוגי טריקים – קפיצה מעל חפצים, סיבובים.',
+ s:[
+ {k:'context',ph:'engage',h:'מערכת צירים',p:['טכנולוגיית לכידת תנועה (מושן קפצ׳ר) מזהה את תנועות השחקנים במרחב ומקליטה אותן.','בלוקי חישת-גוף יכולים ללכוד נתוני קואורדינטות x ו-y.'],cta:'בואו נשתמש בנתוני חישת-גוף כדי לתכנת את תנועות הגולש!',vocab:['נתוני חישת-גוף'],
+  n:'בדוגמה שחקן בחליפת מעקב תנועה – הטכנולוגיה לוכדת תנועות לאנימציה ולאפקטים ממוחשבים (CGI) בקולנוע. חזקו את מושג נתוני חישת-גוף.'},
+ {k:'norms',ph:'explore',build:'C1 · עמ׳ 224'},
+ {k:'build',ph:'explore',l:['גולש סקייטבורד','ספסל'],done:['באילו היבטים של תנועת הגולש אפשר לשלוט?'],timer:7,
+  n:'קבוצות שמסיימות מהר חוקרות במה אפשר לשלוט – מהירות המעגל וגובה הקפיצה.'},
+ {k:'predict',ph:'explore',p:['הבינה המלאכותית תעקוב אחרי מיקום האף ותייצר קואורדינטות x ו-y.'],
+  code:[['ev','when ▶ clicked',0],['ctl','forever',0],['mot1','start [left ▾] motor at ([x ▾] coordinate of [nose ▾]) % power',1]],
+  q:['מה לדעתכם הקוד הזה עושה?'],
+  n:'הפנו לבלוק x coordinate of nose. מי שעבד עם y – במה זה שונה? קשרו למתמטיקה: ציר x אופקי, ציר y אנכי.'},
+ {k:'try',ph:'explore',pin:'1329',p:['הגולש רוצה לקפוץ מעל הספסל במהירויות שונות.'],q:['מה המיקום של האף שלכם עושה?'],
+  n:'מפעילים מצלמה. הגולש נוסע במעגל במהירות שנקבעת לפי מיקום האף על ציר x, וקופץ כשקואורדינטת y גבוהה מהערך שבקוד. מתחלפים מול המצלמה. ודאו שהאף מזוהה. אפשר לשנות את בלוק ה-power, אבל השיעור עובד הכי טוב עם הערך שבקוד ההתחלתי.'},
+ {k:'check',ph:'explain',q:['האם הגולש הצליח לקפוץ מעל הספסל במהירויות שונות?','איך הבינה המלאכותית מייצרת נתונים בתוך מערכת צירים?'],vocab:['מערכת צירים'],
+  n:'הציגו את מושג המפתח מערכת צירים: המודל עוקב אחרי מיקום נקודה (האף) ומייצר קואורדינטות x ו-y. תשובות: מיקום האף על ציר x שלט במהירות; מיקום האף על ציר y גרם לקפיצה.'},
+ {k:'elab',ph:'elaborate',h:'צרו עוד טריקים של סקייטבורד!',l:['בנו עוד חפצים שהגולש יקפוץ מעליהם או ישתמש בהם בטריקים.','השתמשו בבלוקי חישת-גוף כדי לקודד את תנועות הגולש.'],timer:5,
+  n:'זוג אחד בונה חפצים נוספים; זוג שני משנה את הקוד – ערכי סף לקואורדינטות או איברי גוף אחרים. החלפה כל 5 דקות.'},
+ {k:'share',ph:'elaborate',pre:'שתפו את הטריקים החדשים שלכם!',q:['איך השתמשתם בקואורדינטות x ו-y?'],
+  n:'לבדיקת הבנה: התלמידים משתמשים בבלוקי חישת-גוף; משנים תוכנית עם נתוני x ו-y; מסבירים למה בחרו איבר גוף או ערך מסוים.'},
+ {k:'swk',ph:'evaluate',q:['הסבירו איך השתמשתם בבלוקי חישת-גוף של בינה מלאכותית.','מה יצרתם, ולמה?']},
+ {k:'clean'}
+ ]},
+
+{id:'u6l5',u:6,n:5,dc:true,en:'Password Pose',t:'תנוחת סיסמה',art:'lock',
+ q:'איך נעצב מערכת אבטחה שמגינה על משהו?',
+ obj:'התלמידים ישתמשו בבינה מלאכותית כדי ליצור מערכת אבטחה, וידגימו איך נתונים הופכים משהו למאובטח וגם נגיש.',
+ can:['אני יכול/ה להסביר איך סיסמאות שומרות על משהו מאובטח.','אני יכול/ה להשתמש בנתונים כדי שהעיצוב שלי יהיה נגיש.','אני יכול/ה לתאר איך להפחית הטיה במאגר נתונים.'],
+ min:'2 מפגשים של 45 דקות',comp:true,build:null,pin:'1330',prep:'נדרשת מצלמה במחשב של כל קבוצה.',
+ nIntro:'אילו מערכות אבטחה אתם מכירים? מצלמות ואזעקות בבית, בבית הספר ובעסקים; סיסמאות ואמצעים דיגיטליים; קודים ללוקרים ולכספות.',
+ s:[
+ {k:'context',ph:'engage',h:'מאובטח וגם נגיש',p:['מנגנונים פיזיים ודיגיטליים שומרים על דברים מאובטחים.','סיסמאות חזקות – עם אותיות, מספרים או נתוני חיישנים – מגינות על הגישה.'],cta:'בואו נשתמש בבינה מלאכותית כדי לעצב מערכת אבטחה מוגנת בסיסמה!',vocab:['בינה מלאכותית'],
+  n:'מנעול שומר על הבית – והמפתח הנכון פותח אותו; מערכת לייזר מזהה תנועה ומפעילה אזעקה – וסיסמה מנטרלת אותה; טלפון נייד מוגן בקוד. כאן התלמידים מיישמים את כל מה שלמדו על AI ו-Coding Canvas.'},
+ {k:'plan',ph:'proto',h:'איך נעצב את מערכת האבטחה?',pre:'תכננו כקבוצה:',q:['למי אנחנו מעצבים? על מה הוא צריך להגן ולמה?','איך נשתמש בבינה מלאכותית ובנתוני תנוחה כדי שהמערכת תהיה מאובטחת?','איך נעבוד יחד?'],
+  n:'אתגרו את התלמידים לחשוב יצירתית: מערכת מאובטחת אבל נגישה. דוגמה: קופסה סגורה שנפתחת בתנוחה קשה, עם שלושה ניסיונות לפני שאזעקה מופעלת. מה קורה אם התנוחה קשה לחלק מהמשתמשים?'},
+ {k:'proto',ph:'proto',h:'בנו כקבוצה אב-טיפוס של מערכת האבטחה! היא צריכה להיות מאובטחת אבל נגישה למשתמשים המיועדים.',l:['בנו את מנגנוני מערכת האבטחה.','קודדו עם בינה מלאכותית – סיווג תנוחות או חישת-גוף.','הפחיתו הטיה של הבינה המלאכותית: אמנו ובדקו את הסיסמה יחד.'],pin:'1330',timer:30,vocab:['הטיה (bias)'],
+  n:'זוג אחד בונה את מנגנון האבטחה; זוג שני מאמן ובודק תנוחת גוף שמשמשת כסיסמה; מחליפים. שאלו: למי הסיסמה עובדת? איך מפחיתים הטיה בנתוני האימון? הטיית AI נוצרת כשמודל מאומן על מעט נתונים – והתוצאות לא הוגנות או לא אמינות. אם תנוחה אינה נגישה לתלמיד – הוא יכול להנחות חבר, או להשתמש במסווג המאומן מראש.'},
+ {k:'feedback',ph:'share',pres:['הפכנו את המערכת למאובטחת בכך ש ___ .','הפכנו את המערכת לנגישה בכך ש ___ .'],amb:['אהבתי שהקבוצה שלכם ___ .','מה אם תנסו ___ ?'],
+  n:'המציגים מסבירים איך עיצבו את מערכת האבטחה והשתמשו בנתוני תנוחה. השגרירים מבקרים ונותנים משוב ספציפי ובונה.'},
+ {k:'check',ph:'share',pre:'בקבוצה שלכם:',q:['מה שמעתם?','אילו רעיונות חדשים יש לכם?','מה תרצו לעשות בהמשך?'],
+  n:'הקבוצות מתאחדות, משתפות משוב ומתכננות שיפורים. הזכירו לשמור פרויקטים, לרשום תוכניות ולצלם דגמים.'},
+ {k:'clean'}
+ ]}
+);
+// ---------- Illustrations: small night-sky scenes, one per lesson ----------
+const C={sky:'#26365f',sea:'#1f4f78',deep:'#163a5c',hill:'#3d8b7a',hill2:'#2f7466',sun:'#f2b84b',coral:'#e36b5d',cream:'#f3ead8',sky2:'#8fc8e8',vio:'#9b8be0',ink:'#141b36',skin:'#f2c9a0',wood:'#a9744a',white:'#fbf7ee'};
+const STARS='<g fill="#f3ead8" opacity=".7"><circle cx="40" cy="38" r="1.6"/><circle cx="150" cy="30" r="1.3"/><circle cx="170" cy="70" r="1.6"/><circle cx="62" cy="70" r="1.1"/><circle cx="118" cy="52" r="1"/></g><circle cx="30" cy="80" r="2.2" fill="#f2b84b" opacity=".8"/>';
+const svg=(inner,bg=C.sky,stars=true)=>`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="200" height="200" fill="${bg}"/>${stars?STARS:''}${inner}</svg>`;
+const hill=(c=C.hill,y=150)=>`<ellipse cx="100" cy="${y+70}" rx="150" ry="78" fill="${c}"/>`;
+const fig=(x,y,c,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><circle cx="0" cy="0" r="6" fill="${C.sun}"/><rect x="-6" y="6" width="12" height="13" rx="3" fill="${c}"/><rect x="-5" y="19" width="4" height="8" fill="${C.ink}"/><rect x="1" y="19" width="4" height="8" fill="${C.ink}"/></g>`;
+const bot=(x,y,c=C.cream,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><rect x="-16" y="-14" width="32" height="24" rx="5" fill="${c}"/><rect x="-11" y="-30" width="22" height="16" rx="4" fill="${c}"/><circle cx="-5" cy="-22" r="2.6" fill="${C.ink}"/><circle cx="5" cy="-22" r="2.6" fill="${C.ink}"/><line x1="0" y1="-30" x2="0" y2="-37" stroke="${c}" stroke-width="2"/><circle cx="0" cy="-38" r="2.5" fill="${C.coral}"/><circle cx="-10" cy="13" r="6" fill="${C.ink}"/><circle cx="10" cy="13" r="6" fill="${C.ink}"/><circle cx="-10" cy="13" r="2.4" fill="${C.cream}"/><circle cx="10" cy="13" r="2.4" fill="${C.cream}"/></g>`;
+const brick=(x,y,w,c)=>`<g><rect x="${x}" y="${y}" width="${w}" height="10" rx="2" fill="${c}"/>${Array.from({length:Math.max(1,Math.floor(w/10))},(_,i)=>`<rect x="${x+3+i*10}" y="${y-3}" width="6" height="3" rx="1" fill="${c}"/>`).join('')}</g>`;
+const note=(x,y,c=C.sun)=>`<g fill="${c}"><circle cx="${x}" cy="${y}" r="4"/><rect x="${x+3}" y="${y-16}" width="2" height="16"/><path d="M${x+3} ${y-16} q8 3 8 9" stroke="${c}" stroke-width="2" fill="none"/></g>`;
+const tree=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><rect x="-2.5" y="0" width="5" height="12" fill="${C.wood}"/><path d="M0 -30 L14 2 H-14Z" fill="${C.hill2}"/><path d="M0 -40 L11 -12 H-11Z" fill="${C.hill}"/></g>`;
+const dash=(d,c=C.sun)=>`<path d="${d}" fill="none" stroke="${c}" stroke-width="2.5" stroke-dasharray="5 5" stroke-linecap="round"/>`;
+
+const ART={
+restaurant:()=>svg(hill()+`<ellipse cx="140" cy="140" rx="26" ry="7" fill="${C.cream}"/><rect x="137" y="140" width="6" height="22" fill="${C.cream}"/>`+bot(75,140,C.cream)+`<ellipse cx="75" cy="108" rx="16" ry="4" fill="${C.white}"/><path d="M64 106 q11 -14 22 0" fill="${C.coral}"/>`+brick(26,170,22,C.coral)+brick(52,172,22,C.sky2)+brick(78,174,22,C.sun)),
+restaurant2:()=>svg(hill()+`<rect x="112" y="78" width="58" height="44" rx="6" fill="${C.ink}"/><rect x="117" y="83" width="48" height="34" rx="3" fill="${C.sky2}"/><rect x="121" y="88" width="18" height="10" rx="2" fill="${C.sun}"/><rect x="143" y="88" width="18" height="10" rx="2" fill="${C.coral}"/><rect x="121" y="102" width="40" height="10" rx="2" fill="${C.teal||'#4fb3a4'}"/><rect x="138" y="122" width="6" height="22" fill="${C.ink}"/>`+bot(70,140,C.cream)+`<ellipse cx="70" cy="108" rx="15" ry="4" fill="${C.white}"/><circle cx="70" cy="102" r="6" fill="${C.sun}"/>`),
+plane:()=>svg(hill(C.hill2,155)+tree(40,160,.9)+tree(65,168,.7)+tree(150,165,.9)+tree(175,170,.7)+dash('M20 110 Q70 70 110 90 T190 70')+`<g transform="translate(118 84) rotate(-12)"><rect x="-26" y="-6" width="52" height="12" rx="6" fill="${C.cream}"/><path d="M-4 -4 L-14 -26 H-4 L8 -4Z" fill="${C.coral}"/><path d="M-4 4 L-14 22 H-4 L8 4Z" fill="${C.coral}"/><path d="M-26 -4 L-34 -14 H-28 L-20 -4Z" fill="${C.sun}"/><circle cx="16" cy="-1" r="3" fill="${C.sky2}"/></g>`+fig(100,150,C.coral,.8)+fig(160,142,C.vio,.8)),
+drop:()=>svg(hill(C.hill2,158)+tree(35,165,.8)+tree(170,166,.8)+`<g transform="translate(70 52)"><rect x="-26" y="-6" width="52" height="12" rx="6" fill="${C.cream}"/><path d="M-4 -4 L-14 -24 H-4 L8 -4Z" fill="${C.coral}"/><path d="M-26 -4 L-34 -14 H-28 L-20 -4Z" fill="${C.sun}"/></g><g transform="translate(110 95)"><path d="M-16 0 Q0 -22 16 0Z" fill="${C.sun}"/><line x1="-16" y1="0" x2="-5" y2="18" stroke="${C.cream}"/><line x1="16" y1="0" x2="5" y2="18" stroke="${C.cream}"/><rect x="-7" y="18" width="14" height="11" rx="2" fill="${C.wood}"/></g><g transform="translate(150 70) scale(.7)"><path d="M-16 0 Q0 -22 16 0Z" fill="${C.sky2}"/><line x1="-16" y1="0" x2="-5" y2="18" stroke="${C.cream}"/><line x1="16" y1="0" x2="5" y2="18" stroke="${C.cream}"/><rect x="-7" y="18" width="14" height="11" rx="2" fill="${C.wood}"/></g>`+fig(110,150,C.vio,.85)),
+chores:()=>svg(hill()+`<path d="M110 92 L150 62 L190 92 V150 H110Z" fill="${C.cream}"/><path d="M104 96 L150 58 L196 96" stroke="${C.coral}" stroke-width="7" fill="none" stroke-linejoin="round"/><rect x="140" y="118" width="20" height="32" rx="2" fill="${C.wood}"/><rect x="120" y="102" width="14" height="14" fill="${C.sky2}"/><rect x="166" y="102" width="14" height="14" fill="${C.sky2}"/>`+bot(64,140,C.sun)+`<line x1="82" y1="132" x2="96" y2="96" stroke="${C.wood}" stroke-width="3"/><path d="M76 158 h26 l-4 -10 h-18z" fill="${C.coral}"/><circle cx="40" cy="160" r="3" fill="${C.cream}" opacity=".6"/><circle cx="30" cy="154" r="2" fill="${C.cream}" opacity=".6"/>`),
+droptower:()=>svg(hill()+`<rect x="92" y="30" width="16" height="130" rx="3" fill="${C.cream}"/><rect x="86" y="24" width="28" height="10" rx="3" fill="${C.coral}"/><rect x="78" y="82" width="44" height="18" rx="5" fill="${C.sun}"/>`+fig(88,70,C.coral,.6)+fig(100,70,C.sky2,.6)+fig(112,70,C.vio,.6)+`<path d="M140 60 v40 m-7 -8 l7 8 l7 -8" stroke="${C.sun}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M58 100 v-34 m-7 8 l7 -8 l7 8" stroke="${C.sky2}" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="4 4"/>`),
+spintower:()=>svg(hill()+`<rect x="93" y="28" width="14" height="132" rx="3" fill="${C.cream}"/><ellipse cx="100" cy="90" rx="46" ry="11" fill="${C.vio}"/><ellipse cx="100" cy="86" rx="46" ry="11" fill="${C.sun}"/>`+fig(72,70,C.coral,.55)+fig(90,68,C.sky2,.55)+fig(110,68,C.hill,.55)+fig(128,70,C.cream,.55)+`<path d="M40 110 a60 18 0 0 0 120 0" stroke="${C.sky2}" stroke-width="3" fill="none" stroke-dasharray="5 5"/><path d="M156 104 l5 7 l-8 2" stroke="${C.sky2}" stroke-width="3" fill="none"/>`),
+clock:()=>svg(hill()+`<circle cx="70" cy="62" r="13" fill="${C.sun}"/><circle cx="130" cy="62" r="13" fill="${C.sun}"/><circle cx="100" cy="100" r="44" fill="${C.cream}"/><circle cx="100" cy="100" r="36" fill="${C.white}" stroke="${C.coral}" stroke-width="4"/><line x1="100" y1="100" x2="100" y2="76" stroke="${C.ink}" stroke-width="4" stroke-linecap="round"/><line x1="100" y1="100" x2="118" y2="108" stroke="${C.ink}" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="100" r="4" fill="${C.coral}"/><path d="M42 82 q-8 18 0 36 M30 76 q-12 24 0 48 M158 82 q8 18 0 36 M170 76 q12 24 0 48" stroke="${C.sky2}" stroke-width="3" fill="none" stroke-linecap="round"/>`),
+runclock:()=>svg(hill()+`<circle cx="112" cy="96" r="36" fill="${C.cream}"/><circle cx="112" cy="96" r="29" fill="${C.white}" stroke="${C.coral}" stroke-width="4"/><line x1="112" y1="96" x2="112" y2="76" stroke="${C.ink}" stroke-width="4" stroke-linecap="round"/><line x1="112" y1="96" x2="126" y2="102" stroke="${C.ink}" stroke-width="4" stroke-linecap="round"/><circle cx="90" cy="138" r="10" fill="${C.ink}"/><circle cx="134" cy="138" r="10" fill="${C.ink}"/><circle cx="90" cy="138" r="4" fill="${C.sun}"/><circle cx="134" cy="138" r="4" fill="${C.sun}"/><path d="M30 90 h34 M22 106 h40 M36 122 h26" stroke="${C.sky2}" stroke-width="4" stroke-linecap="round"/><rect x="150" y="150" width="20" height="8" rx="2" fill="${C.coral}"/>`),
+dance:()=>svg(`<path d="M60 26 h80 l26 150 h-132z" fill="${C.vio}" opacity=".25"/><rect x="56" y="20" width="88" height="10" rx="4" fill="${C.vio}"/>`+hill(C.hill2,160)+`<g transform="translate(78 108)"><circle r="9" fill="${C.sun}"/><path d="M-9 12 h18 v26 h-18z" fill="${C.coral}"/><path d="M-9 14 l-16 -18 M9 14 l16 -10" stroke="${C.coral}" stroke-width="5" stroke-linecap="round"/><path d="M-4 38 l-6 18 M4 38 l10 16" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/></g><g transform="translate(128 108)"><circle r="9" fill="${C.sun}"/><path d="M-9 12 h18 v26 h-18z" fill="${C.sky2}"/><path d="M-9 14 l-14 -8 M9 14 l14 -18" stroke="${C.sky2}" stroke-width="5" stroke-linecap="round"/><path d="M-4 38 l-10 16 M4 38 l6 18" stroke="${C.ink}" stroke-width="5" stroke-linecap="round"/></g>`+note(40,90)+note(160,80,C.sky2)),
+game:()=>svg(`<rect x="28" y="40" width="144" height="104" rx="12" fill="${C.ink}"/><rect x="36" y="48" width="128" height="88" rx="6" fill="${C.sky2}"/><rect x="36" y="118" width="128" height="18" fill="${C.hill}"/><rect x="74" y="72" width="16" height="16" fill="${C.sun}"/><text x="82" y="85" font-size="12" text-anchor="middle" fill="${C.ink}" font-family="sans-serif" font-weight="700">?</text><rect x="108" y="98" width="30" height="8" fill="${C.wood}"/>`+fig(82,96,C.coral,.8)+`<circle cx="124" cy="88" r="5" fill="${C.sun}"/><circle cx="138" cy="80" r="5" fill="${C.sun}"/><rect x="88" y="150" width="24" height="14" rx="3" fill="${C.cream}"/><circle cx="62" cy="164" r="8" fill="${C.coral}"/><circle cx="138" cy="164" r="8" fill="${C.sun}"/>`),
+game2:()=>svg(`<rect x="28" y="40" width="144" height="104" rx="12" fill="${C.ink}"/><rect x="36" y="48" width="128" height="88" rx="6" fill="${C.vio}"/><rect x="36" y="118" width="40" height="18" fill="${C.hill}"/><rect x="76" y="104" width="40" height="32" fill="${C.hill}"/><rect x="116" y="88" width="48" height="48" fill="${C.hill}"/><rect x="148" y="58" width="3" height="30" fill="${C.cream}"/><path d="M151 58 l14 6 l-14 6z" fill="${C.sun}"/>`+fig(56,98,C.coral,.75)+`<text x="100" y="72" text-anchor="middle" font-size="16" font-weight="800" fill="${C.sun}" font-family="sans-serif">LEVEL 2</text><path d="M60 160 h80" stroke="${C.cream}" stroke-width="6" stroke-linecap="round"/><rect x="72" y="150" width="8" height="12" rx="2" fill="${C.coral}"/><rect x="120" y="150" width="8" height="12" rx="2" fill="${C.sky2}"/>`),
+ocean:()=>svg(`<g fill="${C.sky2}" opacity=".5"><circle cx="50" cy="60" r="3"/><circle cx="56" cy="46" r="2"/><circle cx="150" cy="40" r="3"/></g><ellipse cx="100" cy="200" rx="150" ry="40" fill="#c9b27a"/><path d="M30 170 q-8 -20 4 -36 q-10 20 4 36z M170 168 q8 -24 -4 -40 q12 22 0 40z" fill="${C.hill}"/>`+`<g transform="translate(100 118)"><rect x="-26" y="-22" width="52" height="30" rx="8" fill="${C.sun}"/><circle cx="-10" cy="-8" r="6" fill="${C.ink}"/><circle cx="10" cy="-8" r="6" fill="${C.ink}"/><circle cx="-10" cy="-8" r="2.5" fill="${C.sky2}"/><circle cx="10" cy="-8" r="2.5" fill="${C.sky2}"/><path d="M-18 8 l-10 30 M-6 8 l-4 30 M6 8 l4 30 M18 8 l10 30" stroke="${C.cream}" stroke-width="5" stroke-linecap="round"/></g><path d="M140 70 q10 -8 20 0 q-10 8 -20 0z M160 70 l6 -5 v10z" fill="${C.coral}"/><line x1="100" y1="96" x2="100" y2="20" stroke="${C.cream}" stroke-width="2" stroke-dasharray="4 4"/>`,C.sea,false),
+deep:()=>svg(`<ellipse cx="100" cy="205" rx="150" ry="42" fill="#c9b27a"/><rect x="140" y="110" width="8" height="58" fill="${C.cream}"/><circle cx="144" cy="104" r="14" fill="${C.coral}"/><circle cx="144" cy="104" r="6" fill="${C.sun}"/><path d="M122 96 q-8 8 0 16 M166 96 q8 8 0 16" stroke="${C.sun}" stroke-width="2.5" fill="none"/>`+`<g transform="translate(66 140) scale(.8)"><rect x="-26" y="-22" width="52" height="30" rx="8" fill="${C.sun}"/><circle cx="-10" cy="-8" r="6" fill="${C.ink}"/><circle cx="10" cy="-8" r="6" fill="${C.ink}"/><path d="M-18 8 l-10 26 M-6 8 l-4 26 M6 8 l4 26 M18 8 l10 26" stroke="${C.cream}" stroke-width="5" stroke-linecap="round"/></g><g fill="${C.sky2}" opacity=".55"><circle cx="70" cy="90" r="4"/><circle cx="76" cy="74" r="3"/><circle cx="68" cy="60" r="2"/></g><rect x="20" y="168" width="22" height="14" rx="3" fill="${C.wood}"/><rect x="20" y="164" width="22" height="6" rx="2" fill="${C.sun}"/>`,C.deep,false),
+park:()=>svg(hill()+tree(42,140,1.1)+`<rect x="150" y="62" width="5" height="90" fill="${C.cream}"/><path d="M152 62 q-18 0 -18 10" stroke="${C.cream}" stroke-width="5" fill="none"/><path d="M122 74 h26 l-6 8 h-14z" fill="${C.sun}"/><path d="M118 82 l-16 52 h66 l-18 -52z" fill="${C.sun}" opacity=".18"/><rect x="80" y="136" width="44" height="6" rx="2" fill="${C.wood}"/><rect x="84" y="142" width="4" height="12" fill="${C.wood}"/><rect x="116" y="142" width="4" height="12" fill="${C.wood}"/><g fill="${C.sky2}"><circle cx="70" cy="170" r="3"/><circle cx="62" cy="160" r="2.5"/><circle cx="78" cy="158" r="2.5"/></g>`),
+goal:()=>svg(hill()+`<rect x="50" y="62" width="100" height="62" fill="none" stroke="${C.cream}" stroke-width="6"/><g stroke="${C.cream}" stroke-width="1" opacity=".45">${[0,1,2,3,4,5,6,7,8].map(i=>`<line x1="${58+i*11}" y1="64" x2="${58+i*11}" y2="122"/>`).join('')}${[0,1,2,3,4].map(i=>`<line x1="52" y1="${72+i*11}" x2="148" y2="${72+i*11}"/>`).join('')}</g>`+fig(100,92,C.sun,1.1)+`<path d="M86 100 l-12 -10 M114 100 l12 -10" stroke="${C.sun}" stroke-width="4" stroke-linecap="round"/><circle cx="64" cy="156" r="10" fill="${C.white}"/><path d="M60 150 l8 4 l-2 8 l-8 -2z" fill="${C.ink}"/>`+dash('M70 148 Q90 120 130 96',C.cream)),
+scoreboard:()=>svg(hill()+`<rect x="34" y="40" width="132" height="76" rx="8" fill="${C.ink}"/><rect x="96" y="116" width="8" height="40" fill="${C.cream}"/><text x="72" y="96" text-anchor="middle" font-size="40" font-weight="800" fill="${C.sun}" font-family="sans-serif">2</text><text x="100" y="92" text-anchor="middle" font-size="26" font-weight="800" fill="${C.cream}" font-family="sans-serif">:</text><text x="128" y="96" text-anchor="middle" font-size="40" font-weight="800" fill="${C.coral}" font-family="sans-serif">1</text><rect x="48" y="50" width="48" height="8" rx="2" fill="${C.sun}" opacity=".7"/><rect x="104" y="50" width="48" height="8" rx="2" fill="${C.coral}" opacity=".7"/><circle cx="150" cy="160" r="10" fill="${C.white}"/>`),
+pet:()=>svg(hill()+`<g transform="translate(100 140)"><rect x="-40" y="-20" width="80" height="26" rx="12" fill="${C.cream}"/><rect x="26" y="-34" width="28" height="22" rx="8" fill="${C.cream}"/><path d="M34 -24 h6 M44 -24 h6" stroke="${C.ink}" stroke-width="2.5" stroke-linecap="round"/><path d="M30 -34 l-2 -10 M50 -34 l2 -10" stroke="${C.cream}" stroke-width="3"/><circle cx="28" cy="-45" r="3" fill="${C.coral}"/><circle cx="52" cy="-45" r="3" fill="${C.coral}"/></g><text x="130" y="74" font-size="22" font-weight="800" fill="${C.sun}" font-family="sans-serif">Z</text><text x="146" y="58" font-size="16" font-weight="800" fill="${C.sun}" font-family="sans-serif">z</text><text x="158" y="46" font-size="12" font-weight="800" fill="${C.sun}" font-family="sans-serif">z</text><path d="M40 60 a16 16 0 1 0 12 -26 a12 12 0 1 1 -12 26z" fill="${C.sun}"/>`),
+pet2:()=>svg(hill()+`<g transform="translate(96 132)"><rect x="-30" y="-30" width="60" height="44" rx="14" fill="${C.cream}"/><circle cx="-10" cy="-12" r="5" fill="${C.ink}"/><circle cx="10" cy="-12" r="5" fill="${C.ink}"/><path d="M-8 2 q8 6 16 0" stroke="${C.ink}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M-30 -10 l-14 -12 M30 -10 l14 -12" stroke="${C.cream}" stroke-width="5" stroke-linecap="round"/><path d="M-12 -30 l-4 -14 M12 -30 l4 -14" stroke="${C.cream}" stroke-width="3"/><circle cx="-16" cy="-46" r="4" fill="${C.coral}"/><circle cx="16" cy="-46" r="4" fill="${C.coral}"/></g><path d="M150 60 c-6 -10 -20 -4 -14 6 l14 14 l14 -14 c6 -10 -8 -16 -14 -6z" fill="${C.coral}"/><g transform="translate(46 64) rotate(-12)"><rect x="-14" y="-14" width="28" height="28" rx="6" fill="${C.white}"/><circle cx="-6" cy="-6" r="2.6" fill="${C.ink}"/><circle cx="6" cy="6" r="2.6" fill="${C.ink}"/><circle cx="0" cy="0" r="2.6" fill="${C.ink}"/></g>`),
+gamedesign:()=>svg(hill()+`<rect x="40" y="70" width="120" height="70" rx="8" fill="${C.cream}"/>${[0,1,2,3,4,5].map(i=>`<rect x="${48+i*18}" y="${i%2?98:84}" width="14" height="14" rx="3" fill="${[C.coral,C.sun,C.sky2,C.vio,C.hill,C.coral][i]}"/>`).join('')}<path d="M55 91 L73 105 L91 91 L109 105 L127 91 L145 105" stroke="${C.ink}" stroke-width="2" fill="none" stroke-dasharray="3 3"/>`+fig(150,112,C.sun,.7)+`<g transform="translate(64 162) rotate(10)"><rect x="-11" y="-11" width="22" height="22" rx="5" fill="${C.white}"/><circle cx="-5" cy="-5" r="2.2" fill="${C.ink}"/><circle cx="5" cy="5" r="2.2" fill="${C.ink}"/></g><rect x="110" y="152" width="40" height="20" rx="10" fill="${C.ink}"/><circle cx="122" cy="162" r="4" fill="${C.sun}"/><circle cx="138" cy="162" r="4" fill="${C.coral}"/>`),
+dj:()=>svg(hill(C.hill2,160)+`<rect x="26" y="96" width="148" height="56" rx="10" fill="${C.ink}"/><circle cx="70" cy="124" r="22" fill="${C.cream}"/><circle cx="70" cy="124" r="14" fill="${C.ink}"/><circle cx="70" cy="124" r="4" fill="${C.sun}"/><rect x="108" y="108" width="8" height="32" rx="3" fill="${C.navy||'#2f3e70'}"/><rect x="106" y="118" width="12" height="8" rx="2" fill="${C.sun}"/><rect x="126" y="108" width="8" height="32" rx="3" fill="#2f3e70"/><rect x="124" y="128" width="12" height="8" rx="2" fill="${C.coral}"/><circle cx="156" cy="114" r="6" fill="${C.sky2}"/><circle cx="156" cy="134" r="6" fill="${C.vio}"/>`+note(56,70)+note(110,56,C.sky2)+note(150,74,C.coral)),
+dj2:()=>svg(hill(C.hill2,160)+`<path d="M20 70 ${Array.from({length:16},(_,i)=>`L${30+i*10} ${70+(i%2?-1:1)*[8,18,26,12,22,6,16,24][i%8]}`).join(' ')}" stroke="${C.sky2}" stroke-width="3" fill="none" stroke-linejoin="round"/><rect x="40" y="110" width="120" height="44" rx="10" fill="${C.ink}"/><circle cx="76" cy="132" r="16" fill="${C.cream}"/><circle cx="76" cy="132" r="5" fill="${C.coral}"/><circle cx="124" cy="132" r="16" fill="${C.cream}"/><circle cx="124" cy="132" r="5" fill="${C.sun}"/><path d="M80 40 a20 20 0 0 1 40 0" stroke="${C.sun}" stroke-width="5" fill="none"/><rect x="74" y="38" width="10" height="16" rx="4" fill="${C.sun}"/><rect x="116" y="38" width="10" height="16" rx="4" fill="${C.sun}"/>`),
+art:()=>svg(`<rect x="34" y="48" width="132" height="116" rx="4" fill="${C.white}"/>${[0,1,2,3,4,5,6,7,8,9,10,11].map(i=>`<ellipse cx="100" cy="106" rx="44" ry="14" fill="none" stroke="${C.coral}" stroke-width="1.6" transform="rotate(${i*15} 100 106)"/>`).join('')}<g transform="translate(150 56) rotate(35)"><rect x="-4" y="-30" width="8" height="34" rx="2" fill="${C.sun}"/><path d="M-4 4 l4 8 l4 -8z" fill="${C.ink}"/></g>`),
+art2:()=>svg(`<rect x="34" y="48" width="132" height="116" rx="4" fill="${C.white}"/>${[0,1,2,3,4,5,6,7,8,9].map(i=>`<ellipse cx="100" cy="106" rx="46" ry="10" fill="none" stroke="${C.sky2}" stroke-width="1.8" transform="rotate(${i*18} 100 106)"/>`).join('')}${[0,1,2,3,4,5,6,7].map(i=>`<circle cx="${100+28*Math.cos(i*Math.PI/4)}" cy="${106+28*Math.sin(i*Math.PI/4)}" r="14" fill="none" stroke="${C.coral}" stroke-width="1.8"/>`).join('')}<g transform="translate(48 58) rotate(-35)"><rect x="-4" y="-30" width="8" height="34" rx="2" fill="${C.vio}"/><path d="M-4 4 l4 8 l4 -8z" fill="${C.ink}"/></g>`),
+kitchen:()=>svg(`<rect x="0" y="146" width="200" height="54" fill="${C.wood}"/><rect x="0" y="142" width="200" height="8" fill="${C.cream}"/><path d="M58 104 h84 l-10 40 h-64z" fill="${C.sky2}"/><rect x="54" y="98" width="92" height="10" rx="5" fill="${C.cream}"/><rect x="94" y="44" width="12" height="54" fill="${C.coral}"/><rect x="78" y="34" width="44" height="18" rx="8" fill="${C.coral}"/><path d="M92 98 q8 -16 16 0" stroke="${C.cream}" stroke-width="3" fill="none"/><path d="M40 92 q-6 -10 0 -20 q6 -10 0 -20 M160 92 q-6 -10 0 -20 q6 -10 0 -20" stroke="${C.cream}" stroke-width="3" fill="none" opacity=".5" stroke-linecap="round"/><circle cx="170" cy="130" r="9" fill="${C.sun}"/><circle cx="30" cy="132" r="8" fill="${C.coral}"/>`),
+robodance:()=>svg(`<path d="M70 20 h60 l34 160 h-128z" fill="${C.sun}" opacity=".16"/>`+hill(C.vio,160)+`<g transform="translate(100 120)"><rect x="-22" y="-20" width="44" height="40" rx="8" fill="${C.cream}"/><rect x="-15" y="-42" width="30" height="22" rx="6" fill="${C.cream}"/><circle cx="-6" cy="-31" r="3.5" fill="${C.ink}"/><circle cx="6" cy="-31" r="3.5" fill="${C.ink}"/><path d="M-22 -14 l-18 -28 M22 -14 l18 -28" stroke="${C.coral}" stroke-width="7" stroke-linecap="round"/><circle cx="-41" cy="-44" r="6" fill="${C.sun}"/><circle cx="41" cy="-44" r="6" fill="${C.sun}"/><rect x="-18" y="20" width="36" height="8" rx="3" fill="${C.ink}"/></g>`+note(40,80,C.sky2)+note(162,70)),
+robodance2:()=>svg(hill(C.vio,160)+`<rect x="22" y="56" width="50" height="34" rx="6" fill="${C.ink}"/><circle cx="47" cy="73" r="10" fill="${C.sky2}"/><circle cx="47" cy="73" r="4" fill="${C.ink}"/><path d="M76 66 l30 -10 v34 l-30 -10z" fill="${C.sun}" opacity=".3"/><g stroke="${C.sun}" stroke-width="3" fill="${C.sun}" transform="translate(130 74)"><circle cx="0" cy="-26" r="6" stroke="none"/><line x1="0" y1="-18" x2="0" y2="8"/><line x1="0" y1="-14" x2="-16" y2="-30"/><line x1="0" y1="-14" x2="16" y2="-30"/><line x1="0" y1="8" x2="-10" y2="26"/><line x1="0" y1="8" x2="10" y2="26"/><circle cx="-16" cy="-30" r="3" fill="${C.coral}" stroke="none"/><circle cx="16" cy="-30" r="3" fill="${C.coral}" stroke="none"/><circle cx="0" cy="-14" r="3" fill="${C.coral}" stroke="none"/></g>`+bot(70,146,C.cream,.8)),
+skate:()=>svg(hill()+`<rect x="86" y="140" width="40" height="8" rx="2" fill="${C.wood}"/><rect x="90" y="148" width="5" height="12" fill="${C.wood}"/><rect x="117" y="148" width="5" height="12" fill="${C.wood}"/>`+dash('M40 150 Q100 60 168 150',C.sky2)+`<g transform="translate(104 78) rotate(-8)"><rect x="-20" y="18" width="40" height="5" rx="2.5" fill="${C.coral}"/><circle cx="-12" cy="26" r="3.5" fill="${C.ink}"/><circle cx="12" cy="26" r="3.5" fill="${C.ink}"/><circle cx="0" cy="-22" r="7" fill="${C.sun}"/><rect x="-6" y="-14" width="12" height="18" rx="4" fill="${C.sky2}"/><path d="M-6 -10 l-14 -8 M6 -10 l14 -4" stroke="${C.sky2}" stroke-width="4" stroke-linecap="round"/><path d="M-3 4 l-6 14 M3 4 l8 14" stroke="${C.ink}" stroke-width="4" stroke-linecap="round"/></g>`),
+skate2:()=>svg(`<line x1="30" y1="170" x2="180" y2="170" stroke="${C.cream}" stroke-width="2"/><line x1="30" y1="170" x2="30" y2="30" stroke="${C.cream}" stroke-width="2"/><text x="182" y="186" font-size="13" fill="${C.cream}" font-family="sans-serif" text-anchor="end">x</text><text x="18" y="38" font-size="13" fill="${C.cream}" font-family="sans-serif">y</text><g stroke="${C.cream}" opacity=".18">${[1,2,3,4,5].map(i=>`<line x1="${30+i*28}" y1="30" x2="${30+i*28}" y2="170"/><line x1="30" y1="${170-i*28}" x2="180" y2="${170-i*28}"/>`).join('')}</g><circle cx="114" cy="86" r="5" fill="${C.coral}"/><line x1="114" y1="86" x2="114" y2="170" stroke="${C.coral}" stroke-dasharray="3 3"/><line x1="30" y1="86" x2="114" y2="86" stroke="${C.coral}" stroke-dasharray="3 3"/><g transform="translate(110 130)"><rect x="-20" y="18" width="40" height="5" rx="2.5" fill="${C.sun}"/><circle cx="-12" cy="26" r="3.5" fill="${C.ink}"/><circle cx="12" cy="26" r="3.5" fill="${C.ink}"/><circle cx="0" cy="-22" r="7" fill="${C.sun}"/><rect x="-6" y="-14" width="12" height="18" rx="4" fill="${C.vio}"/><path d="M-3 4 l-6 14 M3 4 l8 14" stroke="${C.ink}" stroke-width="4" stroke-linecap="round"/></g><path d="M50 140 h28 M44 152 h34" stroke="${C.sky2}" stroke-width="3" stroke-linecap="round"/>`,C.sky,false),
+lock:()=>svg(hill(C.hill2,160)+`<path d="M10 70 L190 104 M10 110 L190 76" stroke="${C.coral}" stroke-width="2" opacity=".8"/><g transform="translate(70 116)"><path d="M-16 -10 v-14 a16 16 0 0 1 32 0 v14" stroke="${C.cream}" stroke-width="7" fill="none"/><rect x="-24" y="-12" width="48" height="40" rx="8" fill="${C.sun}"/><circle cx="0" cy="4" r="5" fill="${C.ink}"/><rect x="-2" y="6" width="4" height="10" fill="${C.ink}"/></g><g stroke="${C.sky2}" stroke-width="3.5" stroke-linecap="round" transform="translate(140 116)"><circle cx="0" cy="-32" r="7" fill="${C.sky2}" stroke="none"/><line x1="0" y1="-24" x2="0" y2="4"/><line x1="0" y1="-18" x2="-18" y2="-34"/><line x1="0" y1="-18" x2="18" y2="-6"/><line x1="0" y1="4" x2="-12" y2="26"/><line x1="0" y1="4" x2="12" y2="26"/></g>`)
+};
+function artHTML(key,cls=''){const f=ART[key]||ART.restaurant;return `<div class="art ${cls}">${f()}</div>`}
+
+// mark used in header + slide corner: a 2×4 brick with "ו–ח"
+const MARK=`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="30" width="64" height="34" rx="6" fill="#e36b5d"/><g fill="#e36b5d"><rect x="14" y="20" width="12" height="12" rx="3"/><rect x="34" y="20" width="12" height="12" rx="3"/><rect x="54" y="20" width="12" height="12" rx="3"/></g><g fill="#f2b84b"><rect x="14" y="20" width="12" height="4" rx="2"/><rect x="34" y="20" width="12" height="4" rx="2"/><rect x="54" y="20" width="12" height="4" rx="2"/></g><text x="40" y="55" text-anchor="middle" font-family="Rubik,Heebo,sans-serif" font-weight="800" font-size="19" fill="#fbf7ee" direction="rtl" unicode-bidi="embed">ו׳–ח׳</text></svg>`;
+// ---------- App ----------
+const UNITS=[
+ {n:1,name:'יסודות',en:'Basics',c:'#f2b84b',d:'קלט ופלט, אירועים, פסאודו-קוד ופירוק בעיות'},
+ {n:2,name:'לולאות',en:'Loops',c:'#4fb3a4',d:'לולאות, לולאות מקוננות, "חזור עד ש" וניפוי באגים'},
+ {n:3,name:'תנאים',en:'Conditionals',c:'#e36b5d',d:'אם/אז, אם/אז/אחרת, תנאים מורכבים ומבני בקרה'},
+ {n:4,name:'משתנים',en:'Variables',c:'#8fc8e8',d:'יצירה, שינוי ומעקב אחרי משתנים, ערכים אקראיים'},
+ {n:5,name:'פונקציות',en:'Functions',c:'#9b8be0',d:'הגדרה וקריאה לפונקציות, פרמטרים'},
+ {n:6,name:'בינה מלאכותית ונתונים',en:'AI & Data',c:'#f3ead8',d:'מסווגים, אימון מודלים, חישת-גוף וקואורדינטות'}
+];
+const CREDIT='תרגום, עיבוד ועיצוב: שחר זריהן, בי״ס יצחק שדה כפר סבא';
+const PH={engage:['פתיחה','5 דקות'],explore:['חקירה','15 דקות'],explain:['הסבר','5 דקות'],elaborate:['הרחבה','15 דקות'],evaluate:['הערכה','5 דקות'],proto:['אב-טיפוס','30 דקות'],share:['שיתוף ומשוב','10 דקות']};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const byId=Object.fromEntries(L.map(l=>[l.id,l]));
+const $=s=>document.querySelector(s);
+
+// ---- home ----
+function renderHome(){
+ const h=$('#home');
+ h.innerHTML=`
+ <header class="hero">
+  <div class="badge">${MARK}</div>
+  <div class="hero-txt">
+   <h1>רובוטיקה ו׳–ח׳</h1>
+   <p>מצגות לשיעורי LEGO® Education Computer Science &amp; AI · 6 יחידות · 30 שיעורים</p>
+   <p class="credit">${CREDIT}</p>
+  </div>
+  <div class="dots"><i style="background:#9b8be0"></i><i style="background:#4fb3a4"></i><i style="background:#f2b84b"></i><i style="background:#e36b5d"></i></div>
+ </header>
+ <nav class="chips" aria-label="יחידות">${UNITS.map(u=>`<a class="chip" href="#unit${u.n}"><b>יחידה ${u.n}</b> · ${u.name}</a>`).join('')}</nav>
+ ${UNITS.map(u=>`
+ <section class="unit" id="unit${u.n}">
+  <div class="unit-h"><div class="unit-num" style="background:${u.c}">${u.n}</div><div><small style="color:${u.c}">יחידה ${u.n} · ${u.en}</small><h2>${u.name}</h2><p>${u.d}</p></div></div>
+  <div class="grid">${L.filter(l=>l.u===u.n).map(l=>`
+   <a class="card" href="#${l.id}">
+    <div class="pic">${artHTML(l.art)}</div>
+    <div class="meta"><span class="n">שיעור ${l.n}</span><h3>${l.t}</h3><span class="en">${l.en}</span>
+     <div class="tags">${l.dc?'<span class="tag dc">אתגר עיצוב</span>':''}<span class="tag">${l.dc?'2 × 45 דק׳':'45 דק׳'}</span>${l.comp?'':'<span class="tag">בלי מחשב</span>'}</div></div>
+   </a>`).join('')}</div>
+ </section>`).join('')}
+ <footer class="foot"><span>${CREDIT}</span><span>מבוסס על שיעורי LEGO® Education Computer Science &amp; AI לכיתות 6–8. LEGO, the LEGO logo and LEGO Education are trademarks of the LEGO Group. אתר זה אינו רשמי ואינו קשור לקבוצת LEGO.</span></footer>`;
+}
+
+// ---- code blocks ----
+function parseBlock(s){
+ let out='',i=0;
+ while(i<s.length){
+  const ch=s[i];
+  if(ch==='['){const j=s.indexOf(']',i);out+=`<span class="in">${esc(s.slice(i+1,j))}</span>`;i=j+1;}
+  else if(ch==='('){let d=1,j=i+1;while(j<s.length&&d){if(s[j]==='(')d++;else if(s[j]===')')d--;j++;}const inner=s.slice(i+1,j-1);out+=`<span class="rp">${parseBlock(inner)}</span>`;i=j;}
+  else if(ch==='⟨'){out+='<span class="bo">';i++;}
+  else if(ch==='⟩'){out+='</span>';i++;}
+  else{let j=i;while(j<s.length&&!'[(⟨⟩'.includes(s[j]))j++;out+=esc(s.slice(i,j));i=j;}
+ }
+ return out;
+}
+const codeHTML=code=>`<div class="code">${code.map(([c,t,ind])=>`<div class="blk ${c}" style="margin-left:${ind*30}px">${parseBlock(t)}</div>`).join('')}</div>`;
+
+// ---- pieces ----
+const phase=(s,l)=>{if(!s.ph)return'';const p=PH[s.ph];let min=p[1];
+ if(s.ph==='explore'&&l.s.some(x=>x.k==='build'&&x.timer===10))min='10 דקות';
+ if(s.ph==='explore'&&l.id==='u1l2')min='17 דקות';
+ if(s.ph==='elaborate'&&l.id==='u1l2')min='13 דקות';
+ return `<div class="ph">${p[0]} <span class="min">· ${min}</span></div>`};
+const qs=a=>a&&a.length?`<ul class="qs">${a.map(q=>`<li>${esc(q)}</li>`).join('')}</ul>`:'';
+const steps=a=>a&&a.length?`<ol class="steps">${a.map(q=>`<li>${esc(q)}</li>`).join('')}</ol>`:'';
+const paras=a=>(a||[]).map(p=>`<p class="lead">${esc(p)}</p>`).join('');
+const vocab=a=>a&&a.length?`<div class="vocab"><span class="k">מושגי מפתח:</span>${a.map(v=>`<b>${esc(v)}</b>`).join('')}</div>`:'';
+const frame=f=>f?`<div class="frame">${esc(f)}</div>`:'';
+const timer=m=>m?`<div class="timer" data-min="${m}"><span class="tv">${String(m).padStart(2,'0')}:00</span><button data-t="go">הפעלה</button><button data-t="plus">+1 דק׳</button><button data-t="reset">איפוס</button></div>`:'';
+const pinHTML=p=>`<div class="pin"><span class="url">code.legoeducation.com</span><div class="digits">${p.split('').map(d=>`<b>${d}</b>`).join('')}</div><small>קוד PIN ל-Coding Canvas</small></div>`;
+const corner=`<div class="logo-corner">${MARK}</div>`;
+const COLORS=['#4a8fe0','#e36b5d','#3d9b6a','#f2b84b'];
+const brickColors=i=>COLORS[i%4];
+const minifig=c=>`<svg viewBox="0 0 64 84"><rect x="20" y="2" width="24" height="22" rx="8" fill="#f2c94c"/><circle cx="27" cy="13" r="2.4" fill="#141b36"/><circle cx="37" cy="13" r="2.4" fill="#141b36"/><path d="M26 18 q6 4 12 0" stroke="#141b36" stroke-width="2" fill="none"/><path d="M14 28 h36 l4 28 h-44z" fill="${c}"/><rect x="16" y="56" width="14" height="26" rx="3" fill="#2a2f45"/><rect x="34" y="56" width="14" height="26" rx="3" fill="#2a2f45"/></svg>`;
+const POSES=`<svg viewBox="0 0 520 150" style="width:100%;height:auto">${[0,1,2,3,4,5].map(i=>{const up=[1,1,0,1,0,0][i];const x=45+i*86;return `<g transform="translate(${x} 70)"><rect x="-38" y="-62" width="76" height="132" rx="12" fill="${up?'#fff3d6':'#e3f1fb'}" stroke="${up?'#f2b84b':'#8fc8e8'}" stroke-width="2"/><g stroke="#1d2546" stroke-width="4" stroke-linecap="round" fill="none"><circle cx="0" cy="-34" r="9" fill="#1d2546"/><line x1="0" y1="-24" x2="0" y2="16"/>${up?`<line x1="0" y1="-16" x2="${-18-i}" y2="${-44+i*2}"/><line x1="0" y1="-16" x2="${18+i}" y2="${-44+i}"/>`:`<line x1="0" y1="-16" x2="${-14-i}" y2="${8-i}"/><line x1="0" y1="-16" x2="${14+i}" y2="${8}"/>`}<line x1="0" y1="16" x2="-12" y2="48"/><line x1="0" y1="16" x2="12" y2="48"/></g></g>`}).join('')}</svg>`;
+const FLOW=`<div class="flow"><svg viewBox="0 0 520 260" font-family="Rubik,Heebo,sans-serif" font-weight="700">
+<rect x="200" y="8" width="120" height="44" rx="22" fill="#1b2547"/><text x="260" y="37" text-anchor="middle" fill="#f2b84b" font-size="20">התחלה</text>
+<path d="M260 52 v26" stroke="#1d2546" stroke-width="3"/><path d="M252 72 l8 10 l8 -10" fill="#1d2546"/>
+<path d="M260 84 l110 40 l-110 40 l-110 -40z" fill="#fff" stroke="#1d2546" stroke-width="3"/><text x="260" y="122" text-anchor="middle" fill="#1d2546" font-size="17">שתי הידיות</text><text x="260" y="144" text-anchor="middle" fill="#1d2546" font-size="17">למעלה?</text>
+<path d="M370 124 h60 v66" stroke="#2d7f72" stroke-width="3" fill="none"/><text x="400" y="114" text-anchor="middle" fill="#2d7f72" font-size="17">כן</text>
+<path d="M150 124 h-60 v66" stroke="#e36b5d" stroke-width="3" fill="none"/><text x="120" y="114" text-anchor="middle" fill="#e36b5d" font-size="17">לא</text>
+<rect x="360" y="190" width="140" height="56" rx="14" fill="#4fb3a4"/><text x="430" y="224" text-anchor="middle" fill="#141b36" font-size="18">צליל ניצחון</text>
+<rect x="20" y="190" width="140" height="56" rx="14" fill="#e36b5d"/><text x="90" y="224" text-anchor="middle" fill="#fff" font-size="18">צליל הפסד</text>
+</svg></div>`;
+
+// ---- slide notes for structural slides ----
+function notesFor(l,s,idx){
+ if(s.k==='title')return l.nIntro+(l.prep?' · הכנה: '+l.prep:'');
+ if(s.k==='goals')return 'הציגו את מטרת השיעור ואת שלוש המטרות האישיות ("אני יכול/ה"). בסוף השיעור חזרו לשקופית הזו ובדקו יחד אילו כוכבים הרווחנו – לחיצה על כוכב צובעת אותו.'+(l.prep?' הכנה: '+l.prep:'');
+ if(s.k==='norms')return 'הזכירו בקצרה את נורמות שיתוף הפעולה: לשתף בחומרים, לעבוד יחד ולבקש עזרה זה מזה. חלקו לקבוצות של 4. כל תלמיד/ה בוחר/ת דמות לגו – כחולה, אדומה, ירוקה או צהובה – שמסמנת את התפקיד בבנייה; הדמויות תואמות לסמלים בהוראות הבנייה.';
+ if(s.k==='clean')return l.dc?'הקבוצות שומרות את האב-טיפוס, את התוכנית ואת פרויקט ה-Coding Canvas להמשך במפגש השני. החזירו חלקים פנויים לערכה וחברו את החומרה לטעינה.':'הקבוצות מפרקות את הדגמים לפי הצורך, מחזירות את החלקים לערכה ומחברות את החומרה לטעינה. זה גם רגע טוב לחזור לשקופית המטרות.';
+ if(s.k==='swk')return (s.n?s.n+' ':'')+'אפשר לבקש תשובה בכתב במחברת, בציור או בכל דרך אחרת שנהוגה בכיתה. אחר כך חזרו לשקופית המטרות וסמנו כוכבים.';
+ return s.n||'';
+}
+
+// ---- slide renderer ----
+function slideHTML(l,s){
+ const u=UNITS[l.u-1];
+ switch(s.k){
+ case 'title': return `<div class="slide dark"><div class="cols" style="align-items:center">
+   <div class="main" style="flex:1.3">
+    <div class="t-tag"><b>יחידה ${l.u} · שיעור ${l.n}</b><span>${u.name}${l.dc?' · אתגר עיצוב':''}</span></div>
+    <div class="t-title">${l.t}</div>
+    <p class="t-q">${esc(l.q)}</p>
+    <div class="t-meta"><span>${l.min}</span><span>קבוצות של 4</span>${l.build?`<button class="tlink" data-bi="1">הוראות בנייה ${l.build} 📄</button>`:''}${l.comp?(l.pin?`<span>PIN ${l.pin}</span>`:''):'<span>בלי מחשב</span>'}</div>
+    <div class="t-en">${l.en} · LEGO® Education CS &amp; AI · Grades 6–8</div>
+   </div>
+   <div class="side">${artHTML(l.art,'big')}</div></div>
+   ${corner}<div class="foot-credit">מבוסס על שיעור של LEGO® Education Computer Science &amp; AI · ${CREDIT}</div></div>`;
+ case 'goals': return `<div class="slide dark" style="justify-content:center"><div class="ph" style="color:var(--teal)">מטרות השיעור</div>
+   <h2 style="color:var(--sun)">${esc(l.obj)}</h2>
+   <ul class="can">${l.can.map(c=>`<li><button class="star" aria-label="סימון מטרה"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2 6.1 20.4l1.3-6.5L2.5 9.3l6.6-.8z" fill="none" stroke="#f2b84b" stroke-width="1.8" stroke-linejoin="round"/></svg></button><span>${esc(c)}</span></li>`).join('')}</ul>
+   ${corner}</div>`;
+ case 'context': return `<div class="slide paper">${phase(s,l)}<h2>${esc(s.h||'')}</h2><div class="cols">
+   <div class="main">${paras(s.p)}${s.big?`<p class="big">${esc(s.big)}</p>`:''}${s.cta?`<div class="cta">${esc(s.cta)}</div>`:''}<div style="margin-top:auto">${vocab(s.vocab)}</div></div>
+   <div class="side" style="flex:.7">${artHTML(l.art)}</div></div>${corner}</div>`;
+ case 'norms': return `<div class="slide paper">${phase(s,l)}<h2>נורמות שיתוף פעולה</h2><div class="cols">
+   <div class="main"><ol class="steps"><li>משתפים בחומרים</li><li>עובדים יחד</li><li>מבקשים עזרה זה מזה</li></ol><p class="lead" style="margin-top:8px">התחלקו לקבוצות של ארבעה. כל אחד/ת בוחר/ת דמות – והיא מסמנת את החלק שלכם בהוראות הבנייה.</p>${s.build?`<button class="bref" style="align-self:flex-start;margin-top:auto" data-bi="1"><span class="lbl2">הוראות בנייה</span> ${s.build} 📄</button>`:''}</div>
+   <div class="side"><div class="roles">${COLORS.map((c,i)=>`<div class="role">${minifig(c)}<span>${['כחול','אדום','ירוק','צהוב'][i]}</span></div>`).join('')}</div></div></div>${corner}</div>`;
+ case 'build': return `<div class="slide paper">${phase(s,l)}<h2>בונים יחד</h2><div class="cols">
+   <div class="main">${s.pre?`<p class="lead">${esc(s.pre)}</p>`:''}<p class="lead" style="font-weight:700">בנו:</p><ul class="bricks">${s.l.map((x,i)=>`<li><i style="background:${brickColors(i)}"></i>${esc(x)}</li>`).join('')}</ul>
+   ${s.h2?`<p class="lead" style="font-weight:700;margin-top:6px">${esc(s.h2)}</p>${paras(s.p)}`:''}
+   <div style="margin-top:auto;display:flex;gap:14px;align-items:center;flex-wrap:wrap">${timer(s.timer)}${l.build?`<button class="bref" data-bi="1"><span class="lbl2">הוראות בנייה</span> ${l.build} 📄</button>`:''}</div></div>
+   <div class="side">${s.done?`<div class="box"><h5>סיימתם?</h5><ul>${s.done.map(d=>`<li>${esc(d)}</li>`).join('')}</ul></div>`:''}${modelThumb(l,'הדגם שבונים היום')}</div></div>${corner}</div>`;
+ case 'predict': return `<div class="slide paper">${phase(s,l)}<h2>מנבאים</h2><div class="cols">
+   <div class="main">${paras(s.p)}${qs(s.q)}${frame(s.frame)}</div>
+   <div class="side" style="flex:1.15">${s.code?codeHTML(s.code):''}${s.pseudo?`<ul class="pseudo">${s.pseudo.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}${s.poses?POSES:''}</div></div>${corner}</div>`;
+ case 'try': return `<div class="slide paper">${phase(s,l)}<h2>נסו בעצמכם</h2><div class="cols">
+   <div class="main">${s.pre?`<p class="big">${esc(s.pre)}</p>`:''}${paras(s.p)}${qs(s.q)}${steps(s.l)}</div>
+   <div class="side">${pinHTML(s.pin)}</div></div>${corner}</div>`;
+ case 'check': return `<div class="slide paper">${phase(s,l)}<h2>בודקים הבנה</h2><div class="cols">
+   <div class="main">${s.pre?`<p class="lead" style="font-weight:700">${esc(s.pre)}</p>`:''}${paras(s.p)}${qs(s.q)}${frame(s.frame)}<div style="margin-top:auto">${vocab(s.vocab)}</div></div>
+   <div class="side" style="flex:${s.flow?1.1:.6}">${s.flow?FLOW:artHTML(l.art)}</div></div>${corner}</div>`;
+ case 'elab': return `<div class="slide paper">${phase(s,l)}<h2 style="font-size:40px">${esc(s.h)}</h2><div class="cols">
+   <div class="main">${paras(s.p)}${steps(s.l)}<div style="margin-top:auto;display:flex;gap:14px;align-items:center;flex-wrap:wrap">${timer(s.timer)}<span class="bref"><span class="lbl2">בזוגות · מחליפים תפקידים</span> בונים ⇄ מקודדים</span></div>${vocab(s.vocab)}</div>
+   <div class="side" style="flex:.7">${artHTML(l.art)}</div></div>${corner}</div>`;
+ case 'share': return `<div class="slide paper">${phase(s,l)}<h2>${esc(s.pre||'שתפו!')}</h2><div class="cols">
+   <div class="main">${qs(s.q)}${frame(s.frame)}</div><div class="side" style="flex:.6">${artHTML(l.art)}</div></div>${corner}</div>`;
+ case 'swk': return `<div class="slide dark">${phase(s,l)}<h2 style="color:var(--sun)">הראו מה למדתם</h2><div class="cols">
+   <div class="main">${(s.p||[]).map(p=>`<p class="lead">${esc(p)}</p>`).join('')}<ul class="qs">${s.q.map(q=>`<li style="color:var(--fg)">${esc(q)}</li>`).join('')}</ul><p style="margin-top:auto;font-size:20px;color:var(--mute)">כתבו את התשובות במחברת – ואז חזרו למטרות השיעור.</p></div>
+   <div class="side" style="flex:.6">${artHTML(l.art)}</div></div>${corner}</div>`;
+ case 'plan': return `<div class="slide paper">${phase(s,l)}<h2>${esc(s.h)}</h2><div class="cols">
+   <div class="main">${s.pre?`<p class="big" style="color:#2d7f72">${esc(s.pre)}</p>`:''}${qs(s.q)}<div style="margin-top:auto">${vocab(s.vocab)}</div></div>
+   <div class="side" style="flex:.7">${artHTML(l.art)}</div></div>${corner}</div>`;
+ case 'proto': return `<div class="slide paper">${phase(s,l)}<h2 style="font-size:40px">${esc(s.h)}</h2><div class="cols">
+   <div class="main">${steps(s.l)}<div style="margin-top:auto">${timer(s.timer)}</div>${vocab(s.vocab)}</div>
+   <div class="side">${s.pin?pinHTML(s.pin):''}${modelThumb(l,'דגם להשראה',true)}</div></div>${corner}</div>`;
+ case 'feedback': return `<div class="slide paper">${phase(s,l)}<h2>תנו וקבלו משוב על האב-טיפוס!</h2><div class="fb">
+   <div class="col" style="background:#ffe4b0"><h3>מציגים</h3><span style="font-size:18px;color:var(--paper-mute)">נשארים ליד האב-טיפוס ומסבירים</span>${s.pres.map(p=>`<p>${esc(p)}</p>`).join('')}</div>
+   <div class="col" style="background:#cdeee8"><h3>שגרירים</h3><span style="font-size:18px;color:var(--paper-mute)">מבקרים בקבוצות אחרות ונותנים משוב</span>${s.amb.map(p=>`<p>${esc(p)}</p>`).join('')}</div></div>${corner}</div>`;
+ case 'clean': return `<div class="slide dark"><div class="cols" style="align-items:center"><div class="main">
+   <div class="ph" style="color:var(--teal)">סיום</div><div class="t-title" style="font-size:80px">מסדרים!</div>
+   <ol class="steps">${(l.dc?['שמרו את פרויקט ה-Coding Canvas','צלמו את האב-טיפוס ורשמו את הצעדים הבאים','החזירו חלקים פנויים לערכה','חברו את החומרה לטעינה']:['פרקו את הדגם (אם צריך)','החזירו את החלקים לערכה','חברו את החומרה לטעינה']).map(x=>`<li style="color:var(--fg)">${x}</li>`).join('')}</ol></div>
+   <div class="side" style="flex:.8">${artHTML(l.art)}</div></div>${corner}<div class="foot-credit">${CREDIT}</div></div>`;
+ }
+ return '';
+}
+
+// ---- model image + building instructions ----
+const modelSrc=l=>'models/'+l.id+'.webp';
+const biURL=l=>'https://teach.legoeducation.com/en-us/computer-science/lesson/'+l.en.toLowerCase().replace(/ /g,'-')+'/building-instructions';
+function modelThumb(l,cap,small){return `<button class="mthumb${small?' sm':''}" data-model="1" aria-label="הגדלת תמונת הדגם"><img src="${modelSrc(l)}" alt="${esc(l.t)} – דגם"><span>${cap} · לחצו להגדלה</span></button>`}
+let showModel=false,modelFor=null;
+function paintModel(){const l=cur;$('#model').hidden=!showModel;$('#mb').classList.toggle('on',showModel);
+ if(showModel){$('#mimg').src=modelSrc(l);$('#mimg').alt=l.t+' – דגם';$('#mt').textContent=(l.dc?'דגם להשראה':'הדגם')+(l.build?' · הוראות בנייה '+l.build:'');}}
+
+// ---- building-instructions viewer (PDF pages pre-rendered to images) ----
+const lessonCode=l=>'C'+(100+(l.u-1)*5+l.n);
+let biFor=null;
+function closeBI(){$('#biv').hidden=true;biFor=null;}
+const BIPAGES={"C101": 4, "C102": 4, "C103": 4, "C104": 5, "C105": 1, "C106": 6, "C107": 7, "C108": 3, "C109": 3, "C110": 1, "C111": 5, "C112": 6, "C113": 4, "C114": 4, "C115": 1, "C116": 5, "C117": 5, "C118": 3, "C119": 3, "C120": 1, "C121": 5, "C122": 5, "C123": 6, "C124": 6, "C125": 1, "C126": 5, "C127": 5, "C128": 5, "C129": 5, "C130": 1};
+function openBI(){
+ const l=cur;biFor=l.id;const code=lessonCode(l);
+ $('#biv').hidden=false;$('#bit').textContent=(l.dc?'דף השראה':'הוראות בנייה')+' · '+l.t+(l.build?' · '+l.build:'')+' · '+code;
+ const n=BIPAGES[code]||0;
+ $('#bip').innerHTML=n?Array.from({length:n},(_,i)=>`<img src="bip/${code}-${i+1}.webp" alt="${code} עמוד ${i+1}" loading="${i<2?'eager':'lazy'}">`).join(''):'<p class="bimsg">אין הוראות בנייה לשיעור הזה.</p>';
+ $('#bip').scrollTop=0;
+}
+
+// ---- deck state ----
+let cur=null,idx=0,showNotes=false,tick=null;
+try{showNotes=localStorage.getItem('notes68')==='1'}catch(e){}
+const slidesOf=l=>[{k:'title'},{k:'goals'},...l.s];
+
+function fit(){
+ const w=$('#stageWrap'),st=$('#stage');
+ const sc=Math.min(w.clientWidth/1280,w.clientHeight/720);
+ st.style.transform=`translate(-50%,-50%) scale(${sc})`;
+}
+function show(){
+ const l=cur,all=slidesOf(l),s=all[idx];
+ clearInterval(tick);tick=null;
+ $('#stage').innerHTML=slideHTML(l,s);
+ $('#cnt').textContent=`${idx+1} / ${all.length}`;
+ $('#lbl').textContent=`יחידה ${l.u} · שיעור ${l.n} – ${l.t}`;
+ $('#progress i').style.width=((idx+1)/all.length*100)+'%';
+ const n=notesFor(l,s,idx);
+ $('#notes').innerHTML=`<h4>הערות למורה · שקופית ${idx+1}</h4><p>${esc(n)}</p>`;
+ $('#notes').hidden=!showNotes||!n;
+ $('#nb').classList.toggle('on',showNotes);
+ if(modelFor!==l.id){modelFor=l.id;showModel=false;}
+ $('#mbl').textContent=l.dc?'השראה':'דגם';
+ $('#bil').textContent=l.dc?'דף השראה':'הוראות בנייה';if(biFor!==l.id){closeBI();}
+ paintModel();
+ $('#prev').disabled=idx===0;$('#next').disabled=idx===all.length-1;
+ fit();
+}
+function go(d){const n=slidesOf(cur).length;const j=Math.max(0,Math.min(n-1,idx+d));if(j!==idx){idx=j;setHash();show();}}
+function setHash(){const h='#'+cur.id+(idx?'-s'+(idx+1):'');if(location.hash!==h)history.replaceState(null,'',h);}
+
+function route(){
+ const h=location.hash.slice(1);
+ const m=h.match(/^(u\d+l\d+)(?:-s(\d+))?$/);
+ if(m&&byId[m[1]]){
+  cur=byId[m[1]];idx=Math.max(0,Math.min(slidesOf(cur).length-1,(+m[2]||1)-1));
+  $('#home').hidden=true;$('#deck').hidden=false;document.title=cur.t+' · רובוטיקה ו׳–ח׳';show();
+ }else{
+  $('#deck').hidden=true;$('#home').hidden=false;document.title='רובוטיקה ו׳–ח׳';clearInterval(tick);
+  const u=h.match(/^unit(\d)$/);if(u){const el=document.getElementById(h);el&&el.scrollIntoView();}
+  else if(!h||h==='home')window.scrollTo(0,0);
+ }
+}
+
+// ---- events ----
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ if(b.id==='next')go(1);else if(b.id==='prev')go(-1);
+ else if(b.id==='homeb'){const u=cur?cur.u:1;location.hash='unit'+u;}
+ else if(b.id==='mb'||b.dataset.model){showModel=!showModel;paintModel();}
+ else if(b.id==='bi'||b.dataset.bi){$('#biv').hidden?openBI():closeBI();}
+ else if(b.id==='biclose'){closeBI();}
+ else if(b.id==='mclose'){showModel=false;paintModel();}
+ else if(b.id==='nb'){showNotes=!showNotes;try{localStorage.setItem('notes68',showNotes?'1':'0')}catch(err){};show();}
+ else if(b.id==='fs'){try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}catch(err){}}
+ else if(b.classList.contains('star')){b.classList.toggle('on')}
+ else if(b.dataset.t){
+  const t=b.closest('.timer'),tv=t.querySelector('.tv');
+  let left=+(t.dataset.left??t.dataset.min*60);
+  const paint=()=>{tv.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');tv.classList.toggle('done',left<=0)};
+  if(b.dataset.t==='plus'){left+=60;t.dataset.left=left;paint();}
+  if(b.dataset.t==='reset'){clearInterval(tick);tick=null;left=t.dataset.min*60;t.dataset.left=left;paint();t.querySelector('[data-t=go]').textContent='הפעלה';}
+  if(b.dataset.t==='go'){
+   if(tick){clearInterval(tick);tick=null;b.textContent='המשך';}
+   else{b.textContent='עצירה';tick=setInterval(()=>{left=Math.max(0,+(t.dataset.left??left)-1);t.dataset.left=left;paint();if(left<=0){clearInterval(tick);tick=null;b.textContent='הפעלה';}},1000);}
+  }
+ }
+});
+document.addEventListener('keydown',e=>{
+ if($('#deck').hidden)return;
+ if(['ArrowLeft','PageDown',' '].includes(e.key)){e.preventDefault();go(1);}
+ else if(['ArrowRight','PageUp'].includes(e.key)){e.preventDefault();go(-1);}
+ else if(e.key==='n'||e.key==='נ'){$('#nb').click();}
+ else if(e.key==='m'||e.key==='צ'){$('#mb').click();}
+ else if(e.key==='Escape'&&!$('#biv').hidden){closeBI();}
+ else if(e.key==='Escape'&&!document.fullscreenElement){location.hash='unit'+cur.u;}
+});
+let tx=null;
+document.addEventListener('touchstart',e=>{if(!$('#deck').hidden)tx=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50)go(dx>0?1:-1);},{passive:true});
+window.addEventListener('resize',()=>{if(!$('#deck').hidden)fit()});
+window.addEventListener('hashchange',route);
+document.documentElement.lang='he';document.documentElement.dir='rtl';
+renderHome();route();
+</script>
+
+</body></html>
